@@ -35,9 +35,22 @@ public class EventDispatch {
 		public void end();
 	}
 	
+
+	public interface Open {
+		public void open(String filename);
+	}
+	public interface Save {
+		public void save(String filename);
+	}
+
+	
 	public interface Add<t> { 
 		public void added(t newInstance, Event e);
 	}
+
+	public final Observable<Save> saveListener = new Observable<>(Save.class);
+	public final Observable<Open> openListener = new Observable<>(Open.class);
+
 	
 	public final Observable<Start> connectStartListener = new Observable<>(Start.class);
 	public final Observable<Stop> connectEndListener = new Observable<>(Stop.class);
@@ -64,6 +77,8 @@ public class EventDispatch {
 	public final Observable<Add<JMenuBar>> menu = new Observable<>(Add.class);
 	
 	public final Observable<Add<Object>> all = new Observable<>(Add.class);
+
+	public final Observable<Add<AQueryWindow>> queryWindow = new Observable<>(Add.class);
 	
 	public EventDispatch() {
 		tableGroupListener.getMaint().add((x,e)->all.getDispatcher().added(x,e));
@@ -83,9 +98,6 @@ public class EventDispatch {
 		indexGroupListener.getMaint().add((x,e)->all.getDispatcher().added(x,e));
 		indexListener.getMaint().add((x,e)->all.getDispatcher().added(x,e));
 	}
-	
-	
-	public final Observable<Add<AQueryWindow>> queryWindow = new Observable<>(Add.class);
 	
 }
 

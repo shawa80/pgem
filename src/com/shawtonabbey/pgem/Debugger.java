@@ -26,6 +26,10 @@ public class Debugger {
 			win.setMessage("added " + item + "\n");
 		});
 		
+		dispatch.saveListener.getMaint().add((name) -> {
+			win.setMessage("file " + name + " saved");
+		});
+		
 		dispatch.connectStartListener.getMaint().add(() -> {
 			win.setMessage("start\n");
 		});

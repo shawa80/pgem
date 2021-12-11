@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.Openable;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.plugin.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
+import com.shawtonabbey.pgem.ui.common.OpenAction;
+import com.shawtonabbey.pgem.ui.common.SaveAction;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 import com.siliconandsynapse.patterns.observer.Observable;
 
@@ -18,10 +21,11 @@ import com.siliconandsynapse.patterns.observer.Observable;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
+import java.util.List;
 
 @Component
 @Scope("prototype")
-public class AQueryWindow extends JPanel implements QueryWindow
+public class AQueryWindow extends JPanel implements QueryWindow, Openable
 {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,9 +40,17 @@ public class AQueryWindow extends JPanel implements QueryWindow
 	private JToolBar toolBar;
 	private JButton stopButton;
 	private JButton runButton;
+	private JButton openButton;
+	private JButton saveButton;
 	
 	@Autowired
 	EventDispatch dispatch;
+	
+	@Autowired
+	SaveAction save;
+	
+	@Autowired
+	OpenAction open;
 	
 	public interface Event {public void event(QueryWindow win);}
 	
@@ -100,6 +112,23 @@ public class AQueryWindow extends JPanel implements QueryWindow
 		});
 		toolBar.add(stopButton);
 				
+		openButton = new JButton("Open");
+		openButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				open.perform(AQueryWindow.this, AQueryWindow.this);
+			}
+		});
+		toolBar.add(openButton);
+		
+		saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				save.perform(AQueryWindow.this, AQueryWindow.this);
+			}
+		});
+		toolBar.add(saveButton);
+		
+		
 		setVisible(true);
 				
 		query.setText("");
@@ -160,6 +189,13 @@ public class AQueryWindow extends JPanel implements QueryWindow
 	@Override
 	public String getExtn() {
 		return "sql";
+	}
+
+	@Override
+	public void setContent(String content) {
+		
+		setSql(content);
+		
 	}
 
 }

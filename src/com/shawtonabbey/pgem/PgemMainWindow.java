@@ -13,6 +13,7 @@ import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.TreeItem;
 import com.shawtonabbey.pgem.ui.ATabbedPane;
 import com.shawtonabbey.pgem.ui.MainWindow;
+import com.shawtonabbey.pgem.ui.common.SaveAction;
 import com.shawtonabbey.pgem.ui.lambda.AMouseListener;
 import com.shawtonabbey.pgem.ui.lambda.AWindowListener;
 
@@ -124,11 +125,21 @@ public class PgemMainWindow extends JFrame implements MainWindow
 
 	private JMenuBar getMenu()
 	{
-		JMenuItem menuItem;
+
 
 		var menu = new JMenuBar();
 		var tools = new JMenu("Tools", true);
 
+		tools.add(createSaveAction());
+		
+		menu.add(tools);
+		return menu;
+	}
+	
+
+	
+	private JMenuItem createSaveAction() {
+		JMenuItem menuItem;
 		menuItem = new JMenuItem("Save");
 		menuItem.addActionListener((ActionEvent e) ->
 			{
@@ -140,10 +151,7 @@ public class PgemMainWindow extends JFrame implements MainWindow
 				
 			});
 		menuItem.setMnemonic(KeyEvent.VK_Q);
-		tools.add(menuItem);
-
-		menu.add(tools);
-		return menu;
+		return menuItem;
 	}
 	
 	/**

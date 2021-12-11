@@ -18,6 +18,7 @@ public class QueryPlugin implements Plugin {
 	
 	public void init() {
 				
+		
 		dispatch.databaseListener.getMaint().add((m,ev) -> {
 			
 			m.addPopup("Query", (e) -> {

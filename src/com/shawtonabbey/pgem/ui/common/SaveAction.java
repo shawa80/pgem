@@ -1,4 +1,4 @@
-package com.shawtonabbey.pgem;
+package com.shawtonabbey.pgem.ui.common;
 
 import java.awt.Component;
 import java.io.File;
@@ -9,8 +9,18 @@ import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+
+import com.shawtonabbey.pgem.Savable;
+import com.shawtonabbey.pgem.plugin.EventDispatch;
+
+@org.springframework.stereotype.Component
+@Scope("prototype")
 public class SaveAction {
 
+	@Autowired
+	EventDispatch dispatch;
 	
 	public void perform(Component win, Savable qw) {
 		
@@ -23,7 +33,7 @@ public class SaveAction {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			
-			System.out.println(qw.getSavable());
+			dispatch.saveListener.getDispatcher().save(file.getAbsolutePath());
 			
 			try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
 				pw.write(qw.getSavable());
