@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+    <info
+        organisation=""
+        module="CredRest"
+        status="integration">
+	</info>
+	<dependencies>
+		<dependency org="postgresql" name="postgresql" rev="9.1-901.jdbc4"/>
+		<dependency org="org.springframework" name="spring-context" rev="5.0.1.RELEASE"/>
+		<dependency org="com.siliconandsynapse.code" name="observable" rev="1.0.0" />
+		<dependency org="com.siliconandsynapse.code" name="jsyntaxpane" rev="1.1.5" />
+		<dependency org="com.siliconandsynapse.code" name="lombok" rev="1.18.0" />
+	</dependencies>
+</ivy-module>

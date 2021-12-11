@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Pgem</groupId>
+  <artifactId>Pgem</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>Resources</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <release>10</release>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>postgresql</groupId>
+  		<artifactId>postgresql</artifactId>
+  		<version>9.1-901.jdbc4</version>
+  	</dependency>	
+
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context</artifactId>
+  		<version>5.0.1.RELEASE</version>
+  	</dependency>	
+
+  	<dependency>
+  		<groupId>com.fifesoft</groupId>
+  		<artifactId>rsyntaxtextarea</artifactId>
+  		<version>3.1.1</version>
+  	</dependency>	
+
+  		
+		<!--   <dependency org="com.siliconandsynapse.code" name="observable" rev="1.0.0" />
+		<dependency org="com.siliconandsynapse.code" name="jsyntaxpane" rev="1.1.5" />
+		<dependency org="com.siliconandsynapse.code" name="lombok" rev="1.18.0" />
+  	-->
+  </dependencies>
+</project>
