@@ -14,7 +14,6 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.siliconandsynapse.patterns.observer.Observable;
 
 import javax.swing.JToolBar;
 import javax.swing.JButton;
@@ -27,6 +26,7 @@ import java.util.stream.Stream;
 import java.awt.event.ActionEvent;
 
 import com.shawtonabbey.pgem.Savable;
+import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.query.CountedRowTableModel;
 import com.shawtonabbey.pgem.query.SQLResultsPane;
 import javax.swing.JTextField;

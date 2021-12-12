@@ -16,8 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
-import com.siliconandsynapse.patterns.observer.Observable;
-import com.siliconandsynapse.patterns.observer.ObservableMaint;
+import com.shawtonabbey.pgem.event.Observable;
+import com.shawtonabbey.pgem.event.ObservableMaint;
 
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;

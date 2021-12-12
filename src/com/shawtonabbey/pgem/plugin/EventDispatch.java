@@ -4,6 +4,7 @@ import javax.swing.JMenuBar;
 
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.query.AQueryWindow;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.Event;
@@ -23,7 +24,6 @@ import com.shawtonabbey.pgem.tree.table.TableGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.tree.view.ViewGroup;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
-import com.siliconandsynapse.patterns.observer.Observable;
 
 @Component
 public class EventDispatch {

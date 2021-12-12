@@ -15,12 +15,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
+import com.shawtonabbey.pgem.event.Observable;
+import com.shawtonabbey.pgem.event.ObservableMaint;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
-import com.siliconandsynapse.patterns.observer.Observable;
-import com.siliconandsynapse.patterns.observer.ObservableMaint;
-//import jsyntaxpane.components.LineNumbersRuler;
-//import jsyntaxpane.syntaxkits.JavaSyntaxKit;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;

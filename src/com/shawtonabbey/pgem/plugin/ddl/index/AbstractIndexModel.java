@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.shawtonabbey.pgem.database.DbColumn;
-import com.siliconandsynapse.patterns.observer.Observable;
+import com.shawtonabbey.pgem.event.Observable;
 
 import lombok.Getter;
 

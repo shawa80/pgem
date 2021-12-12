@@ -10,8 +10,7 @@ import java.util.*;
 import javax.swing.event.*;
 
 import com.shawtonabbey.pgem.plugin.EventDispatch;
-import com.siliconandsynapse.patterns.observer.Observable;
-
+import com.shawtonabbey.pgem.event.Observable;
 
 @Component
 @Scope("prototype")
