@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 
 @Component
@@ -17,7 +17,7 @@ public class TablePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void init() {
-		dispatch.schemaListener.getMaint().add((s, e) -> {
+		dispatch.schema.listen((s, e) -> {
 			s.addNode(appContext.getBean(TableGroup.class, s).load(e));
 		});
 	}

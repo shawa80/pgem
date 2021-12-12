@@ -19,12 +19,12 @@ public class AbstractIndexModel implements IndexModel {
 	private Observable<IndexModelListener> indexListener = new Observable<>(IndexModelListener.class);
 
 	public void AddListener(IndexModelListener l) {
-		indexListener.getMaint().add(l);
+		indexListener.listen(l);
 	}
 
-	public void RemoveListener(IndexModelListener l) {
-		indexListener.getMaint().remove(l);
-	}
+	//public void RemoveListener(IndexModelListener l) {
+	//	indexListener.listeners().remove(l);
+	//}
 
 	protected void fireChange() {
 		indexListener.getDispatcher().changed(this);

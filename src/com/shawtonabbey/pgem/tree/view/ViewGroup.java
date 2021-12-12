@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbView;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
@@ -38,7 +38,7 @@ public class ViewGroup extends Group<SchemaInstance>
 	public ViewGroup load(Event event) {
 		
 		event.lock(ViewGroup.this);
-		dispatch.viewGroupListener.getDispatcher().added(this, event);
+		dispatch.viewGroup.getDispatcher().added(this, event);
 		event.unlock(ViewGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbView>>()

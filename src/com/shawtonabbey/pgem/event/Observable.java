@@ -10,20 +10,36 @@ public class Observable<T> {
 	
 	private final List<T> observers;
 	private final T dispatcher;
-	private ObservableMaint<T> maint;
+	private Listeners<T> maint;
+
 	
+	public interface FireAction<T> {
+		public void go(T object);
+	}
 
 	@SuppressWarnings("unchecked")
 	public Observable(Class<?> observerClass) {
-		maint = new ObservableMaint<T>(this);
+		maint = new Listeners<T>(this);
 		observers = new ArrayList<T>();
 		dispatcher = (T) Proxy.newProxyInstance(observerClass.getClassLoader(),
 				new Class[] { observerClass }, new Dispatcher());
 	}
 
-
-	public ObservableMaint<T> getMaint() {
+	@Deprecated
+	public Listeners<T> listeners() {
 		return maint;
+	}
+
+	public void listen(T toAdd) {
+		this.add(toAdd);
+	}
+	
+	public void fire(FireAction<T> action) {
+		action.go(dispatcher);
+	}
+	
+	public T getDispatcher() {
+		return dispatcher;
 	}
 	
 	
@@ -39,11 +55,9 @@ public class Observable<T> {
 		}
 	}
 
-	public T getDispatcher() {
-		return dispatcher;
-	}
 
-	public boolean hasObservers() {
+
+	boolean hasObservers() {
 		return !observers.isEmpty();
 	}
 

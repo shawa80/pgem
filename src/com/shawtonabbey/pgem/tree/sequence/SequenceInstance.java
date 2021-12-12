@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbSequence;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
 
@@ -30,7 +30,7 @@ public class SequenceInstance extends Instance<SequenceGroup>
 	
 	public SequenceInstance load(Event event) {
 		
-		dispatch.sequenceListener.getDispatcher().added(this, event);
+		dispatch.sequence.getDispatcher().added(this, event);
 				
 		return this;
 	}

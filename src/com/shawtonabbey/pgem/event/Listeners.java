@@ -1,10 +1,10 @@
 package com.shawtonabbey.pgem.event;
 
-public class ObservableMaint<T> {
+public class Listeners<T> {
 
 	private Observable<T> pool;
 	
-	public ObservableMaint(Observable<T> pool) {
+	public Listeners(Observable<T> pool) {
 		this.pool = pool;
 	}
 	

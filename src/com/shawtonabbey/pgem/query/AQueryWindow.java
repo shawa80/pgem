@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.Openable;
 import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
 import com.shawtonabbey.pgem.ui.common.OpenAction;
 import com.shawtonabbey.pgem.ui.common.SaveAction;

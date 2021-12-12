@@ -18,7 +18,7 @@ import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbServer;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.connect.ConnectDialog;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 
@@ -58,7 +58,7 @@ public class ServerInstance extends Group<DBManager>
 	
 	public void load(Event event) throws IOException {
 		
-		dispatch.serverListener.getDispatcher().added(this,event);
+		dispatch.server.getDispatcher().added(this,event);
 		event.lock(ServerInstance.this);
 		this.setName(name + " (Loading)");
 		event.whenFinished(() -> {this.setName(name);});

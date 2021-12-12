@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTable;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.ddl.index.IndexCreatePanel;
 import com.shawtonabbey.pgem.tree.Event;
@@ -24,13 +24,13 @@ public class DdlPlugin implements Plugin {
 	
 	public void init() {
 
-		dispatch.serverListener.getMaint().add((srv, ev) -> {
+		dispatch.server.listen((srv, ev) -> {
 			srv.addPopup("Reload", (e) -> {
 				srv.reload(new Event());				
 			});
 		});
 	
-		dispatch.routineGroupListener.getMaint().add((rtGrp, ev) -> {
+		dispatch.routineGroup.listen((rtGrp, ev) -> {
 			
 			rtGrp.addPopup("DDL", "Create", (e) -> {
 				win.launchQueryWin(rtGrp.getParentDb().getSchema().getDbInstance(), 
@@ -55,7 +55,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 		
-		dispatch.routineListener.getMaint().add((rtn,ev) -> {
+		dispatch.routine.listen((rtn,ev) -> {
 			
 			rtn.addPopup("DDL", "Drop", (e) -> {
 				win.launchQueryWin(rtn.getParentDb().getParentDb().getSchema().getDbInstance(), 
@@ -67,7 +67,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.sequenceGroupListener.getMaint().add((sqc, ev) -> {
+		dispatch.sequenceGroup.listen((sqc, ev) -> {
 			
 			sqc.addPopup("DDL", "Create", (e) -> {
 				win.launchQueryWin(sqc.getParentDb().getSchema().getDbInstance(), 
@@ -79,7 +79,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.tableGroupListener.getMaint().add((group, ev) -> {
+		dispatch.tableGroup.listen((group, ev) -> {
 			
 			group.addPopup("DDL", "New Table", (e) -> {
 				
@@ -92,7 +92,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.tableListener.getMaint().add((table,ev) -> {
+		dispatch.table.listen((table,ev) -> {
 			
 			table.addPopup("DDL", "Drop", (e) -> {
 				
@@ -114,7 +114,7 @@ public class DdlPlugin implements Plugin {
 
 		
 		
-		dispatch.columnGroupListener.getMaint().add((grp, ev) -> {
+		dispatch.columnGroup.listen((grp, ev) -> {
 			
 			if (!(grp.parent instanceof TableInstance))
 				return;
@@ -131,7 +131,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.columnListener.getMaint().add((cln,ev)-> {
+		dispatch.column.listen((cln,ev)-> {
 			
 			if (!(cln.getUiParent().getUiParent() instanceof TableInstance))
 				return;
@@ -146,7 +146,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 	
-		dispatch.viewGroupListener.getMaint().add((view,ev) -> {
+		dispatch.viewGroup.listen((view,ev) -> {
 			view.addPopup("DDL", "Create", (e) -> {
 				
 				win.launchQueryWin(view.getParentDb().getSchema().getDbInstance(), 
@@ -157,7 +157,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 		
-		dispatch.viewListener.getMaint().add((view,ev) -> {
+		dispatch.view.listen((view,ev) -> {
 			
 			view.addPopup("DDL", "Script Create", (e) -> {
 				
@@ -175,7 +175,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 
-		dispatch.indexGroupListener.getMaint().add((indexGrp,ev) -> {
+		dispatch.indexGroup.listen((indexGrp,ev) -> {
 			
 			indexGrp.addPopup("DDL", "GUI", (e) -> {
 				var ui = new IndexCreatePanel(indexGrp.getTable());
@@ -195,7 +195,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.indexListener.getMaint().add((index,ev) -> {
+		dispatch.index.listen((index,ev) -> {
 			
 			index.addPopup("DDL", "Script Create", (e) -> {
 				

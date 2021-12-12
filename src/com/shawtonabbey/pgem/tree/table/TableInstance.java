@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTable;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class TableInstance extends Group<TableGroup>
 	public TableInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.tableListener.getDispatcher().added(this, event);			
+		dispatch.table.getDispatcher().added(this, event);			
 		event.unlock(this);
 		
 		return this;

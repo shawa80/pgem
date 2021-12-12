@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
@@ -24,7 +24,7 @@ public class XmlPlugin implements Plugin {
 
 	public void init() {
 
-			dispatch.menu.getMaint().add((menuBar, ev) -> {
+			dispatch.menu.listen((menuBar, ev) -> {
 				
 				var topMenu = new JMenu("xPath", true);
 				menuBar.add(topMenu);

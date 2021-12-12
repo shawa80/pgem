@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.PgemMainWindow;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
@@ -32,7 +32,7 @@ public class ConnectPlugin implements Plugin {
 		Preferences pref;
 		pref = Preferences.userRoot().node("com.shawtonabbey.pgem.tree.DBManager");
 		
-		dispatch.databaseListener.getMaint().add((d, ev) -> {
+		dispatch.database.listen((d, ev) -> {
 			
 			d.addPopup("Disconnect", (e)-> {
 				d.getDatabase().getDbInstance().disconnect();
@@ -43,7 +43,7 @@ public class ConnectPlugin implements Plugin {
 			
 		});
 		
-		dispatch.serverListener.getMaint().add((s, ev) -> {
+		dispatch.server.listen((s, ev) -> {
 			
 			s.addPopup("Version", (e) -> {
 				var db = (DatabaseInstance)s.getChildAt(0);
@@ -53,7 +53,7 @@ public class ConnectPlugin implements Plugin {
 			
 		});
 		
-		dispatch.serverListener.getMaint().add((s, ev) -> {
+		dispatch.server.listen((s, ev) -> {
 			
 			s.addPopup("Disconnect", (e) -> {
 				int children = s.getChildCount();
@@ -67,17 +67,17 @@ public class ConnectPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.dbManagerListener.getMaint().add((m, ev) -> {
+		dispatch.dbManager.listen((m, ev) -> {
 			
 			m.addPopup("Connect", (e) -> {
 				
 				Event connectEvent = new Event();
 				
-				dispatch.connectStartListener.getDispatcher().start();
+				dispatch.connectStart.getDispatcher().start();
 				new SwingWorkerChain<ServerInstance>()
 					.setWork(() -> {
 		
-						connectEvent.whenFinished(() -> { dispatch.connectEndListener.getDispatcher().end();});
+						connectEvent.whenFinished(() -> { dispatch.connectEnd.getDispatcher().end();});
 
 						var connect = new ConnectDialog(window);
 						connect.set(

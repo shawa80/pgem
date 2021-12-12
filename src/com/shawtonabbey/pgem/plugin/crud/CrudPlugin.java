@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
@@ -21,13 +21,13 @@ public class CrudPlugin implements Plugin {
 	public void init() {
 		
 		
-		dispatch.viewListener.getMaint().add((view, ev) -> {
+		dispatch.view.listen((view, ev) -> {
 			view.addPopup("CRUD", "Select", (e) -> {
 				win.launchQueryWin(view.getView().getDbInstance(), "Select * from " + view.getView().getName() + " limit 100;");
 			});
 		});
 		
-		dispatch.tableListener.getMaint().add((table, ev) -> {
+		dispatch.table.listen((table, ev) -> {
 			
 			table.addPopup("CRUD", "Select", (e) -> {
 				

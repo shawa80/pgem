@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
 import com.shawtonabbey.pgem.ui.DebugWindow;
@@ -34,7 +34,7 @@ public class ExportPlugin implements Plugin {
 	public void init() {
 		
 		
-		dispatch.queryWindow.getMaint().add((q,ev)-> {
+		dispatch.queryWindow.listen((q,ev)-> {
 			q.addAction("Export", (e) -> {
 				
 				conn = q.getConnection();
@@ -46,7 +46,7 @@ public class ExportPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.tableListener.getMaint().add((table,ev) -> {
+		dispatch.table.listen((table,ev) -> {
 			
 			table.addPopup("Data", "Export", (e) -> {
 				
@@ -61,7 +61,7 @@ public class ExportPlugin implements Plugin {
 		});
 				
 
-		dispatch.viewListener.getMaint().add((view,ev) -> {
+		dispatch.view.listeners().add((view,ev) -> {
 			
 			view.addPopup("Data", "Export", (e) -> {
 				

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbSchema;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
@@ -40,7 +40,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 	public SchemaGroup load(boolean loadSysSchemas, Event event) {
 
 		event.lock(SchemaGroup.this);
-		dispatch.schemaGroupListener.getDispatcher().added(this, event);
+		dispatch.schemaGroup.getDispatcher().added(this, event);
 		event.unlock(SchemaGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbSchema>>()

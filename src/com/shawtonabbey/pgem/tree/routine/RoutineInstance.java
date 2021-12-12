@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbRoutine;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
 
@@ -29,7 +29,7 @@ public class RoutineInstance extends Instance<RoutineGroup>
 	
 	public RoutineInstance load(Event event) {
 		
-		dispatch.routineListener.getDispatcher().added(this, event);
+		dispatch.routine.getDispatcher().added(this, event);
 		
 		return this;
 	}

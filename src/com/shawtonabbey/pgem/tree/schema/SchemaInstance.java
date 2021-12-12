@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbSchema;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
 
@@ -33,7 +33,7 @@ public class SchemaInstance extends Group<SchemaGroup>
 
 	public void load(Event event) {
 		
-		dispatch.schemaListener.getDispatcher().added(this, event);		
+		dispatch.schema.getDispatcher().added(this, event);		
 	}
 	
 	public ImageIcon getIcon() {

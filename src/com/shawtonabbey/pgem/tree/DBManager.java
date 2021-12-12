@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import javax.swing.event.*;
 
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
 
 @Component
@@ -39,7 +39,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	}
 
 	public void load() {
-		dispatch.dbManagerListener.getDispatcher().added(this, new Event());
+		dispatch.dbManager.getDispatcher().added(this, new Event());
 	}
 	
 
@@ -129,7 +129,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
      */
 	public void addTreeModelListener(TreeModelListener l)
 	{
-		treeModelListeners.getMaint().add(l);
+		treeModelListeners.listen(l);
 	}
 
 	public Object getChild(Object parent, int index)
@@ -161,7 +161,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 
 	public void removeTreeModelListener(TreeModelListener l)
 	{
-		treeModelListeners.getMaint().remove(l);
+		treeModelListeners.listeners().remove(l);
 	}
 
     /**

@@ -22,7 +22,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.csv.ui.Compile;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
@@ -47,7 +47,7 @@ public class CsvPlugin implements Plugin {
 
 		csvWin.enableJava();
 		
-		dispatch.tableListener.getMaint().add((t, ev) -> {
+		dispatch.table.listen((t, ev) -> {
 			
 			t.addPopup("Data", "Import", (e) -> {
 

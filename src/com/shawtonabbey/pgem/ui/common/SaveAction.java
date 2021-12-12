@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.shawtonabbey.pgem.Savable;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
@@ -33,7 +33,7 @@ public class SaveAction {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			
-			dispatch.saveListener.getDispatcher().save(file.getAbsolutePath());
+			dispatch.save.getDispatcher().save(file.getAbsolutePath());
 			
 			try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
 				pw.write(qw.getSavable());

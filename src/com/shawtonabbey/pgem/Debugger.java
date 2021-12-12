@@ -3,7 +3,7 @@ package com.shawtonabbey.pgem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.ui.DebugWindow;
 
 @Component
@@ -22,18 +22,18 @@ public class Debugger {
 	}
 	
 	public void init() {
-		dispatch.all.getMaint().add((item, event)-> {
+		dispatch.all.listeners().add((item, event)-> {
 			win.setMessage("added " + item + "\n");
 		});
 		
-		dispatch.saveListener.getMaint().add((name) -> {
+		dispatch.save.listeners().add((name) -> {
 			win.setMessage("file " + name + " saved");
 		});
 		
-		dispatch.connectStartListener.getMaint().add(() -> {
+		dispatch.connectStart.listeners().add(() -> {
 			win.setMessage("start\n");
 		});
-		dispatch.connectEndListener.getMaint().add(() -> {
+		dispatch.connectEnd.listeners().add(() -> {
 			win.setMessage("stop\n");
 		});
 	}

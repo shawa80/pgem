@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.database.DbColumnCollection;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.ATreeNode;
 import com.shawtonabbey.pgem.tree.Event;
@@ -41,7 +41,7 @@ public class ColumnGroup<T extends ATreeNode> extends Group<T> {
 	public ColumnGroup load(Event event) {
 	
 		event.lock(ColumnGroup.this);
-		dispatch.columnGroupListener.getDispatcher().added(this, event);
+		dispatch.columnGroup.getDispatcher().added(this, event);
 		event.unlock(ColumnGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbColumn>>()

@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
 import com.shawtonabbey.pgem.query.QueryWindow;
 import com.shawtonabbey.pgem.tree.ATreeNode;

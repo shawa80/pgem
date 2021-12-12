@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbColumn;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
 
@@ -31,7 +31,7 @@ public class ColumnInstance extends Instance<ColumnGroup> {
 	
 	public ColumnInstance load(Event event) {
 
-		dispatch.columnListener.getDispatcher().added(this, event);
+		dispatch.column.getDispatcher().added(this, event);
 		
 		return this;
 	}

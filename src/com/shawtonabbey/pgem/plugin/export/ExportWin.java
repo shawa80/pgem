@@ -17,7 +17,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import com.shawtonabbey.pgem.event.Observable;
-import com.shawtonabbey.pgem.event.ObservableMaint;
+import com.shawtonabbey.pgem.event.Listeners;
 
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
@@ -133,5 +133,5 @@ public class ExportWin extends JDialog implements Logable {
 		editorPane.setText(query);
 	}
 	
-	public ObservableMaint<Export> getExportObserver() { return exportChange.getMaint(); }
+	public Listeners<Export> getExportObserver() { return exportChange.listeners(); }
 }

@@ -16,7 +16,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import com.shawtonabbey.pgem.event.Observable;
-import com.shawtonabbey.pgem.event.ObservableMaint;
+import com.shawtonabbey.pgem.event.Listeners;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -308,10 +308,10 @@ public class CsvImportWin extends JDialog {
 	public String getCodeText() { return codePane.getText(); }
 	public String getCsvText() { return csvPane.getText(); }
 	
-	public ObservableMaint<CsvPicked> getCsvObserver() { return csvChange.getMaint(); }
-	public ObservableMaint<Compile> getCompileObserver() { return csvCompile.getMaint(); }
-	public ObservableMaint<Builder> getBuilderObserver() { return csvBuilder.getMaint(); }
-	public ObservableMaint<Saver> getSaverObserver() { return csvSaver.getMaint(); }
-	public ObservableMaint<Loader> getLoaderObserver() { return csvLoader.getMaint(); }
+	public Listeners<CsvPicked> getCsvObserver() { return csvChange.listeners(); }
+	public Listeners<Compile> getCompileObserver() { return csvCompile.listeners(); }
+	public Listeners<Builder> getBuilderObserver() { return csvBuilder.listeners(); }
+	public Listeners<Saver> getSaverObserver() { return csvSaver.listeners(); }
+	public Listeners<Loader> getLoaderObserver() { return csvLoader.listeners(); }
 	
 }

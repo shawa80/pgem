@@ -29,7 +29,7 @@ public class XmlController {
 	public XmlController(XmlQueryWin win) {
 		
 		this.win = win;
-		win.runListener.getMaint().add(this::run);
+		win.runListener.listen(this::run);
 		
 	}
 	

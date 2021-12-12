@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbIndex;
 import com.shawtonabbey.pgem.database.DbTable;
-import com.shawtonabbey.pgem.plugin.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
@@ -41,7 +41,7 @@ public class IndexGroup extends Group<TableInstance> {
 	public IndexGroup load(Event event) {
 
 		event.lock(IndexGroup.this);
-		dispatch.indexGroupListener.getDispatcher().added(this, event);
+		dispatch.indexGroup.getDispatcher().added(this, event);
 		event.unlock(IndexGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbIndex>>()

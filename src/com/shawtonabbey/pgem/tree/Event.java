@@ -34,7 +34,7 @@ public class Event {
 	
 	public void whenFinished(Runnable run) {
 		
-		whenDone.getMaint().add(run);	
+		whenDone.listen(run);	
 	}
 	
 }
