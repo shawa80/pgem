@@ -26,7 +26,7 @@ public class Event {
 		if (locks.size() == 0) {
 		
 			SwingInvoker.invoke(() -> {		
-				whenDone.getDispatcher().run();				
+				whenDone.fire(o->o.run());				
 			});
 
 		}

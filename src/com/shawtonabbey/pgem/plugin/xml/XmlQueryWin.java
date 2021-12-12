@@ -71,7 +71,7 @@ public class XmlQueryWin extends JPanel implements Savable{
 		JButton btnRun = new JButton("Run");
 		btnRun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				runListener.getDispatcher().run();
+				runListener.fire(o->o.run());
 			}
 		});
 		toolBar.add(btnRun);

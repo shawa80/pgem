@@ -29,7 +29,7 @@ public class RoutineInstance extends Instance<RoutineGroup>
 	
 	public RoutineInstance load(Event event) {
 		
-		dispatch.routine.getDispatcher().added(this, event);
+		dispatch.routine.fire(o->o.added(this, event));
 		
 		return this;
 	}

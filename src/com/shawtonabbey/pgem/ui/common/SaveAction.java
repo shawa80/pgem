@@ -33,7 +33,7 @@ public class SaveAction {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			
-			dispatch.save.getDispatcher().save(file.getAbsolutePath());
+			dispatch.save.fire(o->o.save(file.getAbsolutePath()));
 			
 			try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
 				pw.write(qw.getSavable());

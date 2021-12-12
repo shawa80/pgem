@@ -41,7 +41,7 @@ public class IndexGroup extends Group<TableInstance> {
 	public IndexGroup load(Event event) {
 
 		event.lock(IndexGroup.this);
-		dispatch.indexGroup.getDispatcher().added(this, event);
+		dispatch.indexGroup.fire(o->o.added(this, event));
 		event.unlock(IndexGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbIndex>>()

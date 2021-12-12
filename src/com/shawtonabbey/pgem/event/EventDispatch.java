@@ -82,22 +82,23 @@ public class EventDispatch {
 	public final Observable<Add<AQueryWindow>> queryWindow = new Observable<>(Add.class);
 	
 	public EventDispatch() {
-		tableGroup.listen((x,e)->all.getDispatcher().added(x,e));
-		table.listen((x,e)->all.getDispatcher().added(x,e));
-		columnGroup.listen((x,e)->all.getDispatcher().added(x,e));
-		column.listen((x,e)->all.getDispatcher().added(x,e));
-		viewGroup.listen((x,e)->all.getDispatcher().added(x, e));
-		view.listen((x,e)->all.getDispatcher().added(x,e));
-		database.listen((x,e)->all.getDispatcher().added(x,e));
-		routineGroup.listen((x,e)->all.getDispatcher().added(x,e));
-		routine.listen((x,e)->all.getDispatcher().added(x,e));
-		schemaGroup.listen((x,e)->all.getDispatcher().added(x,e));
-		schema.listen((x,e)->all.getDispatcher().added(x,e));
-		sequenceGroup.listen((x,e)->all.getDispatcher().added(x,e));
-		sequence.listen((x,e)->all.getDispatcher().added(x,e));
-		server.listen((x,e)->all.getDispatcher().added(x,e));
-		indexGroup.listen((x,e)->all.getDispatcher().added(x,e));
-		index.listen((x,e)->all.getDispatcher().added(x,e));
+				
+		tableGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		table.listen((x,e)-> all.fire(o->o.added(x,e)));
+		columnGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		column.listen((x,e)-> all.fire(o->o.added(x,e)));
+		viewGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		view.listen((x,e)-> all.fire(o->o.added(x,e)));
+		database.listen((x,e)-> all.fire(o->o.added(x,e)));
+		routineGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		routine.listen((x,e)-> all.fire(o->o.added(x,e)));
+		schemaGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		schema.listen((x,e)-> all.fire(o->o.added(x,e)));
+		sequenceGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		sequence.listen((x,e)-> all.fire(o->o.added(x,e)));
+		server.listen((x,e)-> all.fire(o->o.added(x,e)));
+		indexGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
+		index.listen((x,e)-> all.fire(o->o.added(x,e)));
 	}
 	
 }

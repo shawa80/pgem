@@ -31,7 +31,7 @@ public class OpenAction {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 		
-			dispatch.open.getDispatcher().open(file.getAbsolutePath());
+			dispatch.open.fire(o->o.open(file.getAbsolutePath()));
 			
 			try {
 				var lines = Files.readAllLines(file.toPath(),

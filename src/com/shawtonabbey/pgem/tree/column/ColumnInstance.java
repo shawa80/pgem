@@ -31,7 +31,7 @@ public class ColumnInstance extends Instance<ColumnGroup> {
 	
 	public ColumnInstance load(Event event) {
 
-		dispatch.column.getDispatcher().added(this, event);
+		dispatch.column.fire(o->o.added(this, event));
 		
 		return this;
 	}

@@ -38,7 +38,7 @@ public class ViewGroup extends Group<SchemaInstance>
 	public ViewGroup load(Event event) {
 		
 		event.lock(ViewGroup.this);
-		dispatch.viewGroup.getDispatcher().added(this, event);
+		dispatch.viewGroup.fire(o->o.added(this, event));
 		event.unlock(ViewGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbView>>()

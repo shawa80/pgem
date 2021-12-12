@@ -41,7 +41,7 @@ public class ColumnGroup<T extends ATreeNode> extends Group<T> {
 	public ColumnGroup load(Event event) {
 	
 		event.lock(ColumnGroup.this);
-		dispatch.columnGroup.getDispatcher().added(this, event);
+		dispatch.columnGroup.fire(o->o.added(this, event));
 		event.unlock(ColumnGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbColumn>>()

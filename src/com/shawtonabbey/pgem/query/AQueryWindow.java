@@ -84,7 +84,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 		runButton = new JButton("Run");
 		runButton.addActionListener((ev) -> {
 			
-			runStart.getDispatcher().event(this);
+			runStart.fire(o->o.event(this));
 			
 			var txt = query.getText();
 			model.clear();
@@ -98,7 +98,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 						txt);
 				})
 			.thenOnEdt((m) -> {
-				runFinished.getDispatcher().event(this);
+				runFinished.fire(o->o.event(this));
 			}).start();
 			
 		});
@@ -138,7 +138,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	}
 
 	public void init() {
-		dispatch.queryWindow.getDispatcher().added(this, new com.shawtonabbey.pgem.tree.Event());
+		dispatch.queryWindow.fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));
 	}
 	
 	public void addAction(String name, ActionListener action) {

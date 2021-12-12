@@ -30,7 +30,7 @@ public class ViewInstance extends Group<ViewGroup>
 	public ViewInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.view.getDispatcher().added(this, event);
+		dispatch.view.fire(o->o.added(this, event));
 		event.unlock(this);
 		
 		return this;

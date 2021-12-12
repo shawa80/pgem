@@ -73,11 +73,12 @@ public class ConnectPlugin implements Plugin {
 				
 				Event connectEvent = new Event();
 				
-				dispatch.connectStart.getDispatcher().start();
+				dispatch.connectStart.fire(o->o.start());
+				
 				new SwingWorkerChain<ServerInstance>()
 					.setWork(() -> {
 		
-						connectEvent.whenFinished(() -> { dispatch.connectEnd.getDispatcher().end();});
+						connectEvent.whenFinished(() -> { dispatch.connectEnd.fire(o->o.end());});
 
 						var connect = new ConnectDialog(window);
 						connect.set(

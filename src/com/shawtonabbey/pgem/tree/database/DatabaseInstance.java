@@ -31,7 +31,7 @@ public class DatabaseInstance extends Group<ServerInstance>
 	
 	public void load(Event event) {
 		
-		dispatch.database.getDispatcher().added(this, event);
+		dispatch.database.fire(o->o.added(this, event));
 			
 	}
 	

@@ -30,7 +30,7 @@ public class SequenceInstance extends Instance<SequenceGroup>
 	
 	public SequenceInstance load(Event event) {
 		
-		dispatch.sequence.getDispatcher().added(this, event);
+		dispatch.sequence.fire(o->o.added(this, event));
 				
 		return this;
 	}

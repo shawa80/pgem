@@ -38,9 +38,9 @@ public class Observable<T> {
 		action.go(dispatcher);
 	}
 	
-	public T getDispatcher() {
-		return dispatcher;
-	}
+	//public T getDispatcher() {
+	//	return dispatcher;
+	//}
 	
 	
 	void add(T observer) {

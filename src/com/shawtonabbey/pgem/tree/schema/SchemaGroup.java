@@ -40,7 +40,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 	public SchemaGroup load(boolean loadSysSchemas, Event event) {
 
 		event.lock(SchemaGroup.this);
-		dispatch.schemaGroup.getDispatcher().added(this, event);
+		dispatch.schemaGroup.fire(o->o.added(this, event));
 		event.unlock(SchemaGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbSchema>>()

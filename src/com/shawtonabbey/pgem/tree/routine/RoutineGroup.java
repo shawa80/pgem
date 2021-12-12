@@ -45,7 +45,7 @@ public class RoutineGroup extends Group<SchemaInstance>
 	private void populate(Event event)
 	{
 		event.lock(RoutineGroup.this);
-		dispatch.routineGroup.getDispatcher().added(this, event);
+		dispatch.routineGroup.fire(o->o.added(this, event));
 		event.unlock(RoutineGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbRoutine>>()

@@ -39,7 +39,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	}
 
 	public void load() {
-		dispatch.dbManager.getDispatcher().added(this, new Event());
+		dispatch.dbManager.fire(o->o.added(this, new Event()));
 	}
 	
 
@@ -87,7 +87,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 		var e = new TreeModelEvent(this,
 			new Object[] {node});
 
-		treeModelListeners.getDispatcher().treeNodesChanged(e);
+		treeModelListeners.fire(o->o.treeNodesChanged(e));
 	}
 
 	
@@ -97,7 +97,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 		var newPath = buildPath(path, this);
 		var e = new TreeModelEvent(src, newPath, ids, children);
 
-		treeModelListeners.getDispatcher().treeNodesInserted(e);
+		treeModelListeners.fire(o->o.treeNodesInserted(e));
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 		var newPath = buildPath(path, this);
 		var e = new TreeModelEvent(src, newPath, ids, children);
 
-		treeModelListeners.getDispatcher().treeNodesRemoved(e);
+		treeModelListeners.fire(o->o.treeNodesRemoved(e));
 	}
 
 	
@@ -117,7 +117,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 		var e = new TreeModelEvent(this,
 			new Object[] {node});
 
-		treeModelListeners.getDispatcher().treeStructureChanged(e);
+		treeModelListeners.fire(o->o.treeStructureChanged(e));
 	}
 
 

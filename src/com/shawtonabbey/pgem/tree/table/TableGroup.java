@@ -36,7 +36,7 @@ public class TableGroup extends Group<SchemaInstance>
 	public TableGroup load(Event event) {
 
 		event.lock(TableGroup.this);
-		dispatch.tableGroup.getDispatcher().added(this, event);
+		dispatch.tableGroup.fire(o->o.added(this, event));
 		event.unlock(TableGroup.this);	
 		
 		Event tableLoad = new Event();

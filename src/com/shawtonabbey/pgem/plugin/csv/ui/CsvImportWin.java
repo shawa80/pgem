@@ -134,7 +134,7 @@ public class CsvImportWin extends JDialog {
 									if (returnVal == JFileChooser.APPROVE_OPTION) {
 										String path = fc.getSelectedFile().getPath();
 										csvFileName.setText(path);
-										csvChange.getDispatcher().changed(path);
+										csvChange.fire(o->o.changed(path));
 									}
 								}
 							});
@@ -165,7 +165,7 @@ public class CsvImportWin extends JDialog {
 							panel_1_1.add(okButton);
 							okButton.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
-									csvCompile.getDispatcher().build();
+									csvCompile.fire(o->o.build());
 								}
 							});
 							okButton.setActionCommand("OK");
@@ -220,7 +220,7 @@ public class CsvImportWin extends JDialog {
 							JButton btnNewButton_1 = new JButton("Execute");
 							btnNewButton_1.addActionListener(new ActionListener() {
 								public void actionPerformed(ActionEvent e) {
-									csvBuilder.getDispatcher().build();
+									csvBuilder.fire(o->o.build());
 								}
 							});
 							panel_2.add(btnNewButton_1);
@@ -257,7 +257,7 @@ public class CsvImportWin extends JDialog {
 							int returnVal = openDialog.showOpenDialog(CsvImportWin.this);
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								String path = openDialog.getSelectedFile().getPath();
-								csvLoader.getDispatcher().load(path);
+								csvLoader.fire(o->o.load(path));
 							}
 						}
 					});
@@ -271,7 +271,7 @@ public class CsvImportWin extends JDialog {
 							int returnVal = saveDialog.showSaveDialog(CsvImportWin.this);
 							if (returnVal == JFileChooser.APPROVE_OPTION) {
 								String path = saveDialog.getSelectedFile().getPath();
-								csvSaver.getDispatcher().save(path);
+								csvSaver.fire(o->o.save(path));
 							}
 
 							

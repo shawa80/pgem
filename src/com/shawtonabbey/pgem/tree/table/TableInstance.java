@@ -30,7 +30,7 @@ public class TableInstance extends Group<TableGroup>
 	public TableInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.table.getDispatcher().added(this, event);			
+		dispatch.table.fire(o->o.added(this, event));			
 		event.unlock(this);
 		
 		return this;

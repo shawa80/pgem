@@ -33,7 +33,7 @@ public class SchemaInstance extends Group<SchemaGroup>
 
 	public void load(Event event) {
 		
-		dispatch.schema.getDispatcher().added(this, event);		
+		dispatch.schema.fire(o->o.added(this, event));		
 	}
 	
 	public ImageIcon getIcon() {

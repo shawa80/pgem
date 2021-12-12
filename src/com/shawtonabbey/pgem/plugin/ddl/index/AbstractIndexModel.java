@@ -27,7 +27,7 @@ public class AbstractIndexModel implements IndexModel {
 	//}
 
 	protected void fireChange() {
-		indexListener.getDispatcher().changed(this);
+		indexListener.fire(o->o.changed(this));
 	}
 
 	@Getter

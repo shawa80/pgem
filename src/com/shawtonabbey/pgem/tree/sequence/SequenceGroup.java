@@ -34,7 +34,7 @@ public class SequenceGroup extends Group<SchemaInstance>
 	public SequenceGroup load(Event event) {
 
 		event.lock(SequenceGroup.this);
-		dispatch.sequenceGroup.getDispatcher().added(this, event);
+		dispatch.sequenceGroup.fire(o->o.added(this, event));
 		event.unlock(SequenceGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbSequence>>()

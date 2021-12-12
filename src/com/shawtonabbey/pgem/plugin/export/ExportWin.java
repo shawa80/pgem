@@ -115,7 +115,7 @@ public class ExportWin extends JDialog implements Logable {
 		JButton btnNewButton_1 = new JButton("Export");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				exportChange.getDispatcher().changed(csvFilename.getText(), editorPane.getText());
+				exportChange.fire(o->o.changed(csvFilename.getText(), editorPane.getText()));
 			}
 		});
 		panel_1.add(btnNewButton_1);

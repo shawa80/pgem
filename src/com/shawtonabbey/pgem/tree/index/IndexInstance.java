@@ -33,7 +33,7 @@ public class IndexInstance extends Instance<IndexGroup> {
 	public IndexInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.index.getDispatcher().added(this, event);				
+		dispatch.index.fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

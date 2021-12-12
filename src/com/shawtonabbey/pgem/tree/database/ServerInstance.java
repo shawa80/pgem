@@ -58,7 +58,7 @@ public class ServerInstance extends Group<DBManager>
 	
 	public void load(Event event) throws IOException {
 		
-		dispatch.server.getDispatcher().added(this,event);
+		dispatch.server.fire(o->o.added(this,event));
 		event.lock(ServerInstance.this);
 		this.setName(name + " (Loading)");
 		event.whenFinished(() -> {this.setName(name);});
