@@ -1,4 +1,4 @@
-package com.shawtonabbey.pgem.ui.common;
+package com.shawtonabbey.pgem.plugin.save;
 
 import java.awt.Component;
 import java.io.File;

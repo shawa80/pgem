@@ -11,9 +11,9 @@ import com.shawtonabbey.pgem.Openable;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
+import com.shawtonabbey.pgem.plugin.save.OpenAction;
+import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
-import com.shawtonabbey.pgem.ui.common.OpenAction;
-import com.shawtonabbey.pgem.ui.common.SaveAction;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 
 //import jsyntaxpane.components.LineNumbersRuler;
@@ -40,17 +40,10 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	private JToolBar toolBar;
 	private JButton stopButton;
 	private JButton runButton;
-	private JButton openButton;
-	private JButton saveButton;
 	
 	@Autowired
 	EventDispatch dispatch;
 	
-	@Autowired
-	SaveAction save;
-	
-	@Autowired
-	OpenAction open;
 	
 	public interface Event {public void event(QueryWindow win);}
 	
@@ -112,22 +105,6 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 		});
 		toolBar.add(stopButton);
 				
-		openButton = new JButton("Open");
-		openButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				open.perform(AQueryWindow.this, AQueryWindow.this);
-			}
-		});
-		toolBar.add(openButton);
-		
-		saveButton = new JButton("Save");
-		saveButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				save.perform(AQueryWindow.this, AQueryWindow.this);
-			}
-		});
-		toolBar.add(saveButton);
-		
 		
 		setVisible(true);
 				
@@ -137,6 +114,11 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 
 	}
 
+	public void addButton(JButton toAdd) {
+		
+		toolBar.add(toAdd);
+	}
+	
 	public void init() {
 		dispatch.queryWindow.fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));
 	}
