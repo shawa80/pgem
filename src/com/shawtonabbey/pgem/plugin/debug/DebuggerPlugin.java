@@ -1,13 +1,13 @@
-package com.shawtonabbey.pgem;
+package com.shawtonabbey.pgem.plugin.debug;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.ui.DebugWindow;
+import com.shawtonabbey.pgem.plugin.Plugin;
 
 @Component
-public class Debugger {
+public class DebuggerPlugin implements Plugin {
 
 	@Autowired
 	private DebugWindow win;
@@ -15,27 +15,29 @@ public class Debugger {
 	@Autowired
 	private EventDispatch dispatch;
 	
-	public Debugger() {
+	public DebuggerPlugin() {
 		
 		
 		
 	}
 	
 	public void init() {
-		dispatch.all.listeners().add((item, event)-> {
+		dispatch.all.listen((item, event)-> {
 			win.setMessage("added " + item + "\n");
 		});
 		
-		dispatch.save.listeners().add((name) -> {
+		dispatch.save.listen((name) -> {
 			win.setMessage("file " + name + " saved");
 		});
 		
-		dispatch.connectStart.listeners().add(() -> {
+		dispatch.connectStart.listen(() -> {
 			win.setMessage("start\n");
 		});
-		dispatch.connectEnd.listeners().add(() -> {
+		dispatch.connectEnd.listen(() -> {
 			win.setMessage("stop\n");
 		});
+		
+		win.setVisible(true);
 	}
 	
 }

@@ -34,6 +34,10 @@ public class Observable<T> {
 		this.add(toAdd);
 	}
 	
+	public void ignore(T toRemove) {
+		this.remove(toRemove);
+	}
+	
 	public void fire(FireAction<T> action) {
 		action.go(dispatcher);
 	}

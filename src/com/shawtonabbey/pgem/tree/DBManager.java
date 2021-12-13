@@ -161,7 +161,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 
 	public void removeTreeModelListener(TreeModelListener l)
 	{
-		treeModelListeners.listeners().remove(l);
+		treeModelListeners.ignore(l);
 	}
 
     /**

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.PluginFactory;
-import com.shawtonabbey.pgem.ui.DebugWindow;
+import com.shawtonabbey.pgem.plugin.debug.DebuggerPlugin;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
 @Component
@@ -56,12 +56,7 @@ public class Pgem
 		
 		var win = context.getBean(MainWindow.class);
 		        
-        var dWin = context.getBean(DebugWindow.class);
-        dWin.setVisible(true);
-        
-        var debug = context.getBean(Debugger.class);
-        debug.init();
-        
+            
         ((PgemMainWindow)win).start();
 
        

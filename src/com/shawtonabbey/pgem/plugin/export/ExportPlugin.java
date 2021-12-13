@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
-import com.shawtonabbey.pgem.ui.DebugWindow;
 
 @Component
 public class ExportPlugin implements Plugin {
@@ -61,7 +61,7 @@ public class ExportPlugin implements Plugin {
 		});
 				
 
-		dispatch.view.listeners().add((view,ev) -> {
+		dispatch.view.listen((view,ev) -> {
 			
 			view.addPopup("Data", "Export", (e) -> {
 				

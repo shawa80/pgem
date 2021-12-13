@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.ui.HeaderCollection;
 import com.shawtonabbey.pgem.database.ui.Row;
 import com.shawtonabbey.pgem.database.ui.Status;
+import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.SqlResultModel;
 import com.shawtonabbey.pgem.query.StatusListener;
-import com.shawtonabbey.pgem.ui.DebugWindow;
 
 @Component
 @Scope("prototype")

@@ -1,11 +1,11 @@
 package com.shawtonabbey.pgem.tree.table;
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
-import com.shawtonabbey.pgem.ui.DebugWindow;
 
 import java.util.List;
 

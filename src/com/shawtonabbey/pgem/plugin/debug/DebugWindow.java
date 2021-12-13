@@ -1,4 +1,4 @@
-package com.shawtonabbey.pgem.ui;
+package com.shawtonabbey.pgem.plugin.debug;
 
 import java.awt.BorderLayout;
 
