@@ -11,8 +11,6 @@ import com.shawtonabbey.pgem.Openable;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
-import com.shawtonabbey.pgem.plugin.save.OpenAction;
-import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 
@@ -21,7 +19,6 @@ import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
-import java.util.List;
 
 @Component
 @Scope("prototype")
@@ -114,10 +111,6 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 
 	}
 
-	public void addButton(JButton toAdd) {
-		
-		toolBar.add(toAdd);
-	}
 	
 	public void init() {
 		dispatch.queryWindow.fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));

@@ -1,10 +1,5 @@
 package com.shawtonabbey.pgem.plugin.save;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,24 +24,8 @@ public class SavePlugin implements Plugin {
 				
 		dispatch.queryWindow.listen((m,ev) -> {
 			
-			
-			var openButton = new JButton("Open");
-			openButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					open.perform(m, m);
-				}
-			});
-			m.addButton(openButton);
-
-			
-			var saveButton = new JButton("Save");
-			saveButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					save.perform(m, m);
-				}
-			});			
-			m.addButton(saveButton);
-			
+			m.addAction("Open", (e)->open.perform(m, m));
+			m.addAction("Save", (e)->save.perform(m, m));	
 		});
 		
 	}

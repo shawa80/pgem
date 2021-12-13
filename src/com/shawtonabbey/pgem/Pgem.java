@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.PluginFactory;
-import com.shawtonabbey.pgem.plugin.debug.DebuggerPlugin;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
 @Component
