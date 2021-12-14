@@ -77,7 +77,7 @@ public class ExportPlugin implements Plugin {
 
 		
 		
-		 csvWin.getExportObserver().add((file, query) -> {
+		 csvWin.getExportObserver().listen((file, query) -> {
 			 
 			 debug.setMessage("export\n");
 			 debug.setMessage("file: " + file + "\n");

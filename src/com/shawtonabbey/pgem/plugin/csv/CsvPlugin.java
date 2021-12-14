@@ -57,7 +57,7 @@ public class CsvPlugin implements Plugin {
 				csvWin.setCodeText(code);
 				csvWin.setModal(true);
 
-				csvWin.getCompileObserver().add(() -> {
+				csvWin.getCompileObserver().listen(() -> {
 					
 					try {
 						var msg = Compile.build(csvWin.getCsvText(), csvWin.getCodeText());
@@ -67,7 +67,7 @@ public class CsvPlugin implements Plugin {
 
 				});
 				
-				csvWin.getCsvObserver().add(path -> {
+				csvWin.getCsvObserver().listen(path -> {
 					this.path = path;
 					try (var fs = new FileInputStream(path)) {
 						var r = new CsvReader(fs);
@@ -79,7 +79,7 @@ public class CsvPlugin implements Plugin {
 					
 				});
 				
-				csvWin.getBuilderObserver().add(() -> {
+				csvWin.getBuilderObserver().listen(() -> {
 
 					Logging log = (msg) -> {
 						csvWin.appendExecuteText(msg);
@@ -89,7 +89,7 @@ public class CsvPlugin implements Plugin {
 					exe.run(path, t.getTable().getDbInstance(), log);
 				});
 
-				csvWin.getSaverObserver().add((path) -> {
+				csvWin.getSaverObserver().listen((path) -> {
 					try {
 						var factory = DocumentBuilderFactory.newInstance();
 						var docBuilder = factory.newDocumentBuilder();
@@ -116,7 +116,7 @@ public class CsvPlugin implements Plugin {
 				      
 				});
 				
-				csvWin.getLoaderObserver().add((path) -> {
+				csvWin.getLoaderObserver().listen((path) -> {
 
 					try {
 						var factory = DocumentBuilderFactory.newInstance();
