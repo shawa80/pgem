@@ -18,7 +18,7 @@ public class UserPlugin implements Plugin {
 	
 	public void init() {
 		dispatch.database.listen((d, event) -> {
-			d.addNode(appContext.getBean(UserGroup.class, d).load(event));
+			d.addNode(appContext.getBean(UserGroup.class, d, d.getDatabase()).load(event));
 		});
 	}
 }

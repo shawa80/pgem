@@ -21,6 +21,8 @@ import com.shawtonabbey.pgem.tree.sequence.SequenceGroup;
 import com.shawtonabbey.pgem.tree.sequence.SequenceInstance;
 import com.shawtonabbey.pgem.tree.table.TableGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
+import com.shawtonabbey.pgem.tree.user.UserGroup;
+import com.shawtonabbey.pgem.tree.user.UserInstance;
 import com.shawtonabbey.pgem.tree.view.ViewGroup;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 
@@ -74,6 +76,9 @@ public class EventDispatch {
 	public final Observable<Add<ServerInstance>> server = new Observable<>(Add.class);
 	public final Observable<Add<IndexGroup>> indexGroup = new Observable<>(Add.class);
 	public final Observable<Add<IndexInstance>> index = new Observable<>(Add.class);
+	
+	public final Observable<Add<UserGroup>> userGroup = new Observable<>(Add.class);
+	public final Observable<Add<UserInstance>> user = new Observable<>(Add.class);
 
 	public final Observable<Add<JMenuBar>> menu = new Observable<>(Add.class);
 	
@@ -99,6 +104,8 @@ public class EventDispatch {
 		server.listen((x,e)-> all.fire(o->o.added(x,e)));
 		indexGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
 		index.listen((x,e)-> all.fire(o->o.added(x,e)));
+		user.listen((x,e)-> all.fire(o->o.added(x,e)));
+		userGroup.listen((x,e)-> all.fire(o->o.added(x,e)));
 	}
 	
 }
