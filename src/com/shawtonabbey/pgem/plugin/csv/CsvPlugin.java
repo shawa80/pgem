@@ -32,6 +32,7 @@ import com.shawtonabbey.pgem.plugin.csv.ui.Logging;
 import com.shawtonabbey.pgem.plugin.csv.writer.CsvModelWriter;
 import com.shawtonabbey.pgem.plugin.csv.writer.SqlWriter;
 import com.shawtonabbey.pgem.plugin.csv.writer.TransformWriter;
+import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
 public class CsvPlugin implements Plugin {
@@ -43,11 +44,15 @@ public class CsvPlugin implements Plugin {
 	
 	private CsvImportWin csvWin = new CsvImportWin();
 	
+	public void register() {
+	}
+
+	
 	public void init() {
 
 		csvWin.enableJava();
 		
-		dispatch.table.listen((t, ev) -> {
+		dispatch.find(TableInstance.Ev.class).listen((t, ev) -> {
 			
 			t.addPopup("Data", "Import", (e) -> {
 

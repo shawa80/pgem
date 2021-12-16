@@ -13,12 +13,14 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbServer;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.plugin.connect.ConnectDialog;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 
@@ -36,6 +38,7 @@ public class ServerInstance extends Group<DBManager>
 	@Autowired
 	private MainWindow win;
 
+	public interface Ev extends Add<ServerInstance> {}
 	
 	private String name;
 	
@@ -58,7 +61,7 @@ public class ServerInstance extends Group<DBManager>
 	
 	public void load(Event event) throws IOException {
 		
-		dispatch.server.fire(o->o.added(this,event));
+		dispatch.find(Ev.class).fire(o->o.added(this,event));
 		event.lock(ServerInstance.this);
 		this.setName(name + " (Loading)");
 		event.whenFinished(() -> {this.setName(name);});

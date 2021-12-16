@@ -111,7 +111,7 @@ public class PgemMainWindow extends JFrame implements MainWindow
 		setVisible(true);
 		splitPane.setDividerLocation(0.25);
 		
-		dispatch.menu.fire(o->o.added(m, null));
+		dispatch.find(SysPlugin.MenuEv.class).fire(o->o.added(m, null));
 	}
 	
 	public JTree getTree()

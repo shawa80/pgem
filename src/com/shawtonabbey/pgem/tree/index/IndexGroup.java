@@ -12,9 +12,12 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbIndex;
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 import lombok.Getter;
@@ -31,6 +34,8 @@ public class IndexGroup extends Group<TableInstance> {
 	
 	@Getter
 	private DbTable table;
+	
+	public interface Ev extends Add<IndexGroup> {}
 		
 	public IndexGroup(TableInstance parent, DbTable table)
 	{
@@ -41,7 +46,7 @@ public class IndexGroup extends Group<TableInstance> {
 	public IndexGroup load(Event event) {
 
 		event.lock(IndexGroup.this);
-		dispatch.indexGroup.fire(o->o.added(this, event));
+		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		event.unlock(IndexGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbIndex>>()

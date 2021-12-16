@@ -8,8 +8,11 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbIndex;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 import lombok.Getter;
 
@@ -23,6 +26,7 @@ public class IndexInstance extends Instance<IndexGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
+	public interface Ev extends Add<IndexInstance> {}
 	
 	public IndexInstance(IndexGroup parent, DbIndex index)
 	{
@@ -33,7 +37,7 @@ public class IndexInstance extends Instance<IndexGroup> {
 	public IndexInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.index.fire(o->o.added(this, event));				
+		dispatch.find(Ev.class).fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

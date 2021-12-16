@@ -12,9 +12,11 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbUser;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
@@ -27,6 +29,8 @@ public class UserGroup extends Group<DatabaseInstance>
 	@Autowired
 	private EventDispatch dispatch;
 	
+	public interface Ev extends Add<UserGroup> {}
+	
 	public UserGroup(DatabaseInstance parent, DbDatabase db)
 	{
 		super(parent, "Users");
@@ -36,7 +40,7 @@ public class UserGroup extends Group<DatabaseInstance>
 	public UserGroup load(Event event) {
 		
 		event.lock(UserGroup.this);
-		dispatch.userGroup.fire(o->o.added(this, event));
+		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		event.unlock(UserGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbUser>>()
@@ -47,11 +51,11 @@ public class UserGroup extends Group<DatabaseInstance>
 					.map(x -> appContext.getBean(UserInstance.class, this, x))
 					.forEach(x -> {x.load(event); addNode(x);});
 				
-				this.setName("Users");
+				this.doneLoading();
 			});
 		
 		this.AddWillExpandListener(this, () -> {
-			this.setName("Users (Loading)");
+			this.setLoading();
 			sw.start();
 		});
 

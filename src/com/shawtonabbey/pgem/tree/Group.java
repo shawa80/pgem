@@ -15,6 +15,7 @@ public class Group<P extends ATreeNode> extends ATreeNode
 
 	@Getter
 	private String name;
+	private String givenName;
 	
 	@Getter
 	private P parentDb;
@@ -25,12 +26,21 @@ public class Group<P extends ATreeNode> extends ATreeNode
 
 		popUp = new JPopupMenu();
 		this.name = name;
+		this.givenName = name;
 		this.parentDb = parent;
 	}
 		
 	public void setName(String name) {
 		this.name = name;
 		this.notifyNodeChange();
+	}
+	
+	public void setLoading() {
+		setName(givenName + " (loading)");
+	}
+	
+	public void doneLoading() {
+		setName(givenName);
 	}
 	
 	public String toString()

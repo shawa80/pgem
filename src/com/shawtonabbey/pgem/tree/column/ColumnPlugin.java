@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.tree.table.TableInstance;
+import com.shawtonabbey.pgem.tree.view.ViewInstance;
 
 @Component
 public class ColumnPlugin implements Plugin {
@@ -16,12 +18,18 @@ public class ColumnPlugin implements Plugin {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	public void register() {
+		dispatch.register(ColumnGroup.Ev.class);
+		dispatch.register(ColumnInstance.Ev.class);
+	}
+	
 	public void init() {
-		dispatch.table.listen((t, event) -> {
+		
+		dispatch.find(TableInstance.Ev.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(ColumnGroup.class, t, t.getTable()).load(event));
 		});
 		
-		dispatch.view.listen((t, event) -> {
+		dispatch.find(ViewInstance.Ev.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(ColumnGroup.class, t, t.getView()).load(event));
 		});
 	}

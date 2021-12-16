@@ -10,7 +10,18 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.ddl.index.IndexCreatePanel;
 import com.shawtonabbey.pgem.tree.Event;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup;
+import com.shawtonabbey.pgem.tree.column.ColumnInstance;
+import com.shawtonabbey.pgem.tree.database.ServerInstance;
+import com.shawtonabbey.pgem.tree.index.IndexGroup;
+import com.shawtonabbey.pgem.tree.index.IndexInstance;
+import com.shawtonabbey.pgem.tree.routine.RoutineGroup;
+import com.shawtonabbey.pgem.tree.routine.RoutineInstance;
+import com.shawtonabbey.pgem.tree.sequence.SequenceGroup;
+import com.shawtonabbey.pgem.tree.table.TableGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
+import com.shawtonabbey.pgem.tree.view.ViewGroup;
+import com.shawtonabbey.pgem.tree.view.ViewInstance;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
 @Component
@@ -21,16 +32,19 @@ public class DdlPlugin implements Plugin {
 	@Autowired
 	private MainWindow win;
 	
+	public void register() {
+	}
+
 	
 	public void init() {
 
-		dispatch.server.listen((srv, ev) -> {
+		dispatch.find(ServerInstance.Ev.class).listen((srv, ev) -> {
 			srv.addPopup("Reload", (e) -> {
 				srv.reload(new Event());				
 			});
 		});
 	
-		dispatch.routineGroup.listen((rtGrp, ev) -> {
+		dispatch.find(RoutineGroup.Ev.class).listen((rtGrp, ev) -> {
 			
 			rtGrp.addPopup("DDL", "Create", (e) -> {
 				win.launchQueryWin(rtGrp.getParentDb().getSchema().getDbInstance(), 
@@ -55,7 +69,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 		
-		dispatch.routine.listen((rtn,ev) -> {
+		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
 			
 			rtn.addPopup("DDL", "Drop", (e) -> {
 				win.launchQueryWin(rtn.getParentDb().getParentDb().getSchema().getDbInstance(), 
@@ -67,7 +81,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.sequenceGroup.listen((sqc, ev) -> {
+		dispatch.find(SequenceGroup.Ev.class).listen((sqc, ev) -> {
 			
 			sqc.addPopup("DDL", "Create", (e) -> {
 				win.launchQueryWin(sqc.getParentDb().getSchema().getDbInstance(), 
@@ -79,7 +93,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.tableGroup.listen((group, ev) -> {
+		dispatch.find(TableGroup.Ev.class).listen((group, ev) -> {
 			
 			group.addPopup("DDL", "New Table", (e) -> {
 				
@@ -92,7 +106,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.table.listen((table,ev) -> {
+		dispatch.find(TableInstance.Ev.class).listen((table,ev) -> {
 			
 			table.addPopup("DDL", "Drop", (e) -> {
 				
@@ -114,7 +128,7 @@ public class DdlPlugin implements Plugin {
 
 		
 		
-		dispatch.columnGroup.listen((grp, ev) -> {
+		dispatch.find(ColumnGroup.Ev.class).listen((grp, ev) -> {
 			
 			if (!(grp.parent instanceof TableInstance))
 				return;
@@ -131,7 +145,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.column.listen((cln,ev)-> {
+		dispatch.find(ColumnInstance.Ev.class).listen((cln,ev)-> {
 			
 			if (!(cln.getUiParent().getUiParent() instanceof TableInstance))
 				return;
@@ -146,7 +160,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 	
-		dispatch.viewGroup.listen((view,ev) -> {
+		dispatch.find(ViewGroup.Ev.class).listen((view,ev) -> {
 			view.addPopup("DDL", "Create", (e) -> {
 				
 				win.launchQueryWin(view.getParentDb().getSchema().getDbInstance(), 
@@ -157,7 +171,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 		
-		dispatch.view.listen((view,ev) -> {
+		dispatch.find(ViewInstance.Ev.class).listen((view,ev) -> {
 			
 			view.addPopup("DDL", "Script Create", (e) -> {
 				
@@ -175,7 +189,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 
-		dispatch.indexGroup.listen((indexGrp,ev) -> {
+		dispatch.find(IndexGroup.Ev.class).listen((indexGrp,ev) -> {
 			
 			indexGrp.addPopup("DDL", "GUI", (e) -> {
 				var ui = new IndexCreatePanel(indexGrp.getTable());
@@ -195,7 +209,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.index.listen((index,ev) -> {
+		dispatch.find(IndexInstance.Ev.class).listen((index,ev) -> {
 			
 			index.addPopup("DDL", "Script Create", (e) -> {
 				

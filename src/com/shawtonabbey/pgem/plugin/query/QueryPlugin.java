@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
 public class QueryPlugin implements Plugin {
@@ -16,10 +17,14 @@ public class QueryPlugin implements Plugin {
 	@Autowired
 	private PgemMainWindow window;
 	
+	public void register() {
+	}
+
+	
 	public void init() {
 				
 		
-		dispatch.database.listen((m,ev) -> {
+		dispatch.find(DatabaseInstance.Ev.class).listen((m,ev) -> {
 			
 			m.addPopup("Query", (e) -> {
 

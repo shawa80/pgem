@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbRoutine;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 import lombok.Getter;
 
@@ -21,6 +24,8 @@ public class RoutineInstance extends Instance<RoutineGroup>
 	@Getter
 	DbRoutine routine;
 	
+	public interface Ev extends Add<RoutineInstance> {}
+	
 	public RoutineInstance(RoutineGroup parent, DbRoutine r)
 	{
 		super(parent, r.getName());
@@ -29,7 +34,7 @@ public class RoutineInstance extends Instance<RoutineGroup>
 	
 	public RoutineInstance load(Event event) {
 		
-		dispatch.routine.fire(o->o.added(this, event));
+		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		
 		return this;
 	}

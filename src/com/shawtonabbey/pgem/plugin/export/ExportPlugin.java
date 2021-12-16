@@ -13,7 +13,10 @@ import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
+import com.shawtonabbey.pgem.query.AQueryWindow;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
+import com.shawtonabbey.pgem.tree.table.TableInstance;
+import com.shawtonabbey.pgem.tree.view.ViewInstance;
 
 @Component
 public class ExportPlugin implements Plugin {
@@ -31,10 +34,14 @@ public class ExportPlugin implements Plugin {
 
 	private DBC conn;
 	
+	public void register() {
+	}
+
+	
 	public void init() {
 		
 		
-		dispatch.queryWindow.listen((q,ev)-> {
+		dispatch.find(AQueryWindow.Ev.class).listen((q,ev)-> {
 			q.addAction("Export", (e) -> {
 				
 				conn = q.getConnection();
@@ -46,7 +53,7 @@ public class ExportPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.table.listen((table,ev) -> {
+		dispatch.find(TableInstance.Ev.class).listen((table,ev) -> {
 			
 			table.addPopup("Data", "Export", (e) -> {
 				
@@ -61,7 +68,7 @@ public class ExportPlugin implements Plugin {
 		});
 				
 
-		dispatch.view.listen((view,ev) -> {
+		dispatch.find(ViewInstance.Ev.class).listen((view,ev) -> {
 			
 			view.addPopup("Data", "Export", (e) -> {
 				

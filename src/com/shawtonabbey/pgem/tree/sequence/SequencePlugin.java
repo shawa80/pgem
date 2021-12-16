@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
+import com.shawtonabbey.pgem.tree.table.TableGroup;
+import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
 public class SequencePlugin implements Plugin {
@@ -16,8 +19,13 @@ public class SequencePlugin implements Plugin {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	public void register() {
+		dispatch.register(SequenceGroup.Ev.class);
+		dispatch.register(SequenceInstance.Ev.class);
+	}
+	
 	public void init() {
-		dispatch.schema.listen((s, event) -> {
+		dispatch.find(SchemaInstance.Ev.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(SequenceGroup.class, s).load(event));
 		});
 	}

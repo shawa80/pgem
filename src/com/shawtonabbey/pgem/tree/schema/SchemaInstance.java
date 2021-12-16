@@ -10,8 +10,11 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbSchema;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
 @Scope("prototype")
@@ -24,6 +27,8 @@ public class SchemaInstance extends Group<SchemaGroup>
 	@Autowired
 	EventDispatch dispatch;
 	
+	public interface Ev extends Add<SchemaInstance> {}
+	
 	public SchemaInstance(SchemaGroup parent, DbSchema schema)
 	{
 		super(parent, schema.getName());
@@ -33,7 +38,7 @@ public class SchemaInstance extends Group<SchemaGroup>
 
 	public void load(Event event) {
 		
-		dispatch.schema.fire(o->o.added(this, event));		
+		dispatch.find(Ev.class).fire(o->o.added(this, event));		
 	}
 	
 	public ImageIcon getIcon() {

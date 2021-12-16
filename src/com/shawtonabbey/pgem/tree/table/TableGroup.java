@@ -1,6 +1,7 @@
 package com.shawtonabbey.pgem.tree.table;
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
@@ -28,6 +29,8 @@ public class TableGroup extends Group<SchemaInstance>
 	@Autowired
 	private DebugWindow win;
 	
+	public interface Ev extends Add<TableGroup> {}
+	
 	public TableGroup(SchemaInstance schema)
 	{
 		super(schema, "Tables");
@@ -36,7 +39,7 @@ public class TableGroup extends Group<SchemaInstance>
 	public TableGroup load(Event event) {
 
 		event.lock(TableGroup.this);
-		dispatch.tableGroup.fire(o->o.added(this, event));
+		dispatch.find(Ev.class).fire(o->o.added(this,  event));
 		event.unlock(TableGroup.this);	
 		
 		Event tableLoad = new Event();

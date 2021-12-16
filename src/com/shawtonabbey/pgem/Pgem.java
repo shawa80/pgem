@@ -18,6 +18,7 @@ import com.shawtonabbey.pgem.ui.MainWindow;
 public class Pgem
 {
 	
+
 	@Configuration
 	@ComponentScan("com.shawtonabbey.pgem")
 	public class AppConfig {
@@ -48,7 +49,11 @@ public class Pgem
 
 		
 		var beans = context.getBeansOfType(Plugin.class);
-				
+		
+		beans.values().stream().forEach(b -> {
+			b.register();
+		});
+		
 		beans.values().stream().forEach(b -> {
 			b.init();
 		});

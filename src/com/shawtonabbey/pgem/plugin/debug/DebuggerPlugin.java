@@ -21,21 +21,25 @@ public class DebuggerPlugin implements Plugin {
 		
 	}
 	
+	public void register() {
+	}
+
+	
 	public void init() {
-		dispatch.all.listen((item, event)-> {
-			win.setMessage("added " + item + "\n");
-		});
-		
-		dispatch.save.listen((name) -> {
-			win.setMessage("file " + name + " saved");
-		});
-		
-		dispatch.connectStart.listen(() -> {
-			win.setMessage("start\n");
-		});
-		dispatch.connectEnd.listen(() -> {
-			win.setMessage("stop\n");
-		});
+//		dispatch.all.listen((item, event)-> {
+//			win.setMessage("added " + item + "\n");
+//		});
+//		
+//		dispatch.save.listen((name) -> {
+//			win.setMessage("file " + name + " saved");
+//		});
+//		
+//		dispatch.connectStart.listen(() -> {
+//			win.setMessage("start\n");
+//		});
+//		dispatch.connectEnd.listen(() -> {
+//			win.setMessage("stop\n");
+//		});
 		
 		win.setVisible(true);
 	}

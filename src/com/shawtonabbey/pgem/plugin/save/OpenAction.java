@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.shawtonabbey.pgem.Openable;
+import com.shawtonabbey.pgem.SysPlugin;
 import com.shawtonabbey.pgem.event.EventDispatch;
 
 @org.springframework.stereotype.Component
@@ -31,7 +32,7 @@ public class OpenAction {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 		
-			dispatch.open.fire(o->o.open(file.getAbsolutePath()));
+			dispatch.find(SysPlugin.OpenEv.class).fire(o->o.open(file.getAbsolutePath()));
 			
 			try {
 				var lines = Files.readAllLines(file.toPath(),

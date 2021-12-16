@@ -9,9 +9,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.PgemMainWindow;
+import com.shawtonabbey.pgem.SysPlugin;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 import com.shawtonabbey.pgem.tree.database.ServerInstance;
@@ -27,12 +29,15 @@ public class ConnectPlugin implements Plugin {
 	@Autowired
 	private ApplicationContext appContext;
 	
+	public void register() {
+	}
+	
 	public void init() {
 		
 		Preferences pref;
 		pref = Preferences.userRoot().node("com.shawtonabbey.pgem.tree.DBManager");
 		
-		dispatch.database.listen((d, ev) -> {
+		dispatch.find(DatabaseInstance.Ev.class).listen((d, ev) -> {
 			
 			d.addPopup("Disconnect", (e)-> {
 				d.getDatabase().getDbInstance().disconnect();
@@ -43,7 +48,7 @@ public class ConnectPlugin implements Plugin {
 			
 		});
 		
-		dispatch.server.listen((s, ev) -> {
+		dispatch.find(ServerInstance.Ev.class).listen((s, ev) -> {
 			
 			s.addPopup("Version", (e) -> {
 				var db = (DatabaseInstance)s.getChildAt(0);
@@ -53,7 +58,7 @@ public class ConnectPlugin implements Plugin {
 			
 		});
 		
-		dispatch.server.listen((s, ev) -> {
+		dispatch.find(ServerInstance.Ev.class).listen((s, ev) -> {
 			
 			s.addPopup("Disconnect", (e) -> {
 				int children = s.getChildCount();
@@ -67,18 +72,20 @@ public class ConnectPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.dbManager.listen((m, ev) -> {
+		dispatch.find(DBManager.Ev.class).listen((m, ev) -> {
 			
 			m.addPopup("Connect", (e) -> {
 				
 				Event connectEvent = new Event();
 				
-				dispatch.connectStart.fire(o->o.start());
+				dispatch.find(SysPlugin.ConnectEv.class).fire(o->o.start());
 				
 				new SwingWorkerChain<ServerInstance>()
 					.setWork(() -> {
 		
-						connectEvent.whenFinished(() -> { dispatch.connectEnd.fire(o->o.end());});
+						connectEvent.whenFinished(() -> { 
+							dispatch.find(SysPlugin.DisconnectEv.class).fire(o->o.end());
+						});
 
 						var connect = new ConnectDialog(window);
 						connect.set(

@@ -8,8 +8,12 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbUser;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
+
 import lombok.Getter;
 
 @Component
@@ -21,6 +25,8 @@ public class UserInstance extends Instance<UserGroup>{
 	@Autowired
 	EventDispatch dispatch;
 		
+	public interface Ev extends Add<UserInstance> {}
+	
 	public UserInstance(UserGroup parent, DbUser user)
 	{
 		super(parent, user.getName());
@@ -30,7 +36,7 @@ public class UserInstance extends Instance<UserGroup>{
 	public UserInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.user.fire(o->o.added(this, event));			
+		dispatch.find(Ev.class).fire(o->o.added(this, event));			
 		event.unlock(this);
 		
 		return this;

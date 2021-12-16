@@ -7,8 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+
 import lombok.Getter;
 
 @Component
@@ -21,6 +24,8 @@ public class TableInstance extends Group<TableGroup>
 	@Autowired
 	EventDispatch dispatch;
 		
+	public interface Ev extends Add<TableInstance> {}
+	
 	public TableInstance(TableGroup parent, DbTable table)
 	{
 		super(parent, table.getName());
@@ -30,7 +35,7 @@ public class TableInstance extends Group<TableGroup>
 	public TableInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.table.fire(o->o.added(this, event));			
+		dispatch.find(Ev.class).fire(o->o.added(this, event));			
 		event.unlock(this);
 		
 		return this;

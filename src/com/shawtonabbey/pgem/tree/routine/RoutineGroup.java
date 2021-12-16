@@ -11,9 +11,12 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbRoutine;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 @Component
@@ -27,6 +30,7 @@ public class RoutineGroup extends Group<SchemaInstance>
 	@Autowired
 	private EventDispatch dispatch;
 
+	public interface Ev extends Add<RoutineGroup> {}
 	
 	public RoutineGroup(SchemaInstance schema)
 	{
@@ -45,7 +49,7 @@ public class RoutineGroup extends Group<SchemaInstance>
 	private void populate(Event event)
 	{
 		event.lock(RoutineGroup.this);
-		dispatch.routineGroup.fire(o->o.added(this, event));
+		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		event.unlock(RoutineGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbRoutine>>()

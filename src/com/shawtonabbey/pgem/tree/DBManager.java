@@ -11,6 +11,8 @@ import javax.swing.event.*;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
+import com.shawtonabbey.pgem.tree.view.ViewGroup;
 
 @Component
 @Scope("prototype")
@@ -22,6 +24,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	@Autowired
 	private EventDispatch dispatch;
 	
+	public interface Ev extends Add<DBManager> {}
 	
 	private JTree tree;
 	
@@ -39,7 +42,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	}
 
 	public void load() {
-		dispatch.dbManager.fire(o->o.added(this, new Event()));
+		dispatch.find(Ev.class).fire(o->o.added(this, new Event()));
 	}
 	
 

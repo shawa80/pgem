@@ -6,8 +6,11 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
+import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
+import com.shawtonabbey.pgem.tree.table.TableGroup;
 
 import lombok.Getter;
 
@@ -23,6 +26,8 @@ public class ColumnInstance extends Instance<ColumnGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
+	public interface Ev extends Add<ColumnInstance> {}
+	
 	public ColumnInstance(ColumnGroup parent, DbColumn col) {
 		super(parent, col.getName() + " (" + col.getType() + ")");
 		
@@ -31,7 +36,7 @@ public class ColumnInstance extends Instance<ColumnGroup> {
 	
 	public ColumnInstance load(Event event) {
 
-		dispatch.column.fire(o->o.added(this, event));
+		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		
 		return this;
 	}

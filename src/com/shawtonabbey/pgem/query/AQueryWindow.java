@@ -11,6 +11,7 @@ import com.shawtonabbey.pgem.Openable;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
+import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 
@@ -41,6 +42,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	@Autowired
 	EventDispatch dispatch;
 	
+	public interface Ev extends Add<AQueryWindow> {}
 	
 	public interface Event {public void event(QueryWindow win);}
 	
@@ -113,7 +115,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 
 	
 	public void init() {
-		dispatch.queryWindow.fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));
+		dispatch.find(Ev.class).fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));
 	}
 	
 	public void addAction(String name, ActionListener action) {
