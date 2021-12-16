@@ -9,9 +9,6 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
-import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
-import com.shawtonabbey.pgem.tree.table.TableGroup;
-
 import lombok.Getter;
 
 @SuppressWarnings("rawtypes")

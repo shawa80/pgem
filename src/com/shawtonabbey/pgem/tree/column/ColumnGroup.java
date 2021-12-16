@@ -17,7 +17,6 @@ import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.ATreeNode;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
-import com.shawtonabbey.pgem.tree.table.TableGroup;
 
 @Component
 @Scope("prototype")
@@ -29,7 +28,7 @@ public class ColumnGroup<T extends ATreeNode> extends Group<T> {
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<ColumnGroup> {}
+	public interface Ev extends Add<ColumnGroup<?>> {}
 		
 	private DbColumnCollection table;
 	

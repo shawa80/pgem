@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
-import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;

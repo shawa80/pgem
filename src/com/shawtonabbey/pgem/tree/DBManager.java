@@ -12,7 +12,6 @@ import javax.swing.event.*;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.tree.view.ViewGroup;
 
 @Component
 @Scope("prototype")

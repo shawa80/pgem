@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
-import com.shawtonabbey.pgem.tree.table.TableGroup;
-import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
 public class UserPlugin implements Plugin {

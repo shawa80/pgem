@@ -7,13 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
-import com.shawtonabbey.pgem.tree.column.ColumnGroup.Ev;
-import com.shawtonabbey.pgem.tree.table.TableGroup;
-
 import lombok.Getter;
 
 @Component

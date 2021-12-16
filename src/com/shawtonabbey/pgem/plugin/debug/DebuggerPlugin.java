@@ -12,6 +12,7 @@ public class DebuggerPlugin implements Plugin {
 	@Autowired
 	private DebugWindow win;
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private EventDispatch dispatch;
 	
