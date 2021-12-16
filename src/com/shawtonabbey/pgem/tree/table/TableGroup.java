@@ -1,34 +1,22 @@
 package com.shawtonabbey.pgem.tree.table;
 import com.shawtonabbey.pgem.database.DbTable;
-import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class TableGroup extends Group<SchemaInstance>
+public class TableGroup extends XGroup<SchemaInstance>
 {
-	@Autowired
-	private ApplicationContext appContext;
-	
-	@Autowired
-	EventDispatch dispatch;
 			
-	@Autowired
-	private DebugWindow win;
-	
 	public interface Ev extends Add<TableGroup> {}
 	
 	public TableGroup(SchemaInstance schema)
@@ -36,36 +24,39 @@ public class TableGroup extends Group<SchemaInstance>
 		super(schema, "Tables");
 
 	}
-	public TableGroup load(Event event) {
 
-		event.lock(TableGroup.this);
+	@Override
+	protected void FireEvent(Event event) {
 		dispatch.find(Ev.class).fire(o->o.added(this,  event));
-		event.unlock(TableGroup.this);	
+	}
+	
+	@Override
+	protected SwingWorkerChain<List<DbTable>> getWorker() {
 		
 		Event tableLoad = new Event();
 		var sw = new SwingWorkerChain<List<DbTable>>()
-		.setWork(() -> DbTable.getTables(getParentDb().getSchema()))
-		.thenOnEdt((tables) -> {
-			tables.stream()
-				.map(x -> appContext.getBean(TableInstance.class, this, x))
-				.forEach(x -> {x.load(tableLoad); addNode(x);});
-			
-			this.setName("Tables");
-		})
-		.setException((ex)->{
-			this.setName("Tables (Error)");
-		});
-		
-		this.AddWillExpandListener(this, () -> {
-			win.setMessage("expanding");
-			this.setName("Tables (Loading)");
-			sw.start();
-		});
+			.setPrework(() -> {
+				removeAll(); 
+				setLoading();
+			})
+			.setWork(() -> DbTable.getTables(getParentDb().getSchema()))
+			.thenOnEdt((tables) -> {
+				tables.stream()
+					.map(x -> appContext.getBean(TableInstance.class, this, x))
+					.forEach(x -> {x.load(tableLoad); addNode(x);});
 				
-		return this;
-	}
+				doneLoading();
+			})
+			.setException((ex)->{
+				setError();
+			});
 
+		return sw;
+	}
+	
 	public ImageIcon getIcon() {
 		return new ImageIcon(getClass().getResource("/images/folder.png"));
 	}
+
+
 }

@@ -1,5 +1,8 @@
 package com.shawtonabbey.pgem.tree;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import javax.swing.*;
 import javax.swing.event.TreeWillExpandListener;
 
@@ -69,7 +72,7 @@ public class ATreeNode implements TreeNode
 	}
 
 //Tree Node
-	Enumeration<ATreeNode> children()
+	public Enumeration<ATreeNode> children()
 	{
 		return children.elements();
 	}
@@ -112,7 +115,13 @@ public class ATreeNode implements TreeNode
 	}
 	public void removeAll()
 	{
-		children.removeAllElements();
+		var toRemove = children.stream().collect(Collectors.toList());
+		
+		for(var child : toRemove) {
+			this.removeNode(child);
+		}
+		
+		//children.removeAllElements();
 		//fireTreeNodesRemoved(this);
 	}
 }

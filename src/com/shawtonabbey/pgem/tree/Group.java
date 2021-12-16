@@ -30,6 +30,7 @@ public class Group<P extends ATreeNode> extends ATreeNode
 		this.parentDb = parent;
 	}
 		
+	@Deprecated
 	public void setName(String name) {
 		this.name = name;
 		this.notifyNodeChange();
@@ -38,6 +39,11 @@ public class Group<P extends ATreeNode> extends ATreeNode
 	public void setLoading() {
 		setName(givenName + " (loading)");
 	}
+	
+	public void setError() {
+		setName(givenName + " (error)");
+	}
+
 	
 	public void doneLoading() {
 		setName(givenName);

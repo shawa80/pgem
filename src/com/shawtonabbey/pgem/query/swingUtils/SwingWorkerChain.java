@@ -6,14 +6,22 @@ import lombok.NonNull;
 
 public class SwingWorkerChain<T> {
 
+	public interface AppPreworkTask { public void run() throws Exception; }
 	public interface AppWorkerTask<T> {	public T run() throws Exception; }
 	public interface AppOnEdtTask<T> { public void run(T data) throws Exception; }
 	public interface AppExceptionTask {	public void handle(Exception ex); }
 	
+	private AppPreworkTask prework = () -> {};
 	private AppWorkerTask<T> work = () -> { return null; };
 	private AppOnEdtTask<T> after = (e) -> {};
 	private AppExceptionTask exception = (e) -> {};
-	
+
+	public SwingWorkerChain<T> setPrework(@NonNull AppPreworkTask prework) {
+
+		this.prework = prework;
+		return this;
+	}
+
 	
 	public SwingWorkerChain<T> setWork(@NonNull AppWorkerTask<T> work) {
 
@@ -39,6 +47,10 @@ public class SwingWorkerChain<T> {
 		var t = new Thread(() -> {
 			
 			try {
+				SwingUtilities.invokeLater(() -> {;
+					try { prework.run(); } catch (Exception ex) {}
+				});
+				
 				T result = work.run();
 				
 				SwingUtilities.invokeLater(() -> {
