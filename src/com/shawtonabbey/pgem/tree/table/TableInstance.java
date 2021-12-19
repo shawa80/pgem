@@ -43,8 +43,5 @@ public class TableInstance extends XGroup<TableGroup>
 		
 		return new ImageIcon(getClass().getResource("/images/table.png"));
 	}
-
-
-
 	
 }

@@ -35,10 +35,6 @@ public class TableGroup extends XGroup<SchemaInstance>
 		
 		Event tableLoad = new Event();
 		var sw = new SwingWorkerChain<List<DbTable>>()
-			.setPrework(() -> {
-				removeAll(); 
-				setLoading();
-			})
 			.setWork(() -> DbTable.getTables(getParentDb().getSchema()))
 			.thenOnEdt((tables) -> {
 				tables.stream()
@@ -46,11 +42,7 @@ public class TableGroup extends XGroup<SchemaInstance>
 					.forEach(x -> {x.load(tableLoad); addNode(x);});
 				
 				doneLoading();
-			})
-			.setException((ex)->{
-				setError();
 			});
-
 		return sw;
 	}
 	

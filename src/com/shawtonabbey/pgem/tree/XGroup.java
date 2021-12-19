@@ -27,8 +27,16 @@ public abstract class XGroup<P extends ATreeNode> extends Group<P> {
 	public void refresh(Event event) {
 		
 		var sw = getWorker();
-		if (sw != null)
+		if (sw != null) {
+			sw.setPrework(() -> {
+				removeAll(); 
+				setLoading();
+			})
+			.setException((ex)->{
+				setError();
+			});
 			sw.start();
+		}
 	}
 	
 	public ATreeNode load(Event event) {
@@ -38,8 +46,17 @@ public abstract class XGroup<P extends ATreeNode> extends Group<P> {
 		event.unlock(this);	
 		
 		var sw = getWorker();
-		if (sw != null)
+		if (sw != null) {
+			sw.setPrework(() -> {
+				removeAll(); 
+				setLoading();
+			})
+			.setException((ex)->{
+				setError();
+			});
 			this.AddWillExpandListener(this, () -> sw.start());
+		}
+			
 				
 		return this;
 	}

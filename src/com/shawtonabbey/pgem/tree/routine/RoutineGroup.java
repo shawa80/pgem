@@ -14,12 +14,12 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 @Component
 @Scope("prototype")
-public class RoutineGroup extends Group<SchemaInstance>
+public class RoutineGroup extends XGroup<SchemaInstance>
 {
 	private SchemaInstance schema;
 	@Autowired
@@ -37,40 +37,31 @@ public class RoutineGroup extends Group<SchemaInstance>
 		this.schema = schema;
 	}
 	
-	public RoutineGroup load(Event event) {
-		
-		populate(event);
-		
-		return this;
-	}
-	
-	private void populate(Event event)
-	{
-		event.lock(RoutineGroup.this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
-		event.unlock(RoutineGroup.this);
-		
-		var sw = new SwingWorkerChain<List<DbRoutine>>()
-			.setWork(() -> DbRoutine.getRoutines(schema.getSchema()))
-			.thenOnEdt((tables) -> {
-				
-				tables.stream()
-						.map(x -> appContext.getBean(RoutineInstance.class, this, x))
-						.forEach(x -> {x.load(event); addNode(x);});
-
-				this.setName("Functions");
-			});
-
-		this.AddWillExpandListener(this, () -> {
-			this.setName("Functions (Loading)");
-			sw.start();
-		});
-
-		
-	}
-	
 	public ImageIcon getIcon() {
 		return new ImageIcon(getClass().getResource("/images/folder.png"));
+	}
+
+	@Override
+	protected SwingWorkerChain<?> getWorker() {
+		
+		Event event = new Event();
+		var sw = new SwingWorkerChain<List<DbRoutine>>()
+				.setWork(() -> DbRoutine.getRoutines(schema.getSchema()))
+				.thenOnEdt((tables) -> {
+					
+					tables.stream()
+							.map(x -> appContext.getBean(RoutineInstance.class, this, x))
+							.forEach(x -> {x.load(event); addNode(x);});
+
+					doneLoading();
+				});
+		return sw;
+	}
+
+	@Override
+	protected void FireEvent(Event event) {
+		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		
 	}
 	
 }
