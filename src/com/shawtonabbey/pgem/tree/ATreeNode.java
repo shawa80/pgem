@@ -1,6 +1,5 @@
 package com.shawtonabbey.pgem.tree;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.swing.*;

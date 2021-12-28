@@ -2,6 +2,7 @@ package com.shawtonabbey.pgem.plugin.connect;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.border.TitledBorder;
 
 public class ConnectDialog extends JDialog
 {
@@ -36,13 +37,9 @@ public class ConnectDialog extends JDialog
 	private GridBagConstraints gridBagConstraints_2;
 	private GridBagConstraints gridBagConstraints_3;
 	private GridBagConstraints gridBagConstraints_4;
-	private GridBagConstraints gridBagConstraints_5;
-	private GridBagConstraints gridBagConstraints_6;
 	private GridBagConstraints gridBagConstraints_7;
 	private GridBagConstraints gridBagConstraints_8;
 	private GridBagConstraints gridBagConstraints_9;
-	private GridBagConstraints gridBagConstraints_10;
-	private GridBagConstraints gridBagConstraints_11;
 	private GridBagConstraints gridBagConstraints_12;
 	private GridBagConstraints gridBagConstraints_13;
 	private GridBagConstraints gridBagConstraints_14;
@@ -50,6 +47,16 @@ public class ConnectDialog extends JDialog
 	private GridBagConstraints gridBagConstraints_16;
 	private JCheckBox chckbxLoadPgSchema;
 	private JLabel lblPgSchema;
+	private JPanel panel;
+	private JTabbedPane tabbedPane;
+	private JPanel PassAuth;
+	private JPanel KerberosAuthInfo;
+	private JCheckBox useKrbFile;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JTextField krbUser;
+	private JTextField krbFile;
+	private JPasswordField krbPass;
 
 	public ConnectDialog(Frame owner)
 	{
@@ -93,13 +100,9 @@ public class ConnectDialog extends JDialog
         ipAddressText = new javax.swing.JLabel();
         portText = new javax.swing.JLabel();
         dbText = new javax.swing.JLabel();
-        userText = new javax.swing.JLabel();
-        passwordText = new javax.swing.JLabel();
         address = new javax.swing.JTextField();
         port = new javax.swing.JTextField();
         database = new javax.swing.JTextField();
-        user = new javax.swing.JTextField();
-        pass = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -110,13 +113,16 @@ public class ConnectDialog extends JDialog
         cancel = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
 
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0};
+        gridBagLayout.columnWeights = new double[]{1.0};
+        getContentPane().setLayout(gridBagLayout);
 
         GridBagLayout gbl_jPanel1 = new GridBagLayout();
         gbl_jPanel1.columnWeights = new double[]{1.0, 0.0, 0.0};
         jPanel1.setLayout(gbl_jPanel1);
 
-        jPanel1.setBorder(new javax.swing.border.TitledBorder("Cridentals"));
+        jPanel1.setBorder(new TitledBorder(null, "Connection", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         ipAddressText.setText("Ip Address:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new Insets(0, 0, 5, 5);
@@ -159,22 +165,6 @@ public class ConnectDialog extends JDialog
         gbc_chckbxLoadPgSchema.gridy = 3;
         jPanel1.add(chckbxLoadPgSchema, gbc_chckbxLoadPgSchema);
 
-        userText.setText("User:");
-        gridBagConstraints_10 = new java.awt.GridBagConstraints();
-        gridBagConstraints_10.insets = new Insets(0, 0, 5, 5);
-        gridBagConstraints_10.gridx = 0;
-        gridBagConstraints_10.gridy = 4;
-        gridBagConstraints_10.anchor = java.awt.GridBagConstraints.EAST;
-        jPanel1.add(userText, gridBagConstraints_10);
-
-        passwordText.setText("Password:");
-        gridBagConstraints_11 = new java.awt.GridBagConstraints();
-        gridBagConstraints_11.insets = new Insets(0, 0, 0, 5);
-        gridBagConstraints_11.gridx = 0;
-        gridBagConstraints_11.gridy = 5;
-        gridBagConstraints_11.anchor = java.awt.GridBagConstraints.EAST;
-        jPanel1.add(passwordText, gridBagConstraints_11);
-
         address.setColumns(40);
 
         gridBagConstraints_2 = new java.awt.GridBagConstraints();
@@ -197,19 +187,6 @@ public class ConnectDialog extends JDialog
         gridBagConstraints_4.gridx = 2;
         gridBagConstraints_4.gridy = 2;
         jPanel1.add(database, gridBagConstraints_4);
-
-        user.setColumns(40);
-        gridBagConstraints_5 = new java.awt.GridBagConstraints();
-        gridBagConstraints_5.insets = new Insets(0, 0, 5, 0);
-        gridBagConstraints_5.gridx = 2;
-        gridBagConstraints_5.gridy = 4;
-        jPanel1.add(user, gridBagConstraints_5);
-
-        pass.setColumns(40);
-        gridBagConstraints_6 = new java.awt.GridBagConstraints();
-        gridBagConstraints_6.gridx = 2;
-        gridBagConstraints_6.gridy = 5;
-        jPanel1.add(pass, gridBagConstraints_6);
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         gridBagConstraints_12 = new java.awt.GridBagConstraints();
@@ -247,9 +224,135 @@ public class ConnectDialog extends JDialog
         jPanel1.add(jSeparator6, gridBagConstraints_16);
 
         GridBagConstraints gbc_jPanel1 = new GridBagConstraints();
-        gbc_jPanel1.insets = new Insets(5, 5, 0, 5);
+        gbc_jPanel1.fill = GridBagConstraints.HORIZONTAL;
+        gbc_jPanel1.anchor = GridBagConstraints.NORTH;
+        gbc_jPanel1.gridx = 0;
+        gbc_jPanel1.gridy = 0;
+        gbc_jPanel1.insets = new Insets(5, 5, 5, 0);
         gbc_jPanel1.ipadx = 10;
         getContentPane().add(jPanel1, gbc_jPanel1);
+        
+        panel = new JPanel();
+        GridBagConstraints gbc_panel = new GridBagConstraints();
+        gbc_panel.insets = new Insets(0, 0, 5, 0);
+        gbc_panel.fill = GridBagConstraints.BOTH;
+        gbc_panel.gridx = 0;
+        gbc_panel.gridy = 1;
+        getContentPane().add(panel, gbc_panel);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        
+        tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        panel.add(tabbedPane);
+        
+        PassAuth = new JPanel();
+        PassAuth.setBorder(new TitledBorder(null, "test", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        tabbedPane.addTab("Pass", null, PassAuth, null);
+        GridBagLayout gbl_PassAuth = new GridBagLayout();
+        gbl_PassAuth.columnWidths = new int[] {0, 30};
+        gbl_PassAuth.rowHeights = new int[]{0, 0};
+        gbl_PassAuth.columnWeights = new double[]{0.0, 0.0};
+        gbl_PassAuth.rowWeights = new double[]{0.0, 0.0};
+        PassAuth.setLayout(gbl_PassAuth);
+                        userText = new javax.swing.JLabel();
+                        GridBagConstraints gbc_userText = new GridBagConstraints();
+                        gbc_userText.anchor = GridBagConstraints.EAST;
+                        gbc_userText.insets = new Insets(0, 0, 5, 5);
+                        gbc_userText.gridx = 0;
+                        gbc_userText.gridy = 0;
+                        PassAuth.add(userText, gbc_userText);
+                        
+                                userText.setText("User:");
+                        user = new javax.swing.JTextField();
+                        GridBagConstraints gbc_user = new GridBagConstraints();
+                        gbc_user.insets = new Insets(0, 0, 5, 5);
+                        gbc_user.gridx = 1;
+                        gbc_user.gridy = 0;
+                        PassAuth.add(user, gbc_user);
+                        
+                                user.setColumns(40);
+                        passwordText = new javax.swing.JLabel();
+                        GridBagConstraints gbc_passwordText = new GridBagConstraints();
+                        gbc_passwordText.anchor = GridBagConstraints.EAST;
+                        gbc_passwordText.insets = new Insets(0, 0, 5, 5);
+                        gbc_passwordText.gridx = 0;
+                        gbc_passwordText.gridy = 1;
+                        PassAuth.add(passwordText, gbc_passwordText);
+                        
+                                passwordText.setText("Password:");
+                        pass = new javax.swing.JPasswordField();
+                        GridBagConstraints gbc_pass = new GridBagConstraints();
+                        gbc_pass.insets = new Insets(0, 0, 5, 5);
+                        gbc_pass.gridx = 1;
+                        gbc_pass.gridy = 1;
+                        PassAuth.add(pass, gbc_pass);
+                        
+                                pass.setColumns(40);
+        
+        KerberosAuthInfo = new JPanel();
+        KerberosAuthInfo.setBorder(new TitledBorder(null, "Kerberos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        tabbedPane.addTab("Kerberos", null, KerberosAuthInfo, null);
+        GridBagLayout gbl_KerberosAuthInfo = new GridBagLayout();
+        gbl_KerberosAuthInfo.columnWidths = new int[]{0, 0, 0};
+        gbl_KerberosAuthInfo.rowHeights = new int[]{0, 0, 0, 0};
+        gbl_KerberosAuthInfo.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+        gbl_KerberosAuthInfo.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE, 0.0};
+        KerberosAuthInfo.setLayout(gbl_KerberosAuthInfo);
+        
+        useKrbFile = new JCheckBox("Cache File");
+        GridBagConstraints gbc_useKrbFile = new GridBagConstraints();
+        gbc_useKrbFile.insets = new Insets(0, 0, 5, 5);
+        gbc_useKrbFile.gridx = 0;
+        gbc_useKrbFile.gridy = 0;
+        KerberosAuthInfo.add(useKrbFile, gbc_useKrbFile);
+        
+        krbFile = new JTextField();
+        GridBagConstraints gbc_krbFile = new GridBagConstraints();
+        gbc_krbFile.insets = new Insets(0, 0, 5, 0);
+        gbc_krbFile.fill = GridBagConstraints.HORIZONTAL;
+        gbc_krbFile.gridx = 1;
+        gbc_krbFile.gridy = 0;
+        KerberosAuthInfo.add(krbFile, gbc_krbFile);
+        krbFile.setColumns(10);
+        
+        JLabel lblNewLabel = new JLabel("Fallback creds");
+        GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+        gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel.gridx = 0;
+        gbc_lblNewLabel.gridy = 1;
+        KerberosAuthInfo.add(lblNewLabel, gbc_lblNewLabel);
+        
+        lblNewLabel_1 = new JLabel("User:");
+        GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+        gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+        gbc_lblNewLabel_1.gridx = 0;
+        gbc_lblNewLabel_1.gridy = 2;
+        KerberosAuthInfo.add(lblNewLabel_1, gbc_lblNewLabel_1);
+        
+        krbUser = new JTextField();
+        GridBagConstraints gbc_krbUser = new GridBagConstraints();
+        gbc_krbUser.insets = new Insets(0, 0, 5, 0);
+        gbc_krbUser.fill = GridBagConstraints.HORIZONTAL;
+        gbc_krbUser.gridx = 1;
+        gbc_krbUser.gridy = 2;
+        KerberosAuthInfo.add(krbUser, gbc_krbUser);
+        krbUser.setColumns(10);
+        
+        lblNewLabel_2 = new JLabel("Password:");
+        GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+        gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
+        gbc_lblNewLabel_2.insets = new Insets(0, 0, 0, 5);
+        gbc_lblNewLabel_2.gridx = 0;
+        gbc_lblNewLabel_2.gridy = 3;
+        KerberosAuthInfo.add(lblNewLabel_2, gbc_lblNewLabel_2);
+        
+        krbPass = new JPasswordField();
+        GridBagConstraints gbc_krbPass = new GridBagConstraints();
+        gbc_krbPass.fill = GridBagConstraints.HORIZONTAL;
+        gbc_krbPass.gridx = 1;
+        gbc_krbPass.gridy = 3;
+        KerberosAuthInfo.add(krbPass, gbc_krbPass);
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
@@ -270,9 +373,9 @@ public class ConnectDialog extends JDialog
         jPanel2.add(jSeparator1, gridBagConstraints);
 
         gridBagConstraints_1 = new java.awt.GridBagConstraints();
-        gridBagConstraints_1.insets = new Insets(5, 0, 5, 0);
+        gridBagConstraints_1.insets = new Insets(5, 0, 0, 0);
         gridBagConstraints_1.gridx = 0;
-        gridBagConstraints_1.gridy = 1;
+        gridBagConstraints_1.gridy = 2;
         getContentPane().add(jPanel2, gridBagConstraints_1);
 
         pack();
@@ -305,5 +408,36 @@ public class ConnectDialog extends JDialog
 	public boolean selectedConnect()
 	{
 		return selectState;
+	}
+	
+	public boolean isKerberosfile() {
+		return useKrbFile.getModel().isSelected();
+	}
+	
+	public String getKerberosFile()
+	{
+		return this.krbFile.getText();
+	}
+	
+	public String getKerberosUser()
+	{
+		return this.krbUser.getText();
+	}
+	public String getKerberosPass()
+	{
+		return new String(this.krbPass.getPassword());
+	}
+
+	public int getTab() {
+		return this.tabbedPane.getSelectedIndex();
+	}
+	public void setTab(int tab) {
+		this.tabbedPane.setSelectedIndex(tab);
+	}
+
+	public void setKerberos(String krbUser, String krbFile, boolean useFile) {
+		this.krbUser.setText(krbUser);
+		this.krbFile.setText(krbFile);
+		this.useKrbFile.getModel().setSelected(useFile);
 	}
 }

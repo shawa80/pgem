@@ -30,6 +30,9 @@ public class ConnectPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
+			
+		javax.security.auth.login.Configuration.setConfiguration(new CustomConfig());
+	
 	}
 	
 	public void init() {
@@ -93,6 +96,14 @@ public class ConnectPlugin implements Plugin {
 								pref.get("port", ""),
 								pref.get("database", ""),
 								pref.get("user", ""));
+						
+						var useFile = Boolean.parseBoolean(pref.get("krbUseFile", "false"));
+						connect.setKerberos(
+								pref.get("krbUser", ""),  
+								pref.get("krbFile", ""), 
+								useFile
+								);
+						connect.setTab(Integer.parseInt(pref.get("LoginTab", "0")));
 						connect.setLocationRelativeTo(window);
 						connect.setVisible(true);
 						if (connect.selectedConnect())
@@ -102,7 +113,24 @@ public class ConnectPlugin implements Plugin {
 							pref.put("database", connect.getDatabase());
 							pref.put("user", connect.getUser());
 							
-							var server = appContext.getBean(ServerInstance.class, m, window, connect);
+							pref.put("krbUser", connect.getKerberosUser());
+							pref.put("krbFile", connect.getKerberosFile());
+							pref.put("krbUseFile", connect.isKerberosfile()+"");
+							
+							pref.put("LoginTab",  connect.getTab()+"");
+							
+							UserPassPrompt.user = connect.getKerberosUser();
+							UserPassPrompt.password = connect.getKerberosPass();
+							
+							KerberosLogin.cachePath = null;
+							if (connect.isKerberosfile())
+								KerberosLogin.cachePath = connect.getKerberosFile();
+							
+							var useKerberos = true;
+							if (connect.getTab() == 0)
+								useKerberos = false;
+							
+							var server = appContext.getBean(ServerInstance.class, m, window, connect, useKerberos);
 									
 							return server;
 						}

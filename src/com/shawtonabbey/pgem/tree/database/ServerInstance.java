@@ -40,12 +40,14 @@ public class ServerInstance extends Group<DBManager>
 	public interface Ev extends Add<ServerInstance> {}
 	
 	private String name;
+	private boolean useKerberos;
 	
-	public ServerInstance(DBManager dbManager, PgemMainWindow window, ConnectDialog params)
+	public ServerInstance(DBManager dbManager, PgemMainWindow window, ConnectDialog params, boolean useKerberos)
 	{
 		super(dbManager, params.getAddress());
 
 		name = params.getAddress();
+		this.useKerberos = useKerberos;
 		
 		this.params = params;
 	}

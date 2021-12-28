@@ -1,6 +1,7 @@
 package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 
 import com.shawtonabbey.pgem.database.ui.HeaderCollection;
 import com.shawtonabbey.pgem.database.ui.HeaderReady;
@@ -22,11 +23,17 @@ public class DBC implements AutoCloseable
 	private String port;
 	@Getter
 	private String database;
-	private String user;
-	private String pass;
+	private String user = null;
+	private String pass = null;
 
 	private PreparedStatement stm;
 	private boolean requestStop;
+	
+	private DBC(String a, String po, String d) {
+		address = a;
+		port = po;
+		database = d;
+	}
 	
 	private DBC(String a, String po, String d, String u, String pa)
 	{
@@ -36,20 +43,16 @@ public class DBC implements AutoCloseable
 		user = u;
 		pass = pa;
 		
-		try {
-			Class.forName("org.postgresql.Driver");
-		}
-		catch (ClassNotFoundException e)
-		{
-			System.out.println("Can't load postgres driver");
-		}
-
 	}
 
 	
 	public DBC connect(String dbName) throws IOException{
 	
-		var conn = connect(address, port, dbName, user, pass);
+		DBC conn;
+		if (user == null)
+			conn = connect(address, port, dbName);
+		else
+			conn = connect(address, port, dbName, user, pass);
 	
 		return conn;
 	}
@@ -66,12 +69,34 @@ public class DBC implements AutoCloseable
 		return conn;
 	}
 	
+	
+	public static DBC connect(String address, String po, String database) throws IOException
+	{
+		var conn = new DBC(address, po, database);
+		
+		try {
+			
+			Properties props = new Properties();			
+			conn.db = DriverManager.getConnection("jdbc:postgresql://" 
+					+ address + "/" + database, props);
+		}
+		catch (SQLException e)
+		{
+			throw new IOException(e.getMessage(), e);
+		}
+
+		return conn;
+	}
+	
 	public static DBC connect(String address, String po, String database, String user, String pass) throws IOException
 	{
 		var conn = new DBC(address, po, database, user, pass);
 		
 		try {
-			conn.db = DriverManager.getConnection("jdbc:postgresql://" + address + "/" + database, user, pass);
+			
+			conn.db = DriverManager.getConnection("jdbc:postgresql://" 
+					+ address + "/" + database, user, pass);
+			
 		}
 		catch (SQLException e)
 		{
