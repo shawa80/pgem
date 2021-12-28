@@ -16,6 +16,7 @@ import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
+import com.shawtonabbey.pgem.tree.database.ConnectionInfo;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
@@ -39,14 +40,23 @@ public class SchemaGroup extends Group<DatabaseInstance>
 		this.db = db;
 	}
 	
-	public SchemaGroup load(boolean loadSysSchemas, Event event) {
+	public SchemaGroup load(Event event) {
 
+		
+		boolean loadPgSchema;
+		if (event.getParams().containsKey("ConnectionInfo") 
+				&& event.getParams().get("ConnectionInfo") instanceof ConnectionInfo) {
+			loadPgSchema = ((ConnectionInfo)event.getParams().get("ConnectionInfo")).isLoadPgSchema();
+		} else {
+			loadPgSchema = false;
+		}
+		
 		event.lock(SchemaGroup.this);
 		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		event.unlock(SchemaGroup.this);
 		
 		var sw = new SwingWorkerChain<List<DbSchema>>()
-		.setWork(() -> DbSchema.getSchemas(db, loadSysSchemas))
+		.setWork(() -> DbSchema.getSchemas(db, loadPgSchema))
 		.thenOnEdt((schemas) -> {
 			
 			schemas.stream()
