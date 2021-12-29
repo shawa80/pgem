@@ -11,7 +11,7 @@ import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 import lombok.Getter;
 
-public class Instance<P extends ItemModel> extends ItemModel {
+public class Instance<P extends ItemModel> extends ItemModel implements DbcFinder{
 
 	@Getter
 	private JPopupMenu menu;

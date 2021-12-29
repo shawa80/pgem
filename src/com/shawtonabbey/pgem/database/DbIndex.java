@@ -6,26 +6,21 @@ import java.util.List;
 
 import lombok.Getter;
 
-public class DbIndex implements DbcProvider {
+public class DbIndex {
 
 	@Getter
 	private String name;
-	//private DbTable table;
-	@Getter
-	private DBC connection;
 	@Getter
 	private String def;
 	
-	private DbIndex(String name, DbTable table, DBC connection, String def) {
+	private DbIndex(String name, DbTable table, String def) {
 		this.name = name;
-		//this.table = table;
 		this.def = def;
-		this.connection = connection;
 	}
 	
 
 
-	public static List<DbIndex> getIndexes(DbTable table) throws IOException {
+	public static List<DbIndex> getIndexes(DBC connection, DbTable table) throws IOException {
 		
 		var results = new ArrayList<DbIndex>();
 		
@@ -36,13 +31,14 @@ public class DbIndex implements DbcProvider {
 		" where schemaname = ? " +
 		" and tablename = ?";
 
-		rs = table.getDbInstance().exec(sqlStr, table.getSchema().getName(), table.getName());
+		rs = connection.exec(sqlStr, table.getSchema().getName(), table.getName());
 
 		if (rs != null) {
 			
 			while (rs.next())
 			{
-					results.add(new DbIndex(rs.get("indexname"), table, table.getDbInstance(), rs.get("indexdef")));
+					results.add(new DbIndex(rs.get("indexname"), table, 
+							rs.get("indexdef")));
 			}
 			rs.close();
 		}
@@ -50,10 +46,6 @@ public class DbIndex implements DbcProvider {
 		return results;
 	}
 
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}
 
 
 }

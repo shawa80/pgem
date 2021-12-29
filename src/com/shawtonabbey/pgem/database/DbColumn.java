@@ -2,7 +2,7 @@ package com.shawtonabbey.pgem.database;
 
 import lombok.Getter;
 
-public class DbColumn implements DbcProvider {
+public class DbColumn {
 	
 	@Getter
 	private String name;
@@ -12,25 +12,18 @@ public class DbColumn implements DbcProvider {
 	
 	@Getter
 	private DbTableLike parent;
-	
-	private DBC connection;
-	
-	public DbColumn(DBC connection, DbTableLike parent, Column c) {
-		this(connection, parent, c.getColumn_name(), c.getData_type());
+		
+	public DbColumn(DbTableLike parent, Column c) {
+		this(parent, c.getColumn_name(), c.getData_type());
 	}
 	
-	public DbColumn(DBC connection, DbTableLike parent, String name, String type) {
+	public DbColumn(DbTableLike parent, String name, String type) {
 		
-		this.connection = connection;
 		this.name = name;
 		this.type = type;
 		this.parent = parent;
 	}
-	
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}
+
 
 	@Override
 	public String toString() {

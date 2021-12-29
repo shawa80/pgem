@@ -7,14 +7,12 @@ import java.util.List;
 
 import lombok.Getter;
 
-public class DbView implements Definable, DbcProvider, DbColumnCollection, DbTableLike {
+public class DbView implements Definable, DbColumnCollection, DbTableLike {
 
 	@Getter
 	private String name;
 	@Getter
 	private DbSchema schema;
-	
-	private DBC connection;
 		
 	@Getter
 	private List<DbColumn> columns;
@@ -24,7 +22,6 @@ public class DbView implements Definable, DbcProvider, DbColumnCollection, DbTab
 		
 		this.name = name;
 		this.schema = schema;
-		this.connection = connection;
 		
 		ARecordSet rs;
 		var sqlStr = "SELECT column_name, data_type " + 
@@ -37,7 +34,7 @@ public class DbView implements Definable, DbcProvider, DbColumnCollection, DbTab
 		while (rs.next()) {
 			var n = rs.get("column_name");
 			var t = rs.get("data_type");
-			cls.add(new DbColumn(connection, this, n, t));
+			cls.add(new DbColumn(this, n, t));
 		}
 		rs.close();
 
@@ -45,7 +42,7 @@ public class DbView implements Definable, DbcProvider, DbColumnCollection, DbTab
 		
 	}
 	
-	public String getDefinition() throws IOException {
+	public String getDefinition(DBC connection) throws IOException {
 		
 		var result = "create view " + schema.getName()  + "." + name + "\nas\n" ;
 		
@@ -62,7 +59,7 @@ public class DbView implements Definable, DbcProvider, DbColumnCollection, DbTab
 	}
 
 	
-	public static List<DbView> getViews(DbSchema schema) throws IOException {
+	public static List<DbView> getViews(DBC connection, DbSchema schema) throws IOException {
 
 		List<DbView> results = new ArrayList<DbView>();
 		
@@ -72,21 +69,15 @@ public class DbView implements Definable, DbcProvider, DbColumnCollection, DbTab
 		"WHERE table_schema=? AND table_type='VIEW' " +
 		"order by table_name;";
 
-		rs = schema.getDbInstance().exec(sqlStr, schema.getName());
+		rs = connection.exec(sqlStr, schema.getName());
 
 		while (rs.next())
 		{
-			results.add(new DbView(schema.getDbInstance(), rs.get("table_name"), schema));
+			results.add(new DbView(connection, rs.get("table_name"), schema));
 		}
 		
 		return results;
 	}
-
-
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}	
 	
 	
 }

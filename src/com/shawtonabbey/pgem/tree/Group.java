@@ -12,7 +12,7 @@ import java.awt.event.*;
 import java.util.stream.Stream;
 
 
-public class Group<P extends ItemModel> extends ItemModel
+public class Group<P extends ItemModel> extends ItemModel implements DbcFinder
 {
 	private JPopupMenu popUp;
 

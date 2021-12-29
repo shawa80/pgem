@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
@@ -44,5 +45,9 @@ public class DatabaseInstance extends XGroup<ServerInstance>
 		dispatch.find(Ev.class).fire(o->o.added(this, event));
 	}
 
+	@Override 
+	public DBC FindDbc() {
+		return this.database.getDbInstance();
+	}
 	
 }

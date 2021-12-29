@@ -39,7 +39,7 @@ public class ViewGroup extends XGroup<SchemaInstance>
 		
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbView>>()
-				.setWork(() -> DbView.getViews(schema.getSchema()))
+				.setWork(() -> DbView.getViews(FindDbc(), schema.getSchema()))
 				.thenOnEdt((views) -> {
 		
 					views.stream()

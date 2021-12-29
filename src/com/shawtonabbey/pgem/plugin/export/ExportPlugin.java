@@ -57,7 +57,7 @@ public class ExportPlugin implements Plugin {
 			
 			table.addPopup("Data", "Export", (e) -> {
 				
-				conn = table.getTable().getDbInstance();
+				conn = table.FindDbc();
 				
 				csvWin.setTitle("Export " + table.getName());
 				csvWin.setQuery("Select * from " + table.getTable().getName());
@@ -72,7 +72,7 @@ public class ExportPlugin implements Plugin {
 			
 			view.addPopup("Data", "Export", (e) -> {
 				
-				conn = view.getView().getDbInstance();
+				conn = view.FindDbc();
 				
 				csvWin.setTitle("Export " + view.getView().getName());
 				csvWin.setQuery("Select * from " + view.getView().getName());

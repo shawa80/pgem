@@ -35,7 +35,7 @@ public class TableGroup extends XGroup<SchemaInstance>
 		
 		Event tableLoad = new Event();
 		var sw = new SwingWorker<List<DbTable>>()
-			.setWork(() -> DbTable.getTables(getParentDb().getSchema()))
+			.setWork(() -> DbTable.getTables(FindDbc(), getParentDb().getSchema()))
 			.thenOnEdt((tables) -> {
 				tables.stream()
 					.map(x -> appContext.getBean(TableInstance.class, this, x))

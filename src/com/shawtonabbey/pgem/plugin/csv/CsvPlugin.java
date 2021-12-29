@@ -91,7 +91,7 @@ public class CsvPlugin implements Plugin {
 					};
 					
 					var exe = new Execute();
-					exe.run(path, t.getTable().getDbInstance(), log);
+					exe.run(path, t.FindDbc(), log);
 				});
 
 				csvWin.getSaverObserver().listen((path) -> {

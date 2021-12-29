@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import lombok.Getter;
 
-public class DbTable implements DbcProvider, DbColumnCollection, DbTableLike {
+public class DbTable implements DbColumnCollection, DbTableLike {
 
 	@Getter
 	private String name;
@@ -17,13 +17,11 @@ public class DbTable implements DbcProvider, DbColumnCollection, DbTableLike {
 	
 	@Getter
 	private List<DbColumn> columns;
-	
-	private DBC connection;
+
 	
 	private DbTable(DBC connection, String name, DbSchema schema) throws IOException {
 		this.name = name;
 		this.schema = schema;
-		this.connection = connection;
 		
 		var sqlStr = "SELECT column_name, data_type " + 
 				"FROM information_schema.columns " + 
@@ -33,14 +31,14 @@ public class DbTable implements DbcProvider, DbColumnCollection, DbTableLike {
 		var r = connection.exec(sqlStr, Column.class, schema.getName(), name);
 		
 		var cls = r.stream()
-			.map((x) -> new DbColumn(connection, this, x))
+			.map((x) -> new DbColumn(this, x))
 			.collect(Collectors.toList());
 		
 		columns = Collections.unmodifiableList(cls);
 	
 	}
 	
-	public static List<DbTable> getTables(DbSchema schema) throws IOException {
+	public static List<DbTable> getTables(DBC connection, DbSchema schema) throws IOException {
 		
 		List<DbTable> results = new ArrayList<DbTable>();
 
@@ -50,22 +48,18 @@ public class DbTable implements DbcProvider, DbColumnCollection, DbTableLike {
 		"WHERE table_schema=? AND table_type='BASE TABLE' " +
 		"order by table_name;";
 
-		rs = schema.getDbInstance().exec(sqlStr, schema.getName());
+		rs = connection.exec(sqlStr, schema.getName());
 
 
 		while (rs.next())
 		{
-			results.add(new DbTable(schema.getDbInstance(), rs.get("table_name"), schema));
+			results.add(new DbTable(connection, rs.get("table_name"), schema));
 		}
 		rs.close();
 		
 		return results;
 	}
 
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}
 
 
 }

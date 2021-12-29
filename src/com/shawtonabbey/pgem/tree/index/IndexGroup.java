@@ -43,13 +43,13 @@ public class IndexGroup extends XGroup<TableInstance> {
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbIndex>>()
-				.setWork(() -> DbIndex.getIndexes(table))
+				.setWork(() -> DbIndex.getIndexes(FindDbc(), table))
 				.thenOnEdt((indexes) -> {
 					indexes.stream()
 						.map(x -> appContext.getBean(IndexInstance.class, this, x))
 						.forEach(x -> {x.load(event); addNode(x);});
 					
-					setLoading();	
+					doneLoading();	
 				});
 		return sw;
 	}

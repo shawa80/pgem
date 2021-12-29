@@ -35,7 +35,7 @@ public class DbSequence implements Definable, DbcProvider {
 		return results;
 	}
 	
-	public String getDefinition() {
+	public String getDefinition(DBC connection) {
 		
 		return "";
 	}

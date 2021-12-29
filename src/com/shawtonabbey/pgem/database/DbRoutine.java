@@ -41,7 +41,7 @@ public class DbRoutine implements Definable, DbcProvider {
 	}
 
 	
-	public String getDefinition() throws IOException {
+	public String getDefinition(DBC connection) throws IOException {
 		
 		var result = "create view " + schema.getName()  + "." + name + "\nas\n" ;
 		

@@ -110,7 +110,7 @@ public class DdlPlugin implements Plugin {
 			
 			table.addPopup("DDL", "Drop", (e) -> {
 				
-				win.launchQueryWin(table.getTable().getDbInstance(), "drop table " + table.getName() + ";");
+				win.launchQueryWin(table.FindDbc(), "drop table " + table.getName() + ";");
 			});
 
 			
@@ -119,7 +119,7 @@ public class DdlPlugin implements Plugin {
 				var columns = table.getTable().getColumns().stream().map(d-> "--" + d.getName())
 						.collect(Collectors.joining("\n"));
 				
-				win.launchQueryWin(table.getTable().getDbInstance(), columns + "\nALTER TABLE " 
+				win.launchQueryWin(table.FindDbc(), columns + "\nALTER TABLE " 
 				+ table.getName() + " ADD PRIMARY KEY (<column>);");
 				
 			});
@@ -138,7 +138,7 @@ public class DdlPlugin implements Plugin {
 			grp.addPopup("DDL", "Add", (e) -> {
 				
 
-				win.launchQueryWin(table.getTable().getDbInstance(), 
+				win.launchQueryWin(table.FindDbc(), 
 						"ALTER TABLE " + table.getTable().getName() + "\r\n" + 
 						"add COLUMN <name> <type>;");
 				
@@ -153,7 +153,7 @@ public class DdlPlugin implements Plugin {
 			
 			cln.addPopup("DDL", "Drop", (e) -> {
 								
-				win.launchQueryWin(cln.getColumn().getDbInstance(), 
+				win.launchQueryWin(cln.FindDbc(), 
 						"ALTER TABLE " + table.getName() + "\r\n" + 
 						"DROP COLUMN " + cln.getColumn().getName() + " CASCADE;");
 				
@@ -176,15 +176,15 @@ public class DdlPlugin implements Plugin {
 			view.addPopup("DDL", "Script Create", (e) -> {
 				
 				try {
-				var query = view.getView().getDefinition();
+				var query = view.getView().getDefinition(view.FindDbc());
 				
-				win.launchQueryWin(view.getView().getDbInstance(), query);
+				win.launchQueryWin(view.FindDbc(), query);
 				} catch (Exception ex) {}
 			});
 			
 			view.addPopup("DDL", "Drop", (e) -> {
 				
-				win.launchQueryWin(view.getView().getDbInstance(), "drop view " + view.getView().getName() + ";");
+				win.launchQueryWin(view.FindDbc(), "drop view " + view.getView().getName() + ";");
 			});		
 		});
 		
@@ -205,7 +205,7 @@ public class DdlPlugin implements Plugin {
 						"    [ TABLESPACE tablespace ]\r\n" + 
 						"    [ WHERE predicate ]";
 				
-				win.launchQueryWin(indexGrp.getTable().getDbInstance(), query);
+				win.launchQueryWin(indexGrp.FindDbc(), query);
 			});
 		});
 		
@@ -215,12 +215,12 @@ public class DdlPlugin implements Plugin {
 				
 				var query = index.getIndex().getDef();
 				
-				win.launchQueryWin(index.getIndex().getDbInstance(), query);
+				win.launchQueryWin(index.FindDbc(), query);
 			});
 			
 			index.addPopup("DDL", "Drop", (e) -> {
 				
-				win.launchQueryWin(index.getIndex().getDbInstance(), "drop index " + index.getIndex().getName() + ";");
+				win.launchQueryWin(index.FindDbc(), "drop index " + index.getIndex().getName() + ";");
 			});		
 		});
 
