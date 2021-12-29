@@ -72,7 +72,7 @@ public class DdlPlugin implements Plugin {
 		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
 			
 			rtn.addPopup("DDL", "Drop", (e) -> {
-				win.launchQueryWin(rtn.getParentDb().getParentDb().getSchema().getDbInstance(), 
+				win.launchQueryWin(rtn.getRoutine().getDbInstance(), 
 						"DROP FUNCTION [ IF EXISTS ] " + rtn.getRoutine().getName() + " [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] [, ...]\r\n" + 
 						"    [ CASCADE | RESTRICT ]"
 						);

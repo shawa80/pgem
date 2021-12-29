@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 
@@ -24,21 +25,17 @@ public class DbTable implements DbcProvider, DbColumnCollection, DbTableLike {
 		this.schema = schema;
 		this.connection = connection;
 		
-		ARecordSet rs;
 		var sqlStr = "SELECT column_name, data_type " + 
 				"FROM information_schema.columns " + 
 				"WHERE table_schema = ? " + 
 				"  AND table_name   = ?";
-		rs = connection.exec(sqlStr, schema.getName(), name);
-		
-		List<DbColumn> cls = new ArrayList<>();
-		while (rs.next()) {
-			var n = rs.get("column_name");
-			var t = rs.get("data_type");
-			cls.add(new DbColumn(connection, this, n, t));
-		}
-		rs.close();
 
+		var r = connection.exec(sqlStr, Column.class, schema.getName(), name);
+		
+		var cls = r.stream()
+			.map((x) -> new DbColumn(connection, this, x))
+			.collect(Collectors.toList());
+		
 		columns = Collections.unmodifiableList(cls);
 	
 	}

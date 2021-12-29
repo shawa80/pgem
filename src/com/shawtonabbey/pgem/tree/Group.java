@@ -4,6 +4,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Group<P extends ItemModel> extends ItemModel
 		this.givenName = name;
 		this.parentDb = parent;
 	}
+	
 		
 	@Deprecated
 	public void setName(String name) {

@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.*;
 
 
-public class ARecordSet
+public class ARecordSet implements AutoCloseable 
 {
 	PreparedStatement statement;
 	ResultSet resultSet;
@@ -64,6 +64,22 @@ public class ARecordSet
 		}
 		return "";
 	}
+	public Object getValue(int col)
+	{
+		if (resultSet == null)
+		{
+			return null;
+		}
+
+		try {
+			return resultSet.getObject(col);
+		}
+		catch (SQLException e)
+		{
+		}
+		return null;
+	}
+	
 	public String get(String col)
 	{
 		if (resultSet == null)

@@ -15,6 +15,10 @@ public class DbColumn implements DbcProvider {
 	
 	private DBC connection;
 	
+	public DbColumn(DBC connection, DbTableLike parent, Column c) {
+		this(connection, parent, c.getColumn_name(), c.getData_type());
+	}
+	
 	public DbColumn(DBC connection, DbTableLike parent, String name, String type) {
 		
 		this.connection = connection;
