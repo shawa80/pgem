@@ -12,7 +12,7 @@ import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.SysPlugin;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;

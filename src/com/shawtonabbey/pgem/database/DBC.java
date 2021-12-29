@@ -9,7 +9,7 @@ import com.shawtonabbey.pgem.database.ui.Row;
 import com.shawtonabbey.pgem.database.ui.RowReady;
 import com.shawtonabbey.pgem.database.ui.Status;
 import com.shawtonabbey.pgem.database.ui.StatusReady;
-import com.shawtonabbey.pgem.query.swingUtils.SwingInvoker;
+import com.shawtonabbey.pgem.swingUtils.SwingInvoker;
 
 import lombok.Getter;
 

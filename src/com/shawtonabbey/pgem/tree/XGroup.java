@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 public abstract class XGroup<P extends ItemModel> extends Group<P> {

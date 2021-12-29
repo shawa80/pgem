@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.database.DbColumnCollection;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;

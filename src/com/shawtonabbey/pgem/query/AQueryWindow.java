@@ -12,7 +12,7 @@ import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerProxy;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
 
 //import jsyntaxpane.components.LineNumbersRuler;

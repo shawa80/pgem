@@ -14,7 +14,7 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.AQueryWindow;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerProxy;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerProxy;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 

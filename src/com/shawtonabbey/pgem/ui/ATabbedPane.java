@@ -2,6 +2,8 @@ package com.shawtonabbey.pgem.ui;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -30,7 +32,7 @@ public class ATabbedPane extends JTabbedPane {
 		var p = new JPanel();
 		p.setOpaque(false);
 		p.setLayout(new FlowLayout());
-		var b = new JLabel("X");
+		var b = new JButton("X");
 		
 		b.addMouseListener((AMouseListener)(me) -> removeTab(comp));
 		

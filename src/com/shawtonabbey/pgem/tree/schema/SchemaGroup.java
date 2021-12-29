@@ -13,7 +13,7 @@ import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbSchema;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
 import com.shawtonabbey.pgem.tree.database.ConnectionInfo;

@@ -1,4 +1,4 @@
-package com.shawtonabbey.pgem.query.swingUtils;
+package com.shawtonabbey.pgem.swingUtils;
 
 import javax.swing.SwingUtilities;
 

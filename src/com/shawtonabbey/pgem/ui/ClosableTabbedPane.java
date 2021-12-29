@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-public class ClosableTabbedPane extends JTabbedPane {
+/*public class ClosableTabbedPane extends JTabbedPane {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,4 +27,4 @@ public class ClosableTabbedPane extends JTabbedPane {
 	public Component getSelectedTab() {
         return this.getTabComponentAt(this.getSelectedIndex());
 	}
-}
+}*/

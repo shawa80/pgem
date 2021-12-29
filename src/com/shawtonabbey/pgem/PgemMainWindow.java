@@ -5,11 +5,14 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
 import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.QueryWindow;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
 import com.shawtonabbey.pgem.tree.DBManager;
+import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.ui.ATabbedPane;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.ui.lambda.AMouseListener;
@@ -18,6 +21,7 @@ import com.shawtonabbey.pgem.ui.tree.ItemModel;
 import com.shawtonabbey.pgem.ui.tree.Renderer;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class PgemMainWindow extends JFrame implements MainWindow
@@ -148,21 +152,19 @@ public class PgemMainWindow extends JFrame implements MainWindow
 	 */
 	public void launchQueryWin(DBC db, String query) {
 
-		DBC connection;
-		try {
-			connection = db.duplicate();
-		
-			var qw = appContext.getBean(QueryWindow.class);
-			qw.init();
-			qw.enableSql();
-			qw.setConnection(connection);
-			qw.setSql(query);
-			
-			getDesktop().addTab((java.awt.Component)qw);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		var sw = new SwingWorkerChain<DBC>()
+				.setWork(() -> db.duplicate())
+				.thenOnEdt((dbc) -> {
+					
+					var qw = appContext.getBean(QueryWindow.class);
+					qw.init();
+					qw.enableSql();
+					qw.setConnection(dbc);
+					qw.setSql(query);
+					
+					getDesktop().addTab((java.awt.Component)qw);
+				});
+		sw.start();
 
 	}
 

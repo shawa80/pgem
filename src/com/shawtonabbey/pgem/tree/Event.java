@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 
 import com.shawtonabbey.pgem.event.Observable;
-import com.shawtonabbey.pgem.query.swingUtils.SwingInvoker;
+import com.shawtonabbey.pgem.swingUtils.SwingInvoker;
 
 import lombok.Getter;
 

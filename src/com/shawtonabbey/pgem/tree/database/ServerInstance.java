@@ -21,7 +21,7 @@ import com.shawtonabbey.pgem.database.DbServer;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.plugin.connect.ConnectDialog;
-import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
 
 @Component
 @Scope("prototype")
