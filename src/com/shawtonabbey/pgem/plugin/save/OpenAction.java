@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.shawtonabbey.pgem.Openable;
-import com.shawtonabbey.pgem.SysPlugin;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.plugin.SysPlugin;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")

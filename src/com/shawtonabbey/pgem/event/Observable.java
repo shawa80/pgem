@@ -10,7 +10,7 @@ public class Observable<T> {
 	
 	private final List<T> observers;
 	private final T dispatcher;
-	private Listeners<T> maint;
+	//private Listeners<T> maint;
 
 	
 	public interface FireAction<T> {
@@ -19,16 +19,16 @@ public class Observable<T> {
 
 	@SuppressWarnings("unchecked")
 	public Observable(Class<?> observerClass) {
-		maint = new Listeners<T>(this);
+		//maint = new Listeners<T>(this);
 		observers = new ArrayList<T>();
 		dispatcher = (T) Proxy.newProxyInstance(observerClass.getClassLoader(),
 				new Class[] { observerClass }, new Dispatcher());
 	}
 
-	@Deprecated
-	public Listeners<T> listeners() {
-		return maint;
-	}
+	//@Deprecated
+	//public Listeners<T> listeners() {
+	//	return maint;
+	//}
 
 	public void listen(T toAdd) {
 		this.add(toAdd);

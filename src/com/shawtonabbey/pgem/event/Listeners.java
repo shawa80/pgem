@@ -1,6 +1,6 @@
 package com.shawtonabbey.pgem.event;
 
-public class Listeners<T> {
+/*public class Listeners<T> {
 
 	private Observable<T> pool;
 	
@@ -17,4 +17,4 @@ public class Listeners<T> {
 		pool.remove(toRemove);
 	}
 	
-}
+}*/

@@ -1,4 +1,4 @@
-package com.shawtonabbey.pgem;
+package com.shawtonabbey.pgem.plugin;
 
 import javax.swing.JMenuBar;
 
@@ -11,7 +11,6 @@ import com.shawtonabbey.pgem.event.EventDispatch.Open;
 import com.shawtonabbey.pgem.event.EventDispatch.Save;
 import com.shawtonabbey.pgem.event.EventDispatch.Start;
 import com.shawtonabbey.pgem.event.EventDispatch.Stop;
-import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.query.AQueryWindow;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;

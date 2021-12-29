@@ -5,14 +5,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.plugin.SysPlugin;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
 import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.QueryWindow;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.DBManager;
-import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.ui.ATabbedPane;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.ui.lambda.AMouseListener;
@@ -20,8 +19,6 @@ import com.shawtonabbey.pgem.ui.lambda.AWindowListener;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 import com.shawtonabbey.pgem.ui.tree.Renderer;
 import java.awt.event.*;
-import java.io.IOException;
-import java.util.List;
 
 @Component
 public class PgemMainWindow extends JFrame implements MainWindow
