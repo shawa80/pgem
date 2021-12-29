@@ -39,16 +39,11 @@ public class ServerInstance extends Group<DBManager>
 
 	public interface Ev extends Add<ServerInstance> {}
 	
-	private String name;
-	private boolean useKerberos;
 	
 	public ServerInstance(DBManager dbManager, PgemMainWindow window, ConnectDialog params, boolean useKerberos)
 	{
 		super(dbManager, params.getAddress());
 
-		name = params.getAddress();
-		this.useKerberos = useKerberos;
-		
 		this.params = params;
 	}
 	
@@ -64,8 +59,8 @@ public class ServerInstance extends Group<DBManager>
 		
 		dispatch.find(Ev.class).fire(o->o.added(this,event));
 		event.lock(ServerInstance.this);
-		this.setName(name + " (Loading)");
-		event.whenFinished(() -> {this.setName(name);});
+		this.setLoading();
+		event.whenFinished(() -> this.doneLoading());
 		
 		var db = params.getDatabase().trim();
 		final var loadAll = "".equals(db) ? true : false;
@@ -102,7 +97,7 @@ public class ServerInstance extends Group<DBManager>
 		.setException((ex) -> {
 			event.unlock(ServerInstance.this);
 			win.message(ex.getMessage());
-			this.setName(name + " (Error)");
+			this.setError();
 		})
 		.start();
 							

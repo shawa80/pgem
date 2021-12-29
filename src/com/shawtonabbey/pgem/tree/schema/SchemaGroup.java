@@ -63,11 +63,11 @@ public class SchemaGroup extends Group<DatabaseInstance>
 					.map(x -> appContext.getBean(SchemaInstance.class, this, x))
 					.forEach(x -> {addNode(x); x.load(event);});
 			
-			this.setName("Schemas");
+			this.doneLoading();
 		});
 		
 		this.AddWillExpandListener(this, () -> {
-			this.setName("Schemas (Loading)");
+			this.setLoading();
 			sw.start();
 		});
 		
