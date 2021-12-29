@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbUser;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
@@ -34,10 +34,10 @@ public class UserGroup extends XGroup<DatabaseInstance>
 	}
 
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		
 		Event event = new Event();
-		var sw = new SwingWorkerChain<List<DbUser>>()
+		var sw = new SwingWorker<List<DbUser>>()
 				.setWork(() -> DbUser.getUsers(db))
 				.thenOnEdt((users) -> {
 						

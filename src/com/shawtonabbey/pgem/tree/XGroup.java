@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 public abstract class XGroup<P extends ItemModel> extends Group<P> {
@@ -21,7 +21,7 @@ public abstract class XGroup<P extends ItemModel> extends Group<P> {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	protected abstract SwingWorkerChain getWorker();
+	protected abstract SwingWorker getWorker();
 	
 	protected abstract void FireEvent(Event event);
 	

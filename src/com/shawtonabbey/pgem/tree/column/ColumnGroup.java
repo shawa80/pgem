@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.database.DbColumnCollection;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
@@ -36,10 +36,10 @@ public class ColumnGroup<T extends ItemModel> extends XGroup<T> {
 	}
 
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		
 		Event event = new Event();
-		var sw = new SwingWorkerChain<List<DbColumn>>()
+		var sw = new SwingWorker<List<DbColumn>>()
 			.setWork(() -> {
 				return table.getColumns();
 			})

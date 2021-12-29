@@ -10,7 +10,7 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
 import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.QueryWindow;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.ui.ATabbedPane;
@@ -152,7 +152,7 @@ public class PgemMainWindow extends JFrame implements MainWindow
 	 */
 	public void launchQueryWin(DBC db, String query) {
 
-		var sw = new SwingWorkerChain<DBC>()
+		var sw = new SwingWorker<DBC>()
 				.setWork(() -> db.duplicate())
 				.thenOnEdt((dbc) -> {
 					

@@ -1,7 +1,7 @@
 package com.shawtonabbey.pgem.tree.table;
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
@@ -31,10 +31,10 @@ public class TableGroup extends XGroup<SchemaInstance>
 	}
 	
 	@Override
-	protected SwingWorkerChain<List<DbTable>> getWorker() {
+	protected SwingWorker<List<DbTable>> getWorker() {
 		
 		Event tableLoad = new Event();
-		var sw = new SwingWorkerChain<List<DbTable>>()
+		var sw = new SwingWorker<List<DbTable>>()
 			.setWork(() -> DbTable.getTables(getParentDb().getSchema()))
 			.thenOnEdt((tables) -> {
 				tables.stream()

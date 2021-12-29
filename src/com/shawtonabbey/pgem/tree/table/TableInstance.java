@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 
@@ -29,7 +29,7 @@ public class TableInstance extends XGroup<TableGroup>
 	}
 
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		return null;
 	}
 

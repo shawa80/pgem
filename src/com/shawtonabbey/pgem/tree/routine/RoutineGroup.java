@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbRoutine;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
@@ -42,10 +42,10 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 	}
 
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		
 		Event event = new Event();
-		var sw = new SwingWorkerChain<List<DbRoutine>>()
+		var sw = new SwingWorker<List<DbRoutine>>()
 				.setWork(() -> DbRoutine.getRoutines(schema.getSchema()))
 				.thenOnEdt((tables) -> {
 					

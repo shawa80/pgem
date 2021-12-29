@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbIndex;
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
@@ -40,9 +40,9 @@ public class IndexGroup extends XGroup<TableInstance> {
 	}
 	
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
-		var sw = new SwingWorkerChain<List<DbIndex>>()
+		var sw = new SwingWorker<List<DbIndex>>()
 				.setWork(() -> DbIndex.getIndexes(table))
 				.thenOnEdt((indexes) -> {
 					indexes.stream()

@@ -13,7 +13,7 @@ import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbSchema;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
 import com.shawtonabbey.pgem.tree.database.ConnectionInfo;
@@ -55,7 +55,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 		dispatch.find(Ev.class).fire(o->o.added(this, event));
 		event.unlock(SchemaGroup.this);
 		
-		var sw = new SwingWorkerChain<List<DbSchema>>()
+		var sw = new SwingWorker<List<DbSchema>>()
 		.setWork(() -> DbSchema.getSchemas(db, loadPgSchema))
 		.thenOnEdt((schemas) -> {
 			

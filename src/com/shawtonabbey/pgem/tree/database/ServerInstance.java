@@ -21,7 +21,7 @@ import com.shawtonabbey.pgem.database.DbServer;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.plugin.connect.ConnectDialog;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 
 @Component
 @Scope("prototype")
@@ -75,7 +75,7 @@ public class ServerInstance extends Group<DBManager>
 		var eventInfo = new ConnectionInfo();
 		eventInfo.setLoadPgSchema(params.getUsePgSchema());
 		
-		new SwingWorkerChain<List<DbDatabase>>()
+		new SwingWorker<List<DbDatabase>>()
 		.setWork(() -> {
 
 			try (var conn = DBC.connect(params.getAddress(), params.getPort(),

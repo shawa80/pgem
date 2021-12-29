@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbSequence;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
@@ -31,9 +31,9 @@ public class SequenceGroup extends XGroup<SchemaInstance>
 	}
 
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
-		var sw = new SwingWorkerChain<List<DbSequence>>()
+		var sw = new SwingWorker<List<DbSequence>>()
 				.setWork(() -> DbSequence.getSequence(getParentDb().getSchema()))
 				.thenOnEdt((seq) -> {
 

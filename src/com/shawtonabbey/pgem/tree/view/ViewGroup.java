@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbView;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
@@ -35,10 +35,10 @@ public class ViewGroup extends XGroup<SchemaInstance>
 	}
 
 	@Override
-	protected SwingWorkerChain<?> getWorker() {
+	protected SwingWorker<?> getWorker() {
 		
 		Event event = new Event();
-		var sw = new SwingWorkerChain<List<DbView>>()
+		var sw = new SwingWorker<List<DbView>>()
 				.setWork(() -> DbView.getViews(schema.getSchema()))
 				.thenOnEdt((views) -> {
 		

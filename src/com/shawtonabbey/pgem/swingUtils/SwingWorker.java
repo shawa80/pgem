@@ -1,37 +1,79 @@
 package com.shawtonabbey.pgem.swingUtils;
-//package com.shawtonabbey.pgem.query.swingUtils;
-//
-///**
-// * Wraps the target in a proxy that makes EDT save calls
-// * 
-// * @author shawa
-// *
-// * @param <T>
-// */
-//public class SwingWorker<T> {
-//
-//	private T proxy;
-//	
-//	public SwingWorker(Class<T> targetClass, T target) {
-//		
-//		proxy = new SwingInvoker<>(targetClass, target).getObject();
-//		
-//	}
-//	
-//	public void startThread(Worker<T> w) {
-//	
-//		var t = new Thread(() -> {
-//			w.run(proxy);
-//		});
-//		t.setDaemon(true);
-//		t.setName("SwingWorker");
-//		t.start();
-//	}
-//
-//	
-//	public interface Worker<T> {
-//		
-//		public void run(T data);
-//	}
-//	
-//}
+
+import javax.swing.SwingUtilities;
+
+import lombok.NonNull;
+
+public class SwingWorker<T> {
+
+	public interface AppPreworkTask { public void run() throws Exception; }
+	public interface AppWorkerTask<T> {	public T run() throws Exception; }
+	public interface AppOnEdtTask<T> { public void run(T data) throws Exception; }
+	public interface AppExceptionTask {	public void handle(Exception ex); }
+	
+	private AppPreworkTask prework = () -> {};
+	private AppWorkerTask<T> work = () -> { return null; };
+	private AppOnEdtTask<T> after = (e) -> {};
+	private AppExceptionTask exception = (e) -> {};
+
+	public SwingWorker<T> setPrework(@NonNull AppPreworkTask prework) {
+
+		this.prework = prework;
+		return this;
+	}
+
+	
+	public SwingWorker<T> setWork(@NonNull AppWorkerTask<T> work) {
+
+		this.work = work;
+		return this;
+	}
+	
+	public SwingWorker<T> thenOnEdt(@NonNull AppOnEdtTask<T> after) {
+		
+		this.after = after;
+		return this;
+	}
+
+	public SwingWorker<T> setException(@NonNull AppExceptionTask handler) {
+
+		this.exception = handler;
+		return this;
+	}
+
+	
+	public void start() {
+	
+		var t = new Thread(() -> {
+			
+			try {
+				SwingUtilities.invokeLater(() -> {;
+					try { prework.run(); } catch (Exception ex) {}
+				});
+				
+				T result = work.run();
+				
+				SwingUtilities.invokeLater(() -> {
+					
+					try {
+						after.run(result);
+					} catch (Exception ex) {
+						this.exception.handle(ex);
+					}
+					
+				});
+			} catch (Exception ex) {
+				
+				SwingUtilities.invokeLater(() -> {
+					this.exception.handle(ex);						
+				});
+			}
+			
+		});
+		t.setDaemon(true);
+		t.setName("SwingWorkerChain");
+		t.start();
+
+	}
+	
+}
