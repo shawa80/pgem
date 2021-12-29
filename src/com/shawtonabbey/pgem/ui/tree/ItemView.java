@@ -1,24 +1,31 @@
-package com.shawtonabbey.pgem.tree;
+package com.shawtonabbey.pgem.ui.tree;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
-public class TreeItem extends JComponent {
+public class ItemView extends JComponent {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel lblLabel;
 	
-	public TreeItem() {
-		setLayout(new BorderLayout(0, 0));
+	public ItemView() {
+		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		lblLabel = new JLabel("New label");
 		lblLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblLabel.setIcon(new ImageIcon(TreeItem.class.getResource("/org/springframework/scripting/config/spring-lang.gif")));
+		lblLabel.setIcon(new ImageIcon(ItemView.class.getResource("/org/springframework/scripting/config/spring-lang.gif")));
 		add(lblLabel);
+		
+		var padding = new JLabel("                    ");
+		padding.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		add(padding);
+		
+		
 	}
 	
 	public void setSelected(boolean selected) {

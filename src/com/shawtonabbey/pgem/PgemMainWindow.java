@@ -9,14 +9,13 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
 import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.QueryWindow;
-import com.shawtonabbey.pgem.tree.ATreeNode;
 import com.shawtonabbey.pgem.tree.DBManager;
-import com.shawtonabbey.pgem.tree.TreeItem;
 import com.shawtonabbey.pgem.ui.ATabbedPane;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.ui.lambda.AMouseListener;
 import com.shawtonabbey.pgem.ui.lambda.AWindowListener;
-
+import com.shawtonabbey.pgem.ui.tree.ItemModel;
+import com.shawtonabbey.pgem.ui.tree.Renderer;
 import java.awt.event.*;
 import java.io.IOException;
 
@@ -25,7 +24,7 @@ public class PgemMainWindow extends JFrame implements MainWindow
 {
 	private static final long serialVersionUID = 1L;
 	private ATabbedPane desktop;
-	private JTree index;
+	private JTree tree;
 	private JSplitPane splitPane;
 	
 	@Autowired
@@ -60,35 +59,24 @@ public class PgemMainWindow extends JFrame implements MainWindow
 	
 	public void start() {
 		
-		index = new JTree(root);
+		tree = new JTree(root);
 		root.load();
-		root.setTree(index);
+		root.setTree(tree);
 	
 		
-		index.setCellRenderer((tree, value, selected, expanded, leaf, row, hasFocus) 
-				-> new TreeItem() {
-					private static final long serialVersionUID = 1L;
-
-					{
-						var node = (ATreeNode)value;
-						setIcon(node.getIcon());
-						setText(value.toString()); 
-						setSelected(selected); 
-					}
-				}
-		);
+		tree.setCellRenderer(new Renderer());
 		
-		index.addMouseListener((AMouseListener)(e)-> {
-			ATreeNode node;
-			//e.isPopupTrigger()		//I should use
+		tree.addMouseListener((AMouseListener)(e)-> {
+			ItemModel node;
+
 			if ((e.getModifiersEx() & InputEvent.META_DOWN_MASK) == InputEvent.META_DOWN_MASK)
 			{
-				int selRow = index.getRowForLocation(e.getX(), e.getY());
-				//TreePath selPath = index.getPathForLocation(e.getX(), e.getY());
+			
+				int selRow = tree.getRowForLocation(e.getX(), e.getY());
 				if(selRow != -1)
 				{
-					index.setSelectionRow(selRow);
-					node = (ATreeNode)index.getLastSelectedPathComponent();
+					tree.setSelectionRow(selRow);
+					node = (ItemModel)tree.getLastSelectedPathComponent();
 					var menu = node.getMenu();
 					menu.show(e.getComponent(), e.getX(), e.getY());
 				}
@@ -103,7 +91,7 @@ public class PgemMainWindow extends JFrame implements MainWindow
 		var m = getMenu();
 		setJMenuBar(m);
 
-		splitPane.setLeftComponent(new JScrollPane(index)	);
+		splitPane.setLeftComponent(new JScrollPane(tree)	);
 		splitPane.setRightComponent(desktop);
 		getContentPane().add(splitPane);
 
@@ -116,7 +104,7 @@ public class PgemMainWindow extends JFrame implements MainWindow
 	
 	public JTree getTree()
 	{
-		return index;
+		return tree;
 	}
 	public ATabbedPane getDesktop()
 	{

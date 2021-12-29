@@ -12,10 +12,11 @@ import javax.swing.event.*;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
+import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 @Component
 @Scope("prototype")
-public class DBManager extends Group<ATreeNode> implements TreeModel
+public class DBManager extends Group<ItemModel> implements TreeModel
 {
 
 	private Observable<TreeModelListener> treeModelListeners = new Observable<>(TreeModelListener.class);
@@ -47,8 +48,8 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 
 
 	
-	private Hashtable<ATreeNode, Runnable> expandItems = new Hashtable<>();
-	public void AddWillExpandListener(ATreeNode node, Runnable toRun) {
+	private Hashtable<ItemModel, Runnable> expandItems = new Hashtable<>();
+	public void AddWillExpandListener(ItemModel node, Runnable toRun) {
 		expandItems.put(node, toRun);
 	}
 	private void addExpandHook() {
@@ -83,7 +84,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	
 //////////////// Fire TreeModel events //////////////////////////////////////////////
 
-	protected void fireTreeNodesChanged(ATreeNode node)
+	protected void fireTreeNodesChanged(ItemModel node)
 	{
 
 		var e = new TreeModelEvent(this,
@@ -94,7 +95,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 
 	
 	@Override
-	protected void fireTreeNodesInserted(ATreeNode src, Object[] path, int[] ids, Object[] children)
+	protected void fireTreeNodesInserted(ItemModel src, Object[] path, int[] ids, Object[] children)
 	{
 		var newPath = buildPath(path, this);
 		var e = new TreeModelEvent(src, newPath, ids, children);
@@ -103,7 +104,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	}
 
 	@Override
-	protected void fireTreeNodesRemoved(ATreeNode src, Object[] path, int[] ids, Object[] children)
+	protected void fireTreeNodesRemoved(ItemModel src, Object[] path, int[] ids, Object[] children)
 	{
 
 		var newPath = buildPath(path, this);
@@ -113,7 +114,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 	}
 
 	
-	protected void fireTreeStructureChanged(ATreeNode node)
+	protected void fireTreeStructureChanged(ItemModel node)
 	{
 
 		var e = new TreeModelEvent(this,
@@ -136,18 +137,18 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 
 	public Object getChild(Object parent, int index)
 	{
-		return ((ATreeNode)parent).getChildAt(index);
+		return ((ItemModel)parent).getChildAt(index);
 
 	}
 
 	public int getChildCount(Object parent)
 	{
-		return ((ATreeNode)parent).getChildCount();
+		return ((ItemModel)parent).getChildCount();
 	}
 
 	public int getIndexOfChild(Object parent, Object child)
 	{
-		return ((ATreeNode)parent).getIndex((ATreeNode)child);
+		return ((ItemModel)parent).getIndex((ItemModel)child);
 
 	}
 
@@ -158,7 +159,7 @@ public class DBManager extends Group<ATreeNode> implements TreeModel
 
 	public boolean isLeaf(Object node)
 	{
-		return ((ATreeNode)node).isLeaf();
+		return ((ItemModel)node).isLeaf();
  	}
 
 	public void removeTreeModelListener(TreeModelListener l)

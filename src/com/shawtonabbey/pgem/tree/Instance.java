@@ -7,9 +7,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.shawtonabbey.pgem.ui.tree.ItemModel;
+
 import lombok.Getter;
 
-public class Instance<P extends ATreeNode> extends ATreeNode {
+public class Instance<P extends ItemModel> extends ItemModel {
 
 	@Getter
 	private JPopupMenu menu;

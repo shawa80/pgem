@@ -5,8 +5,9 @@ import org.springframework.context.ApplicationContext;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
+import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
-public abstract class XGroup<P extends ATreeNode> extends Group<P> {
+public abstract class XGroup<P extends ItemModel> extends Group<P> {
 
 	@Autowired
 	protected ApplicationContext appContext;
@@ -39,7 +40,7 @@ public abstract class XGroup<P extends ATreeNode> extends Group<P> {
 		}
 	}
 	
-	public ATreeNode load(Event event) {
+	public ItemModel load(Event event) {
 
 		event.lock(this);
 		FireEvent(event);

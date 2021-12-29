@@ -1,20 +1,20 @@
-package com.shawtonabbey.pgem.tree;
+package com.shawtonabbey.pgem.ui.tree;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.swing.*;
 import javax.swing.event.TreeWillExpandListener;
 
-public class ATreeNode implements TreeNode
+public class ItemModel implements TreeNode
 {
 
-	private Vector<ATreeNode> children = new Vector<ATreeNode>();
+	private Vector<ItemModel> children = new Vector<ItemModel>();
 	private JPopupMenu popUp;
 	boolean allowChildren;
-	public ATreeNode parent;
+	public ItemModel parent;
 
 
-	public ATreeNode(ATreeNode p, boolean ac)
+	public ItemModel(ItemModel p, boolean ac)
 	{
 		allowChildren = ac;
 		parent = p;
@@ -24,7 +24,7 @@ public class ATreeNode implements TreeNode
 		//popUp.add(new JMenuItem("N/A"));
 	}
 
-	public void AddWillExpandListener(ATreeNode node, Runnable toRun) {
+	public void AddWillExpandListener(ItemModel node, Runnable toRun) {
 		parent.AddWillExpandListener(node, toRun);
 	}
 	
@@ -32,7 +32,7 @@ public class ATreeNode implements TreeNode
 		parent.addWillExpandListener(listener);
 	}
 	
-	public void addNode(ATreeNode child)
+	public void addNode(ItemModel child)
 	{
 		children.add(child);
 		fireTreeNodesInserted(this, new Object[] {}, new int[] {children.size()-1}, new Object[] {child});
@@ -46,17 +46,17 @@ public class ATreeNode implements TreeNode
 		return newPath;
 	}
 	
-	protected void fireTreeNodesInserted(ATreeNode src, Object[] path,  int[] ids, Object[] children) {		
+	protected void fireTreeNodesInserted(ItemModel src, Object[] path,  int[] ids, Object[] children) {		
 		parent.fireTreeNodesInserted(src, buildPath(path, this), ids, children);
 	}
 
-	public void removeNode(ATreeNode child)
+	public void removeNode(ItemModel child)
 	{
 		int idx = children.indexOf(child);
 		children.remove(child);
 		fireTreeNodesRemoved(this, new Object[] {}, new int[] {idx}, new Object[] { child });
 	}
-	protected void fireTreeNodesRemoved(ATreeNode src, Object[] path, int[] ids, Object[] children) {
+	protected void fireTreeNodesRemoved(ItemModel src, Object[] path, int[] ids, Object[] children) {
 		parent.fireTreeNodesRemoved(src, buildPath(path, this), ids, children);
 	}
 
@@ -65,13 +65,13 @@ public class ATreeNode implements TreeNode
 	{
 		parent.fireTreeNodesChanged(this);
 	}
-	protected void fireTreeNodesChanged(ATreeNode tn)
+	protected void fireTreeNodesChanged(ItemModel tn)
 	{
 		parent.fireTreeNodesChanged(tn);
 	}
 
 //Tree Node
-	public Enumeration<ATreeNode> children()
+	public Enumeration<ItemModel> children()
 	{
 		return children.elements();
 	}
@@ -79,19 +79,19 @@ public class ATreeNode implements TreeNode
 	{
 		return allowChildren;
 	}
-	public ATreeNode getChildAt(int childIndex)
+	public ItemModel getChildAt(int childIndex)
 	{
-		return (ATreeNode)children.elementAt(childIndex);
+		return (ItemModel)children.elementAt(childIndex);
 	}
 	public int getChildCount()
 	{
 		return children.size();
 	}
-	public int getIndex(ATreeNode node)
+	public int getIndex(ItemModel node)
 	{
 		return children.indexOf(node);
 	}
-	public ATreeNode getUiParent()
+	public ItemModel getUiParent()
 	{
 		return parent;
 	}

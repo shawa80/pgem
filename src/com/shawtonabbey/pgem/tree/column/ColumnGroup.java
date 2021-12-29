@@ -11,13 +11,13 @@ import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.database.DbColumnCollection;
 import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.query.swingUtils.SwingWorkerChain;
-import com.shawtonabbey.pgem.tree.ATreeNode;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 @Component
 @Scope("prototype")
-public class ColumnGroup<T extends ATreeNode> extends XGroup<T> {
+public class ColumnGroup<T extends ItemModel> extends XGroup<T> {
 
 	
 	public interface Ev extends Add<ColumnGroup<?>> {}

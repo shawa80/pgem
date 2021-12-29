@@ -4,12 +4,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.shawtonabbey.pgem.ui.tree.ItemModel;
+
 import lombok.Getter;
 import java.awt.event.*;
 import java.util.stream.Stream;
 
 
-public class Group<P extends ATreeNode> extends ATreeNode
+public class Group<P extends ItemModel> extends ItemModel
 {
 	private JPopupMenu popUp;
 
