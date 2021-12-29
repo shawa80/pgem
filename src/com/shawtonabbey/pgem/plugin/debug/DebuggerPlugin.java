@@ -42,7 +42,7 @@ public class DebuggerPlugin implements Plugin {
 //			win.setMessage("stop\n");
 //		});
 		
-		win.setVisible(true);
+		//win.setVisible(true);
 	}
 	
 }

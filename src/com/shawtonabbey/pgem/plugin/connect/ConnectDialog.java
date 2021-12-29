@@ -57,6 +57,8 @@ public class ConnectDialog extends JDialog
 	private JTextField krbUser;
 	private JTextField krbFile;
 	private JPasswordField krbPass;
+	private JLabel lblLoadDbs;
+	private JCheckBox chckBxLoadDbs;
 
 	public ConnectDialog(Frame owner)
 	{
@@ -194,19 +196,35 @@ public class ConnectDialog extends JDialog
         gridBagConstraints_12.gridx = 1;
         gridBagConstraints_12.gridy = 0;
         jPanel1.add(jSeparator2, gridBagConstraints_12);
+        
+        lblLoadDbs = new JLabel("Load dbs:");
+        GridBagConstraints gbc_lblLoadDbs = new GridBagConstraints();
+        gbc_lblLoadDbs.anchor = GridBagConstraints.EAST;
+        gbc_lblLoadDbs.insets = new Insets(0, 0, 5, 5);
+        gbc_lblLoadDbs.gridx = 0;
+        gbc_lblLoadDbs.gridy = 4;
+        jPanel1.add(lblLoadDbs, gbc_lblLoadDbs);
+        
+        chckBxLoadDbs = new JCheckBox("");
+        GridBagConstraints gbc_chckBxLoadDbs = new GridBagConstraints();
+        gbc_chckBxLoadDbs.anchor = GridBagConstraints.WEST;
+        gbc_chckBxLoadDbs.insets = new Insets(0, 0, 5, 0);
+        gbc_chckBxLoadDbs.gridx = 2;
+        gbc_chckBxLoadDbs.gridy = 4;
+        jPanel1.add(chckBxLoadDbs, gbc_chckBxLoadDbs);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         gridBagConstraints_13 = new java.awt.GridBagConstraints();
         gridBagConstraints_13.insets = new Insets(0, 0, 5, 5);
         gridBagConstraints_13.gridx = 1;
-        gridBagConstraints_13.gridy = 4;
+        gridBagConstraints_13.gridy = 5;
         jPanel1.add(jSeparator3, gridBagConstraints_13);
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
         gridBagConstraints_14 = new java.awt.GridBagConstraints();
         gridBagConstraints_14.insets = new Insets(0, 0, 0, 5);
         gridBagConstraints_14.gridx = 1;
-        gridBagConstraints_14.gridy = 5;
+        gridBagConstraints_14.gridy = 6;
         jPanel1.add(jSeparator4, gridBagConstraints_14);
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -383,6 +401,13 @@ public class ConnectDialog extends JDialog
 
     public boolean getUsePgSchema() {
     	return chckbxLoadPgSchema.isSelected();
+    }
+    
+    public boolean getLoadDbs() {
+    	return chckBxLoadDbs.isSelected();
+    }
+    public void setLoadDbs(boolean value) {
+    	chckBxLoadDbs.setSelected(value);
     }
     
     public String getAddress()

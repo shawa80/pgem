@@ -39,11 +39,15 @@ public class ServerInstance extends Group<DBManager>
 
 	public interface Ev extends Add<ServerInstance> {}
 	
+	private boolean loadDbs;
 	
-	public ServerInstance(DBManager dbManager, PgemMainWindow window, ConnectDialog params, boolean useKerberos)
+	
+	public ServerInstance(DBManager dbManager, PgemMainWindow window, 
+			ConnectDialog params, boolean useKerberos, boolean loadDbs)
 	{
 		super(dbManager, params.getAddress());
 
+		this.loadDbs = loadDbs;
 		this.params = params;
 	}
 	
@@ -63,7 +67,6 @@ public class ServerInstance extends Group<DBManager>
 		event.whenFinished(() -> this.doneLoading());
 		
 		var db = params.getDatabase().trim();
-		final var loadAll = "".equals(db) ? true : false;
 				
 		var server = new DbServer(params.getAddress());
 		
@@ -83,9 +86,10 @@ public class ServerInstance extends Group<DBManager>
 		.thenOnEdt((dbs) -> {
 			final var selectedDb = db;
 			dbs.stream()
-			   .filter((x) -> x.getName().equals(selectedDb) || loadAll)
+			   .filter((x) -> x.getName().equals(selectedDb) || loadDbs)
 			   .forEach((x) -> {
 	
+				   //todo cloning of the connection should happen here
 					var dbi = appContext.getBean(DatabaseInstance.class, this, x);
 					addNode(dbi);
 					event.getParams().put("ConnectionInfo", eventInfo);

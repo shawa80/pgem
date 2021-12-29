@@ -103,6 +103,7 @@ public class ConnectPlugin implements Plugin {
 								pref.get("krbFile", ""), 
 								useFile
 								);
+						connect.setLoadDbs(Boolean.parseBoolean(pref.get("LoadDbs", "false")));
 						connect.setTab(Integer.parseInt(pref.get("LoginTab", "0")));
 						connect.setLocationRelativeTo(window);
 						connect.setVisible(true);
@@ -119,6 +120,8 @@ public class ConnectPlugin implements Plugin {
 							
 							pref.put("LoginTab",  connect.getTab()+"");
 							
+							pref.put("LoadDbs", connect.getLoadDbs()+"");
+							
 							UserPassPrompt.user = connect.getKerberosUser();
 							UserPassPrompt.password = connect.getKerberosPass();
 							
@@ -129,8 +132,10 @@ public class ConnectPlugin implements Plugin {
 							var useKerberos = true;
 							if (connect.getTab() == 0)
 								useKerberos = false;
+
+							var loadDbs = connect.getLoadDbs();
 							
-							var server = appContext.getBean(ServerInstance.class, m, window, connect, useKerberos);
+							var server = appContext.getBean(ServerInstance.class, m, window, connect, useKerberos, loadDbs);
 									
 							return server;
 						}
