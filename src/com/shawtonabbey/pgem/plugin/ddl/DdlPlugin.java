@@ -47,7 +47,7 @@ public class DdlPlugin implements Plugin {
 		dispatch.find(RoutineGroup.Ev.class).listen((rtGrp, ev) -> {
 			
 			rtGrp.addPopup("DDL", "Create", (e) -> {
-				win.launchQueryWin(rtGrp.getParentDb().getSchema().getDbInstance(), 
+				win.launchQueryWin(rtGrp.findDbc(), 
 						"CREATE [ OR REPLACE ] FUNCTION\r\n" + 
 						"    name ( [ [ argmode ] [ argname ] argtype [ { DEFAULT | = } default_expr ] [, ...] ] )\r\n" + 
 						"    [ RETURNS rettype\r\n" + 
@@ -72,7 +72,7 @@ public class DdlPlugin implements Plugin {
 		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
 			
 			rtn.addPopup("DDL", "Drop", (e) -> {
-				win.launchQueryWin(rtn.getRoutine().getDbInstance(), 
+				win.launchQueryWin(rtn.findDbc(), 
 						"DROP FUNCTION [ IF EXISTS ] " + rtn.getRoutine().getName() + " [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] [, ...]\r\n" + 
 						"    [ CASCADE | RESTRICT ]"
 						);
@@ -84,7 +84,7 @@ public class DdlPlugin implements Plugin {
 		dispatch.find(SequenceGroup.Ev.class).listen((sqc, ev) -> {
 			
 			sqc.addPopup("DDL", "Create", (e) -> {
-				win.launchQueryWin(sqc.getParentDb().getSchema().getDbInstance(), 
+				win.launchQueryWin(sqc.findDbc(), 
 						"CREATE [ TEMPORARY | TEMP ] SEQUENCE [ IF NOT EXISTS ] name [ INCREMENT [ BY ] increment ]\r\n" + 
 						"    [ MINVALUE minvalue | NO MINVALUE ] [ MAXVALUE maxvalue | NO MAXVALUE ]\r\n" + 
 						"    [ START [ WITH ] start ] [ CACHE cache ] [ [ NO ] CYCLE ]\r\n" + 
@@ -97,7 +97,7 @@ public class DdlPlugin implements Plugin {
 			
 			group.addPopup("DDL", "New Table", (e) -> {
 				
-				win.launchQueryWin(group.getParentDb().getSchema().getDbInstance(), 
+				win.launchQueryWin(group.findDbc(), 
 						"CREATE TABLE <table> (\r\n" + 
 						"    <col0>      <type> PRIMARY KEY,\r\n" + 
 						"    <col1>      <type> NOT NULL,\r\n" + 
@@ -110,7 +110,7 @@ public class DdlPlugin implements Plugin {
 			
 			table.addPopup("DDL", "Drop", (e) -> {
 				
-				win.launchQueryWin(table.FindDbc(), "drop table " + table.getName() + ";");
+				win.launchQueryWin(table.findDbc(), "drop table " + table.getName() + ";");
 			});
 
 			
@@ -119,7 +119,7 @@ public class DdlPlugin implements Plugin {
 				var columns = table.getTable().getColumns().stream().map(d-> "--" + d.getName())
 						.collect(Collectors.joining("\n"));
 				
-				win.launchQueryWin(table.FindDbc(), columns + "\nALTER TABLE " 
+				win.launchQueryWin(table.findDbc(), columns + "\nALTER TABLE " 
 				+ table.getName() + " ADD PRIMARY KEY (<column>);");
 				
 			});
@@ -138,7 +138,7 @@ public class DdlPlugin implements Plugin {
 			grp.addPopup("DDL", "Add", (e) -> {
 				
 
-				win.launchQueryWin(table.FindDbc(), 
+				win.launchQueryWin(table.findDbc(), 
 						"ALTER TABLE " + table.getTable().getName() + "\r\n" + 
 						"add COLUMN <name> <type>;");
 				
@@ -153,7 +153,7 @@ public class DdlPlugin implements Plugin {
 			
 			cln.addPopup("DDL", "Drop", (e) -> {
 								
-				win.launchQueryWin(cln.FindDbc(), 
+				win.launchQueryWin(cln.findDbc(), 
 						"ALTER TABLE " + table.getName() + "\r\n" + 
 						"DROP COLUMN " + cln.getColumn().getName() + " CASCADE;");
 				
@@ -163,7 +163,7 @@ public class DdlPlugin implements Plugin {
 		dispatch.find(ViewGroup.Ev.class).listen((view,ev) -> {
 			view.addPopup("DDL", "Create", (e) -> {
 				
-				win.launchQueryWin(view.getParentDb().getSchema().getDbInstance(), 
+				win.launchQueryWin(view.findDbc(), 
 						"CREATE [ OR REPLACE ] [ TEMP | TEMPORARY ] VIEW name [ ( column_name [, ...] ) ]\r\n" + 
 						"    [ WITH ( view_option_name [= view_option_value] [, ... ] ) ]\r\n" + 
 						"    AS query;");
@@ -176,15 +176,15 @@ public class DdlPlugin implements Plugin {
 			view.addPopup("DDL", "Script Create", (e) -> {
 				
 				try {
-				var query = view.getView().getDefinition(view.FindDbc());
+				var query = view.getView().getDefinition(view.findDbc());
 				
-				win.launchQueryWin(view.FindDbc(), query);
+				win.launchQueryWin(view.findDbc(), query);
 				} catch (Exception ex) {}
 			});
 			
 			view.addPopup("DDL", "Drop", (e) -> {
 				
-				win.launchQueryWin(view.FindDbc(), "drop view " + view.getView().getName() + ";");
+				win.launchQueryWin(view.findDbc(), "drop view " + view.getView().getName() + ";");
 			});		
 		});
 		
@@ -205,7 +205,7 @@ public class DdlPlugin implements Plugin {
 						"    [ TABLESPACE tablespace ]\r\n" + 
 						"    [ WHERE predicate ]";
 				
-				win.launchQueryWin(indexGrp.FindDbc(), query);
+				win.launchQueryWin(indexGrp.findDbc(), query);
 			});
 		});
 		
@@ -215,12 +215,12 @@ public class DdlPlugin implements Plugin {
 				
 				var query = index.getIndex().getDef();
 				
-				win.launchQueryWin(index.FindDbc(), query);
+				win.launchQueryWin(index.findDbc(), query);
 			});
 			
 			index.addPopup("DDL", "Drop", (e) -> {
 				
-				win.launchQueryWin(index.FindDbc(), "drop index " + index.getIndex().getName() + ";");
+				win.launchQueryWin(index.findDbc(), "drop index " + index.getIndex().getName() + ";");
 			});		
 		});
 

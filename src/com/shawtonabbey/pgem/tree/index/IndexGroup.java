@@ -43,7 +43,7 @@ public class IndexGroup extends XGroup<TableInstance> {
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbIndex>>()
-				.setWork(() -> DbIndex.getIndexes(FindDbc(), table))
+				.setWork(() -> DbIndex.getIndexes(findDbc(), table))
 				.thenOnEdt((indexes) -> {
 					indexes.stream()
 						.map(x -> appContext.getBean(IndexInstance.class, this, x))

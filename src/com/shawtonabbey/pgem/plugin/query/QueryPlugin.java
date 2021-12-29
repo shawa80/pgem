@@ -28,7 +28,7 @@ public class QueryPlugin implements Plugin {
 			
 			m.addPopup("Query", (e) -> {
 
-				window.launchQueryWin(m.getDatabase().getDbInstance(), "");
+				window.launchQueryWin(m.findDbc(), "");
 				
 			});
 		});

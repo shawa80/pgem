@@ -11,16 +11,15 @@ import lombok.Getter;
 import com.shawtonabbey.pgem.database.DBC;
 
 @AllArgsConstructor
-public class DbRoutine implements Definable, DbcProvider {
+public class DbRoutine implements Definable {
 
 	@Getter
 	private String name;
 	@Getter
 	private DbSchema schema;
 		
-	private DBC connection;
 	
-	public static List<DbRoutine> getRoutines(DbSchema dbSchema) throws IOException {
+	public static List<DbRoutine> getRoutines(DBC connection, DbSchema dbSchema) throws IOException {
 
 		List<DbRoutine> results = new ArrayList<DbRoutine>();
 		
@@ -30,11 +29,11 @@ public class DbRoutine implements Definable, DbcProvider {
 		"where routine_schema = ? " +
 		"order by routine_name;";
 
-		rs = dbSchema.getDbInstance().exec(sqlStr, dbSchema.getName());
+		rs = connection.exec(sqlStr, dbSchema.getName());
 
 		while (rs.next())
 		{
-			results.add(new DbRoutine(rs.get("routine_name"), dbSchema, dbSchema.getDbInstance()));
+			results.add(new DbRoutine(rs.get("routine_name"), dbSchema));
 		}
 		
 		return results;
@@ -56,13 +55,5 @@ public class DbRoutine implements Definable, DbcProvider {
 		
 		return result;
 	}
-
-
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}
-
-	
 }
 

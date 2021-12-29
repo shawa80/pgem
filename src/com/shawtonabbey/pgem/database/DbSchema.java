@@ -8,20 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-public class DbSchema implements DbcProvider {
+public class DbSchema {
 
 	@Getter
 	private String name;
 	@Getter
 	private DbDatabase database;
 	
-	private DBC connection;
+
 	
-	public static List<DbSchema> getSchemas(DbDatabase database) throws IOException {
-		return getSchemas(database, false);
-	}
-	
-	public static List<DbSchema> getSchemas(DbDatabase database, boolean loadSysSchema) throws IOException {
+	public static List<DbSchema> getSchemas(DBC connection, DbDatabase database, boolean loadSysSchema) throws IOException {
 		
 		List<DbSchema> results = new ArrayList<DbSchema>();
 		
@@ -31,14 +27,14 @@ public class DbSchema implements DbcProvider {
 		(!loadSysSchema ? "where schema_name not like 'pg%' " : "") +
 		"order by schema_name;";
 
-		rs = database.getDbInstance().exec(sqlStr);
+		rs = connection.exec(sqlStr);
 
 		if (rs != null) {
 			
 			while (rs.next())
 			{
 				if (!"information_schema".equals(rs.get("schema_name")))
-					results.add(new DbSchema(rs.get("schema_name"), database, database.getDbInstance()));
+					results.add(new DbSchema(rs.get("schema_name"), database));
 			}
 			rs.close();
 		}
@@ -46,10 +42,5 @@ public class DbSchema implements DbcProvider {
 		return results;
 	}
 
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}
 
-	
 }

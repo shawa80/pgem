@@ -29,7 +29,7 @@ public class CrudPlugin implements Plugin {
 		
 		dispatch.find(ViewInstance.Ev.class).listen((view, ev) -> {
 			view.addPopup("CRUD", "Select", (e) -> {
-				win.launchQueryWin(view.FindDbc(), "Select * from " + view.getView().getName() + " limit 100;");
+				win.launchQueryWin(view.findDbc(), "Select * from " + view.getView().getName() + " limit 100;");
 			});
 		});
 		
@@ -37,7 +37,7 @@ public class CrudPlugin implements Plugin {
 			
 			table.addPopup("CRUD", "Select", (e) -> {
 				
-				win.launchQueryWin(table.FindDbc(), "Select * from " + table.getTable().getName() + " limit 100;");
+				win.launchQueryWin(table.findDbc(), "Select * from " + table.getTable().getName() + " limit 100;");
 			});
 			
 			table.addPopup("CRUD", "Insert", (e) -> {
@@ -47,7 +47,7 @@ public class CrudPlugin implements Plugin {
 				var values = table.getTable().getColumns().stream().map(d-> "")
 						.collect(Collectors.joining(", "));
 				
-				win.launchQueryWin(table.FindDbc(), 
+				win.launchQueryWin(table.findDbc(), 
 						"insert into " + table.getTable().getName() + "(" + columns + ") values (" + values +")");
 				
 			});
@@ -57,14 +57,14 @@ public class CrudPlugin implements Plugin {
 				var columns = table.getTable().getColumns().stream().map(d-> d.getName() + " = ")
 						.collect(Collectors.joining(", "));
 				
-				win.launchQueryWin(table.FindDbc(), 
+				win.launchQueryWin(table.findDbc(), 
 						"update " + table.getTable().getName() + " set " + columns + " where = ");
 				
 			});
 
 			table.addPopup("CRUD", "Delete", (e) -> {
 								
-				win.launchQueryWin(table.FindDbc(), 
+				win.launchQueryWin(table.findDbc(), 
 						"delete from " + table.getTable().getName() + " where = ");
 				
 			});

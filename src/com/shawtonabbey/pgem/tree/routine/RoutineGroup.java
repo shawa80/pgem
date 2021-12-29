@@ -46,7 +46,7 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 		
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbRoutine>>()
-				.setWork(() -> DbRoutine.getRoutines(schema.getSchema()))
+				.setWork(() -> DbRoutine.getRoutines(findDbc(), schema.getSchema()))
 				.thenOnEdt((tables) -> {
 					
 					tables.stream()

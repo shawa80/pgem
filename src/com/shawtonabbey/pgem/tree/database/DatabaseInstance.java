@@ -44,9 +44,9 @@ public class DatabaseInstance extends XGroup<ServerInstance>
 	protected void FireEvent(Event event) {
 		dispatch.find(Ev.class).fire(o->o.added(this, event));
 	}
-
-	@Override 
-	public DBC FindDbc() {
+	
+	@Override
+	public DBC findDbc() {
 		return this.database.getDbInstance();
 	}
 	

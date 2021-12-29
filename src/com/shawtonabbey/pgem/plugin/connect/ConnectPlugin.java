@@ -43,7 +43,7 @@ public class ConnectPlugin implements Plugin {
 		dispatch.find(DatabaseInstance.Ev.class).listen((d, ev) -> {
 			
 			d.addPopup("Disconnect", (e)-> {
-				d.getDatabase().getDbInstance().disconnect();
+				d.findDbc().disconnect();
 				
 				d.parent.removeNode(d);
 				
@@ -56,7 +56,7 @@ public class ConnectPlugin implements Plugin {
 			s.addPopup("Version", (e) -> {
 				var db = (DatabaseInstance)s.getChildAt(0);
 				
-				window.launchQueryWin(db.getDatabase().getDbInstance(), "SELECT version();");
+				window.launchQueryWin(db.findDbc(), "SELECT version();");
 			});
 			
 		});
@@ -67,7 +67,7 @@ public class ConnectPlugin implements Plugin {
 				int children = s.getChildCount();
 				for (int i= 0; i< children; i++) {
 					var d = (DatabaseInstance)s.getChildAt(i);
-					d.getDatabase().getDbInstance().disconnect();
+					d.findDbc().disconnect();
 				}
 				
 				s.parent.removeNode(s);

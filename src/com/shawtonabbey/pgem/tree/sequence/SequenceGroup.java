@@ -34,7 +34,7 @@ public class SequenceGroup extends XGroup<SchemaInstance>
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbSequence>>()
-				.setWork(() -> DbSequence.getSequence(getParentDb().getSchema()))
+				.setWork(() -> DbSequence.getSequence(findDbc(), getParentDb().getSchema()))
 				.thenOnEdt((seq) -> {
 
 					seq.stream()

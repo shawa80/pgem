@@ -6,22 +6,19 @@ import java.util.List;
 
 import lombok.Getter;
 
-public class DbUser implements DbcProvider {
+public class DbUser {
 
 	@Getter
 	private String name;
 	
-	private DBC connection;
-			
-	
+
 	private DbUser (DBC connection, String name) throws IOException {
 		
 		this.name = name;
-		this.connection = connection;
 	}
 	
 	
-	public static List<DbUser> getUsers(DbDatabase database) throws IOException {
+	public static List<DbUser> getUsers(DBC connection, DbDatabase database) throws IOException {
 
 		List<DbUser> results = new ArrayList<DbUser>();
 		
@@ -30,20 +27,14 @@ public class DbUser implements DbcProvider {
 		String sqlStr = "SELECT usename " + 
 				"FROM pg_catalog.pg_user";
 
-		rs = database.getDbInstance().exec(sqlStr);
+		rs = connection.exec(sqlStr);
 
 		while (rs.next())
 		{
-			results.add(new DbUser(database.getDbInstance(), rs.get("usename")));
+			results.add(new DbUser(connection, rs.get("usename")));
 		}
 		
 		return results;
-	}
-
-
-	@Override
-	public DBC getDbInstance() {
-		return connection;
 	}	
 	
 	

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class DbDatabase implements DbcProvider {
+public class DbDatabase {
 	
 	@Getter
 	private String name;
@@ -13,7 +13,6 @@ public class DbDatabase implements DbcProvider {
 	
 	private DBC connection;
 
-	@Override
 	public DBC getDbInstance() {
 		return connection;
 	}

@@ -8,14 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public class DbSequence implements Definable, DbcProvider {
+public class DbSequence implements Definable {
 
 	@Getter
 	private String name;
 	
-	private DBC connection;
 		
-	public static List<DbSequence> getSequence(DbSchema dbSchema) throws IOException {
+	public static List<DbSequence> getSequence(DBC connection, DbSchema dbSchema) throws IOException {
 
 		List<DbSequence> results = new ArrayList<DbSequence>();
 		
@@ -25,11 +24,11 @@ public class DbSequence implements Definable, DbcProvider {
 					"where sequence_schema = ? " +
 					"order by sequence_name;";
 
-		rs = dbSchema.getDbInstance().exec(sqlStr, dbSchema.getName());
+		rs = connection.exec(sqlStr, dbSchema.getName());
 
 		while (rs.next())
 		{
-			results.add(new DbSequence(rs.get("sequence_name"), dbSchema.getDbInstance()));
+			results.add(new DbSequence(rs.get("sequence_name")));
 		}
 		
 		return results;
@@ -40,10 +39,6 @@ public class DbSequence implements Definable, DbcProvider {
 		return "";
 	}
 
-	@Override
-	public DBC getDbInstance() {
-		return connection;
-	}
 
 
 }

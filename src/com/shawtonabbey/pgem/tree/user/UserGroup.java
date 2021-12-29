@@ -38,7 +38,7 @@ public class UserGroup extends XGroup<DatabaseInstance>
 		
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbUser>>()
-				.setWork(() -> DbUser.getUsers(db))
+				.setWork(() -> DbUser.getUsers(findDbc(), db))
 				.thenOnEdt((users) -> {
 						
 					users.stream()
