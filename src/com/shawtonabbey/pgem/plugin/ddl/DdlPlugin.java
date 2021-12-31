@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.ddl.index.IndexCreatePanel;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.column.ColumnGroup;
 import com.shawtonabbey.pgem.tree.column.ColumnInstance;
@@ -23,6 +25,7 @@ import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.tree.view.ViewGroup;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 import com.shawtonabbey.pgem.ui.MainWindow;
+import java.util.List;
 
 @Component
 public class DdlPlugin implements Plugin {
@@ -68,6 +71,29 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
+		
+		
+		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
+			
+			rtn.addPopup("DDL", "Create Script", (e) -> {
+				
+				var sw = new SwingWorker<List<TextValue>>()
+						.setWork(() -> {
+							var connection = rtn.findDbc();
+							var result = connection.exec("select pg_get_functiondef(oid) as text_value \r\n" + 
+									"from pg_proc\r\n" + 
+									"where proname = ?;", TextValue.class, rtn.getName());
+							return result;
+						})
+						.thenOnEdt((w) -> {
+							win.launchQueryWin(rtn.findDbc(), w.get(0).getText_value());							
+							
+						});
+				sw.start();
+			});
+			
+
+		});
 		
 		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
 			

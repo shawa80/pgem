@@ -4,6 +4,8 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,49 +13,63 @@ import lombok.Getter;
 import com.shawtonabbey.pgem.database.DBC;
 
 @AllArgsConstructor
-public class DbRoutine implements Definable {
+public class DbRoutine {
 
 	@Getter
 	private String name;
 	@Getter
 	private DbSchema schema;
 		
+	@Getter
+	private long oid;
 	
 	public static List<DbRoutine> getRoutines(DBC connection, DbSchema dbSchema) throws IOException {
 
 		List<DbRoutine> results = new ArrayList<DbRoutine>();
 		
-		ARecordSet rs;
 
-		var sqlStr = "select routine_name, * from information_schema.routines " +
+		var sqlStr = "select routine_name as text_value from information_schema.routines " +
 		"where routine_schema = ? " +
 		"order by routine_name;";
 
-		rs = connection.exec(sqlStr, dbSchema.getName());
+		var rs = connection.exec(sqlStr, TextValue.class, dbSchema.getName());
 
-		while (rs.next())
+		for (var name : rs)
 		{
-			results.add(new DbRoutine(rs.get("routine_name"), dbSchema));
+			var proc = name.getText_value();
+			var schema = dbSchema.getName();
+			
+			var oids = connection.exec("select p.oid as value from pg_proc p " + 
+					"join pg_namespace ns on p.pronamespace = ns.oid " + 
+					"where proname = ? " + 
+					"and ns.nspname = ?",
+					BigIntValue.class, proc, schema);
+			
+			var oid = oids.stream().findFirst().get().getValue();
+			
+			results.add(new DbRoutine(proc, dbSchema, oid));
 		}
 		
 		return results;
 	}
 
-	
-	public String getDefinition(DBC connection) throws IOException {
+	public List<String> getRoutinesParams(DBC connection) throws IOException {
+
+		var sqlStr = "select pg_get_function_arguments as text_value "
+				+ "from pg_get_function_arguments(?);";
+
+		var rs = connection.exec(sqlStr, TextValue.class, oid);
+
+		var params = rs.stream()
+			.findFirst()
+			.get().getText_value()
+			.split(",");
 		
-		var result = "create view " + schema.getName()  + "." + name + "\nas\n" ;
+		return Stream.of(params)
+			.map (elem -> elem.trim())
+			.collect(Collectors.toList());
 		
-		var sql = "select view_definition from information_schema.views where table_name = ?;";
-				
-		var def = connection.exec(sql, name);
-		
-		while (def.next()) {
-			result += def.get(1);
-		}
-	
-		
-		return result;
 	}
+	
 }
 

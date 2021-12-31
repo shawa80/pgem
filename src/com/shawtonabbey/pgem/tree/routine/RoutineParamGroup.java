@@ -12,21 +12,23 @@ import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
-import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
+
+import lombok.Getter;
 
 @Component
 @Scope("prototype")
-public class RoutineGroup extends XGroup<SchemaInstance>
+public class RoutineParamGroup extends XGroup<RoutineInstance>
 {
-	private SchemaInstance schema;
+	@Getter
+	private RoutineInstance routine;
 
-	public interface Ev extends Add<RoutineGroup> {}
+	public interface Ev extends Add<RoutineParamGroup> {}
 	
-	public RoutineGroup(SchemaInstance schema)
+	public RoutineParamGroup(RoutineInstance routine)
 	{
-		super(schema, "Functions");
+		super(routine, "Params");
 		
-		this.schema = schema;
+		this.routine = routine;
 	}
 	
 	public ImageIcon getIcon() {
@@ -37,12 +39,12 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 	protected SwingWorker<?> getWorker() {
 		
 		Event event = new Event();
-		var sw = new SwingWorker<List<DbRoutine>>()
-				.setWork(() -> DbRoutine.getRoutines(findDbc(), schema.getSchema()))
-				.thenOnEdt((tables) -> {
+		var sw = new SwingWorker<List<String>>()
+				.setWork(() -> routine.routine.getRoutinesParams(findDbc()))
+				.thenOnEdt((params) -> {
 					
-					tables.stream()
-							.map(x -> appContext.getBean(RoutineInstance.class, this, x))
+					params.stream()
+							.map(x -> appContext.getBean(RoutineParamInstance.class, this, x))
 							.forEach(x -> {x.load(event); addNode(x);});
 
 					doneLoading();
