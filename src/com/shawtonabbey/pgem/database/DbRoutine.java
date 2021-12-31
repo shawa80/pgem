@@ -53,6 +53,21 @@ public class DbRoutine {
 		return results;
 	}
 
+	
+	public String getReturnType(DBC connection) throws IOException {
+
+		var sqlStr = "select pg_get_function_result as text_value "
+				+ "from pg_get_function_result(?)";
+
+		var rs = connection.exec(sqlStr, TextValue.class, oid);
+
+		return rs.stream()
+			.findFirst()
+			.get().getText_value();
+		
+	}
+
+	
 	public List<String> getRoutinesParams(DBC connection) throws IOException {
 
 		var sqlStr = "select pg_get_function_arguments as text_value "

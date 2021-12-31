@@ -22,6 +22,9 @@ public class RoutinePlugin implements Plugin {
 		dispatch.register(RoutineInstance.Ev.class);
 		dispatch.register(RoutineParamGroup.Ev.class);
 		dispatch.register(RoutineParamInstance.Ev.class);
+		dispatch.register(RoutineReturnGroup.Ev.class);
+		dispatch.register(RoutineReturnInstance.Ev.class);
+		
 	}
 	
 	public void init() {
@@ -32,6 +35,9 @@ public class RoutinePlugin implements Plugin {
 		dispatch.find(RoutineInstance.Ev.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(RoutineParamGroup.class, s).load(event));
 		});
-		
+	
+		dispatch.find(RoutineInstance.Ev.class).listen((s, event) -> {
+			s.addNode(appContext.getBean(RoutineReturnGroup.class, s).load(event));
+		});
 	}
 }
