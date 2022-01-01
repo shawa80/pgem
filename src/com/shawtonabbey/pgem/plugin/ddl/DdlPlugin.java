@@ -14,6 +14,7 @@ import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.column.ColumnGroup;
 import com.shawtonabbey.pgem.tree.column.ColumnInstance;
+import com.shawtonabbey.pgem.tree.constraint.ConstraintInstance;
 import com.shawtonabbey.pgem.tree.database.ServerInstance;
 import com.shawtonabbey.pgem.tree.index.IndexGroup;
 import com.shawtonabbey.pgem.tree.index.IndexInstance;
@@ -250,7 +251,20 @@ public class DdlPlugin implements Plugin {
 			});		
 		});
 
-	
+		dispatch.find(ConstraintInstance.Ev.class).listen((con,ev) -> {
+			
+			con.addPopup("DDL", "Script Create", (e) -> {
+				
+				var sw = new SwingWorker<String>()
+						.setWork(() -> con.getCon().GetDefinition(con.findDbc()))
+						.thenOnEdt((q) -> {
+							win.launchQueryWin(con.findDbc(), q);
+													
+						});
+				sw.start();
+			});
+				
+		});
 	}
 	
 }
