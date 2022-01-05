@@ -45,8 +45,8 @@ public class RuleGroup extends XGroup<ItemModel> {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbRule>>()
 				.setWork(() -> DbRule.getRules(findDbc(), table))
-				.thenOnEdt((indexes) -> {
-					indexes.stream()
+				.thenOnEdt((rules) -> {
+					rules.stream()
 						.map(x -> appContext.getBean(RuleInstance.class, this, x))
 						.forEach(x -> {x.load(event); addNode(x);});
 					

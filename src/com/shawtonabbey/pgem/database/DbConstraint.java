@@ -42,7 +42,7 @@ public class DbConstraint {
 		return results;
 	}
 	
-	public String GetDefinition(DBC connection) throws IOException {
+	public String getDefinition(DBC connection) throws IOException {
 		
 		var sqlStr = "select pg_get_constraintdef as text_value "
 				+ "from pg_get_constraintdef(?, true);";

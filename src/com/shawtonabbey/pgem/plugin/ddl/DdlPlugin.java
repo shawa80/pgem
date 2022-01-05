@@ -20,6 +20,7 @@ import com.shawtonabbey.pgem.tree.index.IndexGroup;
 import com.shawtonabbey.pgem.tree.index.IndexInstance;
 import com.shawtonabbey.pgem.tree.routine.RoutineGroup;
 import com.shawtonabbey.pgem.tree.routine.RoutineInstance;
+import com.shawtonabbey.pgem.tree.rule.RuleInstance;
 import com.shawtonabbey.pgem.tree.sequence.SequenceGroup;
 import com.shawtonabbey.pgem.tree.table.TableGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
@@ -256,9 +257,24 @@ public class DdlPlugin implements Plugin {
 			con.addPopup("DDL", "Script Create", (e) -> {
 				
 				var sw = new SwingWorker<String>()
-						.setWork(() -> con.getCon().GetDefinition(con.findDbc()))
+						.setWork(() -> con.getCon().getDefinition(con.findDbc()))
 						.thenOnEdt((q) -> {
 							win.launchQueryWin(con.findDbc(), q);
+													
+						});
+				sw.start();
+			});
+				
+		});
+		
+		dispatch.find(RuleInstance.Ev.class).listen((rule,ev) -> {
+			
+			rule.addPopup("DDL", "Script Create", (e) -> {
+				
+				var sw = new SwingWorker<String>()
+						.setWork(() -> rule.getRule().getDef())
+						.thenOnEdt((q) -> {
+							win.launchQueryWin(rule.findDbc(), q);
 													
 						});
 				sw.start();

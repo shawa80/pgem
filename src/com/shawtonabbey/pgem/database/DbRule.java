@@ -32,6 +32,7 @@ public class DbRule {
 
 		rs = connection.exec(sqlStr, table.getSchema().getName(), table.getName());
 
+		
 		if (rs != null) {
 			
 			while (rs.next())
