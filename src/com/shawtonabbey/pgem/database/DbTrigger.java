@@ -3,9 +3,14 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.xml.crypto.Data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 public class DbTrigger {
@@ -13,29 +18,41 @@ public class DbTrigger {
 	@Getter
 	private String name;
 	
+	@Getter
+	private Long oid;
+	
 		
 	public static List<DbTrigger> getTriggers(DBC connection, DbTable table) throws IOException {
 
-		List<DbTrigger> results = new ArrayList<DbTrigger>();
-		
-		ARecordSet rs;
+		var sqlStr = "select t.oid as oid, t.tgname as name from pg_trigger t " + 
+				"join pg_class c on t.tgrelid = c.oid " + 
+				"join pg_namespace n on c.relnamespace = n.oid " + 
+				"where c.relname = ? " + 
+				"and n.nspname = ?";
 
-		var sqlStr = "select trigger_name " + 
-				"from information_schema.triggers " + 
-				"where trigger_schema = ? " + 
-				"and event_object_table = ? ";
+		var rs = connection.exec(sqlStr, OidName.class, table.getName(),table.getSchema().getName());
 
-		rs = connection.exec(sqlStr, table.getSchema().getName(), table.getName());
-
-		while (rs.next())
-		{
-			results.add(new DbTrigger(rs.get("trigger_name")));
-		}
+		var results = rs.stream()
+			.map(v-> new DbTrigger(v.getName(), v.getOid()))
+			.collect(Collectors.toList());
 		
 		return results;
 	}
 	
+	public String getDef(DBC connection) throws IOException {
 
+		var sqlStr = "select pg_get_triggerdef as text_value "
+				+ "from pg_get_triggerdef(?, true);";
+
+		var rs = connection.exec(sqlStr, TextValue.class, oid);
+
+		var def = rs.stream()
+			.findFirst()
+			.get().getText_value();
+		
+		return def;
+	}
+	
 
 }
 

@@ -24,6 +24,7 @@ import com.shawtonabbey.pgem.tree.rule.RuleInstance;
 import com.shawtonabbey.pgem.tree.sequence.SequenceGroup;
 import com.shawtonabbey.pgem.tree.table.TableGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
+import com.shawtonabbey.pgem.tree.trigger.TriggerInstance;
 import com.shawtonabbey.pgem.tree.view.ViewGroup;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 import com.shawtonabbey.pgem.ui.MainWindow;
@@ -281,6 +282,22 @@ public class DdlPlugin implements Plugin {
 			});
 				
 		});
+
+		dispatch.find(TriggerInstance.Ev.class).listen((trigger,ev) -> {
+			
+			trigger.addPopup("DDL", "Script Create", (e) -> {
+				
+				var sw = new SwingWorker<String>()
+						.setWork(() -> trigger.getTrigger().getDef(trigger.findDbc()))
+						.thenOnEdt((q) -> {
+							win.launchQueryWin(trigger.findDbc(), q);
+													
+						});
+				sw.start();
+			});
+				
+		});
+	
 	}
 	
 }
