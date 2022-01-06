@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class DbRule {
 
@@ -18,7 +19,10 @@ public class DbRule {
 		this.def = def;
 	}
 	
-
+	private class Bob {
+		@Getter @Setter private String value;
+		@Getter @Setter private Long oid; 
+	}
 
 	public static List<DbRule> getRules(DBC connection, DbTableLike table) throws IOException {
 		
