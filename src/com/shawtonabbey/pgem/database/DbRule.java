@@ -3,19 +3,16 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 public class DbRule {
 
 	@Getter
 	private String name;
 	@Getter 
 	private String def;
-	
-	public DbRule(String name, String def) {
-		this.name = name;
-		this.def = def;
-	}
 	
 	public static List<DbRule> getRules(DBC connection, DbTableLike table) throws IOException {
 		
