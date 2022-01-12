@@ -178,6 +178,50 @@ public class DBC implements AutoCloseable
 			}
 		}
 	}
+
+	
+	public <T> List<T> execCon(String sqlstr, Class<T> cls, Object... args) throws IOException
+	{		
+		try {			
+
+			var stm = db.prepareStatement(sqlstr);
+			
+			for (int i = 0; i < args.length; i++) {
+				stm.setObject(i+1, args[i]);
+			}
+			
+			try (var recordSet = new ARecordSet(stm)) {
+				recordSet.execute();
+
+				var results = new ArrayList<T>();
+				var cols = recordSet.columnInfo.getColumnCount();
+				
+				var construct = cls.getConstructors()[0];
+				
+				while (recordSet.next()) {
+		
+					
+					var cArgs = new Object[recordSet.columnInfo.getColumnCount()];
+					
+					for (var i = 1; i <= cols; i++) {						
+						cArgs[i-1] = recordSet.getValue(i);
+					}
+					var c = (T)construct.newInstance(cArgs);
+					
+					results.add(c);
+				}
+				return results;
+			}
+
+		} catch (Exception e)
+		{
+			System.out.println("error on createStatement();");
+			throw new IOException(e.getMessage(), e);
+		}
+
+	}
+
+	
 	
 	public <T> List<T> exec(String sqlstr, Class<T> cls, Object... args) throws IOException
 	{		

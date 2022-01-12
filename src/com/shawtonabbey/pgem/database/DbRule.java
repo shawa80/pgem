@@ -1,46 +1,32 @@
 package com.shawtonabbey.pgem.database;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
-import lombok.Setter;
 
 public class DbRule {
 
 	@Getter
 	private String name;
-	@Getter
+	@Getter 
 	private String def;
 	
-	private DbRule(String name, DbTableLike table, String def) {
+	public DbRule(String name, String def) {
 		this.name = name;
 		this.def = def;
 	}
 	
 	public static List<DbRule> getRules(DBC connection, DbTableLike table) throws IOException {
 		
-		var results = new ArrayList<DbRule>();
-		
-		ARecordSet rs;
-
-		var sqlStr = "select rulename, definition from pg_rules"
+		var sqlStr = "select rulename as name, definition as def "
+				+ " from pg_rules"
 				+ " where schemaname = ?"
 				+ " and tablename = ?;";
 
-		rs = connection.exec(sqlStr, table.getSchema().getName(), table.getName());
+		var results = connection.execCon(sqlStr, DbRule.class,
+				table.getSchema().getName(), table.getName());
 
-		
-		if (rs != null) {
-			
-			while (rs.next())
-			{
-					results.add(new DbRule(rs.get("rulename"), table, 
-							rs.get("definition")));
-			}
-			rs.close();
-		}
 		
 		return results;
 	}

@@ -13,7 +13,6 @@ import com.shawtonabbey.pgem.event.EventDispatch.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
-import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 import lombok.Getter;
