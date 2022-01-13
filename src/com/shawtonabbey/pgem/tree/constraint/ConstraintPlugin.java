@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
-import com.shawtonabbey.pgem.tree.index.IndexGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component

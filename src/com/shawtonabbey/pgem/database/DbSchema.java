@@ -4,40 +4,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class DbSchema {
 
 	@Getter
 	private String name;
-	@Getter
-	private DbDatabase database;
-	
-
 	
 	public static List<DbSchema> getSchemas(DBC connection, DbDatabase database, boolean loadSysSchema) throws IOException {
 		
-		List<DbSchema> results = new ArrayList<DbSchema>();
-		
-		ARecordSet rs;
+
 		var sqlStr = "select schema_name "+
 		"from information_schema.schemata schema_name " +
 		(!loadSysSchema ? "where schema_name not like 'pg%' " : "") +
 		"order by schema_name;";
 
-		rs = connection.exec(sqlStr);
+		var rs = connection.execCon(sqlStr, DbSchema.class);
 
-		if (rs != null) {
+		var results = rs.stream()
+			.filter(s-> !"information_schema".equals(s.name))
+			.collect(Collectors.toList());
 			
-			while (rs.next())
-			{
-				if (!"information_schema".equals(rs.get("schema_name")))
-					results.add(new DbSchema(rs.get("schema_name"), database));
-			}
-			rs.close();
-		}
 		
 		return results;
 	}

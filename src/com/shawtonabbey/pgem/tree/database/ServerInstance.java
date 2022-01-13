@@ -79,7 +79,7 @@ public class ServerInstance extends Group<DBManager>
 			try (var conn = DBC.connect(params.getAddress(), params.getPort(),
 					db, params.getUser(), params.getPass()))
 			{
-				var dbs = DbServer.getDatabases(conn, server);
+				var dbs = DbDatabase.getDatabases(conn, server);
 				return dbs;
 			}
 		})

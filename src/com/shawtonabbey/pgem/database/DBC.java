@@ -221,7 +221,10 @@ public class DBC implements AutoCloseable
 
 	}
 
-	
+	public <T> T first(String sqlStr, Class<T> cls, Object... args) throws IOException
+	{
+		return exec(sqlStr, cls, args).get(0);
+	}
 	
 	public <T> List<T> exec(String sqlstr, Class<T> cls, Object... args) throws IOException
 	{		

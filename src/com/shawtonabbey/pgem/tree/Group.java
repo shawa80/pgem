@@ -4,7 +4,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 import lombok.Getter;
