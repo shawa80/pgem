@@ -17,8 +17,6 @@ public class DbRoutine {
 
 	@Getter
 	private String name;
-	@Getter
-	private DbSchema schema;
 		
 	@Getter
 	private long oid;
@@ -47,7 +45,7 @@ public class DbRoutine {
 			
 			var oid = oids.stream().findFirst().get().getValue();
 			
-			results.add(new DbRoutine(proc, dbSchema, oid));
+			results.add(new DbRoutine(proc, oid));
 		}
 		
 		return results;

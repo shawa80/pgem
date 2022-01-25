@@ -1,7 +1,6 @@
 package com.shawtonabbey.pgem.database;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,16 +10,11 @@ public class DbConstraint {
 
 	@Getter
 	private String name;
-	@Getter
-	private DbTable table;
 		
 	@Getter
 	private Long oid;
 	
 	public static List<DbConstraint> getConstraints(DBC connection, DbTable table) throws IOException {
-
-		List<DbConstraint> results = new ArrayList<DbConstraint>();
-		
 
 		var sqlStr = "SELECT con.conname, con.oid" + 
 				"       FROM pg_catalog.pg_constraint con" + 
@@ -31,13 +25,8 @@ public class DbConstraint {
 				"       WHERE nsp.nspname = ?" + 
 				"             AND rel.relname = ?;";
 
-		var rs = connection.exec(sqlStr, ConstraintData.class, 
+		var results = connection.exec(sqlStr, DbConstraint.class, 
 				table.getSchema().getName(), table.getName());
-
-		for (var r : rs)
-		{
-			results.add(new DbConstraint(r.getConname(), table, r.getOid()));
-		}
 		
 		return results;
 	}
