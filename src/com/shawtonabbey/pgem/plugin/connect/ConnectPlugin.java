@@ -83,30 +83,29 @@ public class ConnectPlugin implements Plugin {
 				
 				dispatch.find(SysPlugin.ConnectEv.class).fire(o->o.start());
 				
+				var connect = new ConnectDialog(window);
+				
+				
+				connect.set(
+						pref.get("address", ""), 
+						pref.get("port", ""),
+						pref.get("database", ""),
+						pref.get("user", ""));
+				
+				var useFile = Boolean.parseBoolean(pref.get("krbUseFile", "false"));
+				connect.setKerberos(
+						pref.get("krbUser", ""),  
+						pref.get("krbFile", ""), 
+						useFile
+						);
+				connect.setLoadDbs(Boolean.parseBoolean(pref.get("LoadDbs", "false")));
+				connect.setTab(Integer.parseInt(pref.get("LoginTab", "0")));
+				connect.setLocationRelativeTo(window);
+				connect.setVisible(true);
+				
 				new SwingWorker<ServerInstance>()
 					.setWork(() -> {
-		
-						connectEvent.whenFinished(() -> { 
-							dispatch.find(SysPlugin.DisconnectEv.class).fire(o->o.end());
-						});
-
-						var connect = new ConnectDialog(window);
-						connect.set(
-								pref.get("address", ""), 
-								pref.get("port", ""),
-								pref.get("database", ""),
-								pref.get("user", ""));
 						
-						var useFile = Boolean.parseBoolean(pref.get("krbUseFile", "false"));
-						connect.setKerberos(
-								pref.get("krbUser", ""),  
-								pref.get("krbFile", ""), 
-								useFile
-								);
-						connect.setLoadDbs(Boolean.parseBoolean(pref.get("LoadDbs", "false")));
-						connect.setTab(Integer.parseInt(pref.get("LoginTab", "0")));
-						connect.setLocationRelativeTo(window);
-						connect.setVisible(true);
 						if (connect.selectedConnect())
 						{
 							pref.put("address", connect.getAddress());
@@ -138,11 +137,12 @@ public class ConnectPlugin implements Plugin {
 							var server = appContext.getBean(ServerInstance.class, m, window, connect, useKerberos, loadDbs);
 									
 							return server;
-						}
-						
+						}	
 						return null;
 					})
 					.thenOnEdt((server) -> {
+						if (server == null) return;
+						
 						server.load(connectEvent);
 						m.addNode(server);
 					})
