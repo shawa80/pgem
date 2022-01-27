@@ -3,6 +3,8 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.util.List;
 
+import com.shawtonabbey.pgem.database.deserializers.Constr;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -19,7 +21,8 @@ public class DbSequence {
 					"where sequence_schema = ? " +
 					"order by sequence_name;";
 
-		var results = connection.execCon(sqlStr, DbSequence.class, dbSchema.getName());
+		var c = new Constr<>(DbSequence.class);
+		var results = connection.execX(sqlStr, c, dbSchema.getName());
 		
 		return results;
 	}

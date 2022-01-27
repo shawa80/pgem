@@ -3,6 +3,8 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.util.List;
 
+import com.shawtonabbey.pgem.database.deserializers.Constr;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,7 +23,8 @@ public class DbRule {
 				+ " where schemaname = ?"
 				+ " and tablename = ?;";
 
-		var results = connection.execCon(sqlStr, DbRule.class,
+		var c = new Constr<>(DbRule.class);
+		var results = connection.execX(sqlStr, c,
 				table.getSchema().getName(), table.getName());
 
 		

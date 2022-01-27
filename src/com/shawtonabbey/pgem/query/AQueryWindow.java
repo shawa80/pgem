@@ -46,9 +46,9 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	public interface Event {public void event(QueryWindow win);}
 	public interface DataReady {public void dataReady(SqlTableModel model);}
 	
-	public final Observable<Event> runStart = new Observable<Event>(Event.class);
-	public final Observable<Event> runFinished = new Observable<Event>(Event.class);
-	public final Observable<DataReady> dataReady = new Observable<DataReady>(DataReady.class);
+	public final Observable<Event> runStart = new Observable<>(Event.class);
+	public final Observable<Event> runFinished = new Observable<>(Event.class);
+	public final Observable<DataReady> dataReady = new Observable<>(DataReady.class);
 	
 	public AQueryWindow()
 	{

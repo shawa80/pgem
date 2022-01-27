@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.shawtonabbey.pgem.database.deserializers.Deserializer;
+import com.shawtonabbey.pgem.database.deserializers.Property;
 import com.shawtonabbey.pgem.database.ui.HeaderCollection;
 import com.shawtonabbey.pgem.database.ui.HeaderReady;
 import com.shawtonabbey.pgem.database.ui.Row;
@@ -180,8 +182,55 @@ public class DBC implements AutoCloseable
 	}
 
 	
-	public <T> List<T> execCon(String sqlstr, Class<T> cls, Object... args) throws IOException
-	{		
+//	public <T> List<T> execCon(String sqlstr, Class<T> cls, Object... args) throws IOException
+//	{		
+//		try {			
+//
+//			var stm = db.prepareStatement(sqlstr);
+//			
+//			for (int i = 0; i < args.length; i++) {
+//				stm.setObject(i+1, args[i]);
+//			}
+//			
+//			try (var recordSet = new ARecordSet(stm)) {
+//				recordSet.execute();
+//
+//				var results = new ArrayList<T>();
+//				var cols = recordSet.columnInfo.getColumnCount();
+//				
+//				var construct = cls.getConstructors()[0];
+//				
+//				while (recordSet.next()) {
+//		
+//					
+//					var cArgs = new Object[recordSet.columnInfo.getColumnCount()];
+//					
+//					for (var i = 1; i <= cols; i++) {						
+//						cArgs[i-1] = recordSet.getValue(i);
+//					}
+//					var c = (T)construct.newInstance(cArgs);
+//					
+//					results.add(c);
+//				}
+//				return results;
+//			}
+//
+//		} catch (Exception e)
+//		{
+//			System.out.println("error on createStatement();");
+//			throw new IOException(e.getMessage(), e);
+//		}
+//
+//	}
+
+	public <T> T first(String sqlStr, Class<T> cls, Object... args) throws IOException
+	{
+			
+		return exec(sqlStr, cls, args).get(0);
+	}
+	
+	public <T> List<T> execX(String sqlstr, Deserializer<T> ser, Object... args) throws IOException
+	{
 		try {			
 
 			var stm = db.prepareStatement(sqlstr);
@@ -194,20 +243,10 @@ public class DBC implements AutoCloseable
 				recordSet.execute();
 
 				var results = new ArrayList<T>();
-				var cols = recordSet.columnInfo.getColumnCount();
-				
-				var construct = cls.getConstructors()[0];
-				
+								
 				while (recordSet.next()) {
 		
-					
-					var cArgs = new Object[recordSet.columnInfo.getColumnCount()];
-					
-					for (var i = 1; i <= cols; i++) {						
-						cArgs[i-1] = recordSet.getValue(i);
-					}
-					var c = (T)construct.newInstance(cArgs);
-					
+					var c = ser.write(recordSet);
 					results.add(c);
 				}
 				return results;
@@ -219,11 +258,6 @@ public class DBC implements AutoCloseable
 			throw new IOException(e.getMessage(), e);
 		}
 
-	}
-
-	public <T> T first(String sqlStr, Class<T> cls, Object... args) throws IOException
-	{
-		return exec(sqlStr, cls, args).get(0);
 	}
 	
 	public <T> List<T> exec(String sqlstr, Class<T> cls, Object... args) throws IOException

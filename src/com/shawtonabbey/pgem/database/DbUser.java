@@ -3,6 +3,8 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.util.List;
 
+import com.shawtonabbey.pgem.database.deserializers.Constr;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,7 +19,8 @@ public class DbUser {
 		String sqlStr = "SELECT usename " + 
 				"FROM pg_catalog.pg_user";
 
-		var results = connection.execCon(sqlStr, DbUser.class);
+		var c = new Constr<>(DbUser.class);
+		var results = connection.execX(sqlStr, c);
 
 		return results;
 	}	

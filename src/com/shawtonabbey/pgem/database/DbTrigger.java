@@ -2,6 +2,9 @@ package com.shawtonabbey.pgem.database;
 
 import java.io.IOException;
 import java.util.List;
+
+import com.shawtonabbey.pgem.database.deserializers.Constr;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -23,7 +26,9 @@ public class DbTrigger {
 				"where c.relname = ? " + 
 				"and n.nspname = ?";
 
-		var results = connection.execCon(sqlStr, DbTrigger.class, 
+		
+		var c = new Constr<>(DbTrigger.class);
+		var results = connection.execX(sqlStr, c, 
 				table.getName(), table.getSchema().getName());
 		
 		return results;

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.shawtonabbey.pgem.database.deserializers.Constr;
+
 @AllArgsConstructor
 public class DbSchema {
 
@@ -21,7 +23,8 @@ public class DbSchema {
 		(!loadSysSchema ? "where schema_name not like 'pg%' " : "") +
 		"order by schema_name;";
 
-		var rs = connection.execCon(sqlStr, DbSchema.class);
+		var c = new Constr<>(DbSchema.class);
+		var rs = connection.execX(sqlStr, c);
 
 		var results = rs.stream()
 			.filter(s-> !"information_schema".equals(s.name))

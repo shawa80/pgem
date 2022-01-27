@@ -5,13 +5,13 @@ import java.util.*;
 
 public class ARecordSet implements AutoCloseable 
 {
-	PreparedStatement statement;
-	ResultSet resultSet;
- 	ResultSetMetaData columnInfo;
-	SQLWarning warnings;
+	private PreparedStatement statement;
+	private ResultSet resultSet;
+ 	public ResultSetMetaData columnInfo;
+	private SQLWarning warnings;
 
-	String errors = "";
-	String message = "";
+	private String errors = "";
+	private String message = "";
 
 	public ARecordSet(PreparedStatement s)
 	{
