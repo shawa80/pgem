@@ -84,26 +84,18 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 	public Status getStatus() {
 		return status;
 	}
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#getColumnCount()
-	 */
+
 	@Override
 	public int getColumnCount() {
 		
 		return columns.size() + 1;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#getRowCount()
-	 */
 	@Override
 	public int getRowCount() {
 		return data.size();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#getValueAt(int, int)
-	 */
 	@Override
 	public Object getValueAt(int row, int col) {
 		
@@ -113,10 +105,6 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		return data.get(row).getColumn(col-1);
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#getColumnName(int)
-	 */
 	@Override
 	public String getColumnName(int column) {
 		
@@ -126,4 +114,12 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		return columns.get(column-1).getName();
 	}
 
+	public String getColumnSqlClass(int column) {
+		
+		if (column == 0)
+			return "";
+		
+		return columns.get(column-1).getClassName();
+	}
+	
 }

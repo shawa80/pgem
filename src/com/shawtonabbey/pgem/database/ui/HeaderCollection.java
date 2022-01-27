@@ -13,10 +13,15 @@ public class HeaderCollection extends ArrayList<Header> {
 	
 		var length = data.getColumnCount();
 		
+		
 		for (var i = 1; i <= length; i++) {
-			add(new Header(data.getColumnName(i)));
-		}
 			
+			var name = data.getColumnName(i);
+			var type = data.getColumnClassName(i);
+			
+			add(new Header(name,type));
+		}
+		
 	}
 	
 	public HeaderCollection(String... args) {
