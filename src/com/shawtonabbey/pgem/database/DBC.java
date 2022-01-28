@@ -225,8 +225,8 @@ public class DBC implements AutoCloseable
 
 	public <T> T first(String sqlStr, Class<T> cls, Object... args) throws IOException
 	{
-			
-		return exec(sqlStr, cls, args).get(0);
+		var c = new Property<>(cls);
+		return execX(sqlStr, c, args).get(0);
 	}
 	
 	public <T> List<T> execX(String sqlstr, Deserializer<T> ser, Object... args) throws IOException
@@ -260,49 +260,49 @@ public class DBC implements AutoCloseable
 
 	}
 	
-	public <T> List<T> exec(String sqlstr, Class<T> cls, Object... args) throws IOException
-	{		
-		try {			
-
-			var stm = db.prepareStatement(sqlstr);
-			
-			for (int i = 0; i < args.length; i++) {
-				stm.setObject(i+1, args[i]);
-			}
-			
-			try (var recordSet = new ARecordSet(stm)) {
-				recordSet.execute();
-
-				var results = new ArrayList<T>();
-				var cols = recordSet.columnInfo.getColumnCount();
-				
-				while (recordSet.next()) {
-		
-					var c = cls.newInstance();
-					for (var i = 1; i <= cols; i++) {
-						var colName = recordSet.getColumnName(i);
-						var className = recordSet.columnInfo.getColumnClassName(i);
-						var value = recordSet.getValue(i);
-						try {
-							var method = cls.getMethod("set" + fix(colName), Class.forName(className));
-							method.invoke(c, value);
-						} catch (NoSuchMethodException e) {}
-					}
-					results.add(c);
-				}
-				return results;
-			}
-
-		} catch (Exception e)
-		{
-			System.out.println("error on createStatement();");
-			throw new IOException(e.getMessage(), e);
-		}
-
-	}
-	private String fix(String str) {
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
+//	public <T> List<T> exec(String sqlstr, Class<T> cls, Object... args) throws IOException
+//	{		
+//		try {			
+//
+//			var stm = db.prepareStatement(sqlstr);
+//			
+//			for (int i = 0; i < args.length; i++) {
+//				stm.setObject(i+1, args[i]);
+//			}
+//			
+//			try (var recordSet = new ARecordSet(stm)) {
+//				recordSet.execute();
+//
+//				var results = new ArrayList<T>();
+//				var cols = recordSet.columnInfo.getColumnCount();
+//				
+//				while (recordSet.next()) {
+//		
+//					var c = cls.newInstance();
+//					for (var i = 1; i <= cols; i++) {
+//						var colName = recordSet.getColumnName(i);
+//						var className = recordSet.columnInfo.getColumnClassName(i);
+//						var value = recordSet.getValue(i);
+//						try {
+//							var method = cls.getMethod("set" + fix(colName), Class.forName(className));
+//							method.invoke(c, value);
+//						} catch (NoSuchMethodException e) {}
+//					}
+//					results.add(c);
+//				}
+//				return results;
+//			}
+//
+//		} catch (Exception e)
+//		{
+//			System.out.println("error on createStatement();");
+//			throw new IOException(e.getMessage(), e);
+//		}
+//
+//	}
+//	private String fix(String str) {
+//		return str.substring(0, 1).toUpperCase() + str.substring(1);
+//	}
 	
 	
 	public ARecordSet exec(String sqlstr, Object... args) throws IOException

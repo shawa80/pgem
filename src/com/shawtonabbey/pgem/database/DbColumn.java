@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.shawtonabbey.pgem.database.deserializers.Property;
+
 import lombok.Getter;
 
 public class DbColumn {
@@ -36,7 +38,8 @@ public class DbColumn {
 				"WHERE table_schema = ? " + 
 				"  AND table_name   = ?";
 
-		var r = connection.exec(sqlStr, Column.class, 
+		var c = new Property<>(Column.class);
+		var r = connection.execX(sqlStr, c, 
 				table.getSchema().getName(), table.getName());
 		
 		var cls = r.stream()

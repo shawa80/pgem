@@ -80,6 +80,30 @@ public class JavaDefPlugin  implements Plugin {
 		if (type.startsWith("java.lang."))
 			return type.substring(10);
 		
+		if ("[Z".equals(type))
+			return "boolean[]";
+		
+		if ("[B".equals(type))
+			return "byte[]";
+		
+		if ("[C".equals(type))
+			return "char[]";
+		
+		if ("[S".equals(type))
+			return "short[]";
+		
+		if ("[I".equals(type))
+			return "int[]";
+		
+		if ("[J".equals(type))
+			return "long[]";
+		
+		if ("[F".equals(type))
+			return "float[]";
+		
+		if ("[D".equals(type))
+			return "double[]";
+		
 		return type;
 	}
 	

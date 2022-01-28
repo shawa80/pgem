@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.database.TextValue;
+import com.shawtonabbey.pgem.database.deserializers.Property;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.plugin.ddl.index.IndexCreatePanel;
@@ -83,9 +84,10 @@ public class DdlPlugin implements Plugin {
 				var sw = new SwingWorker<List<TextValue>>()
 						.setWork(() -> {
 							var connection = rtn.findDbc();
-							var result = connection.exec("select pg_get_functiondef(oid) as text_value \r\n" + 
+							var c = new Property<>(TextValue.class);
+							var result = connection.execX("select pg_get_functiondef(oid) as text_value \r\n" + 
 									"from pg_proc\r\n" + 
-									"where proname = ?;", TextValue.class, rtn.getName());
+									"where proname = ?;", c, rtn.getName());
 							return result;
 						})
 						.thenOnEdt((w) -> {

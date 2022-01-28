@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.shawtonabbey.pgem.database.deserializers.Constr;
+import com.shawtonabbey.pgem.database.deserializers.Property;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +40,8 @@ public class DbTrigger {
 		var sqlStr = "select pg_get_triggerdef as text_value "
 				+ "from pg_get_triggerdef(?, true);";
 
-		var rs = connection.exec(sqlStr, TextValue.class, oid);
+		var c = new Property<>(TextValue.class);
+		var rs = connection.execX(sqlStr, c, oid);
 		
 		var def = rs.stream()
 			.findFirst()

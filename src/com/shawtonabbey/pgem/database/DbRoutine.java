@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.database.deserializers.Property;
 
 @AllArgsConstructor
 public class DbRoutine {
@@ -30,18 +31,21 @@ public class DbRoutine {
 		"where routine_schema = ? " +
 		"order by routine_name;";
 
-		var rs = connection.exec(sqlStr, TextValue.class, dbSchema.getName());
+		var c = new Property<>(TextValue.class);
+		var rs = connection.execX(sqlStr, c, dbSchema.getName());
 
+		var b = new Property<>(BigIntValue.class);
 		for (var name : rs)
 		{
 			var proc = name.getText_value();
 			var schema = dbSchema.getName();
 			
-			var oids = connection.exec("select p.oid as value from pg_proc p " + 
+			
+			var oids = connection.execX("select p.oid as value from pg_proc p " + 
 					"join pg_namespace ns on p.pronamespace = ns.oid " + 
 					"where proname = ? " + 
 					"and ns.nspname = ?",
-					BigIntValue.class, proc, schema);
+					b, proc, schema);
 			
 			var oid = oids.stream().findFirst().get().getValue();
 			
@@ -57,7 +61,8 @@ public class DbRoutine {
 		var sqlStr = "select pg_get_function_result as text_value "
 				+ "from pg_get_function_result(?)";
 
-		var rs = connection.exec(sqlStr, TextValue.class, oid);
+		var c = new Property<>(TextValue.class);
+		var rs = connection.execX(sqlStr, c, oid);
 
 		return rs.stream()
 			.findFirst()
@@ -71,8 +76,10 @@ public class DbRoutine {
 		var sqlStr = "select pg_get_function_arguments as text_value "
 				+ "from pg_get_function_arguments(?);";
 
-		var rs = connection.exec(sqlStr, TextValue.class, oid);
+		var c= new Property<>(TextValue.class);
+		var rs = connection.execX(sqlStr, c, oid);
 
+		
 		var params = rs.stream()
 			.findFirst()
 			.get().getText_value()

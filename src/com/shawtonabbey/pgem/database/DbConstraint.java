@@ -2,6 +2,10 @@ package com.shawtonabbey.pgem.database;
 
 import java.io.IOException;
 import java.util.List;
+
+import com.shawtonabbey.pgem.database.deserializers.Constr;
+import com.shawtonabbey.pgem.database.deserializers.Property;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -25,7 +29,8 @@ public class DbConstraint {
 				"       WHERE nsp.nspname = ?" + 
 				"             AND rel.relname = ?;";
 
-		var results = connection.exec(sqlStr, DbConstraint.class, 
+		var c = new Constr<>(DbConstraint.class);
+		var results = connection.execX(sqlStr, c, 
 				table.getSchema().getName(), table.getName());
 		
 		return results;
@@ -36,7 +41,8 @@ public class DbConstraint {
 		var sqlStr = "select pg_get_constraintdef as text_value "
 				+ "from pg_get_constraintdef(?, true);";
 
-		var rs = connection.exec(sqlStr, TextValue.class, oid);
+		var c = new Property<>(TextValue.class);
+		var rs = connection.execX(sqlStr, c, oid);
 		
 		return rs.stream().findFirst().get().getText_value();
 	}

@@ -23,9 +23,6 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		data = new ArrayList<Row>();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#clear()
-	 */
 	@Override
 	public void clear() {
 		columns = new HeaderCollection();
@@ -34,9 +31,6 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		this.fireTableDataChanged();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#setColumns(com.shawtonabbey.pgem.database.ui.Header)
-	 */
 	@Override
 	public void setColumns(HeaderCollection h) {
 		columns = h;
@@ -45,9 +39,6 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		this.fireTableStructureChanged();
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.shawtonabbey.pgem.query.TableModel#addRow(com.shawtonabbey.pgem.database.ui.Row)
-	 */
 	@Override
 	public void addRow(Row r) {
 		data.add(r);
@@ -102,7 +93,24 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		if (col == 0)
 			return row+1;
 		
-		return data.get(row).getColumn(col-1);
+		var x = data.get(row).getColumn(col-1);
+		var t = x.getClass();
+		var u = t.getComponentType();
+		
+		if (t.isArray() && u == byte.class) {
+			return "[" + toHex((byte[])x) + "]";
+		}
+				
+		
+		return x;
+	}
+	
+	private String toHex(byte[] in) {
+		
+		   StringBuilder sb = new StringBuilder(in.length * 2);
+		   for(byte b: in)
+		      sb.append(String.format("%02x ", b));
+		   return sb.toString();
 	}
 
 	@Override
