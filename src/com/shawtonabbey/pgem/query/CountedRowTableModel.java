@@ -93,16 +93,20 @@ public class CountedRowTableModel extends AbstractTableModel implements SqlTable
 		if (col == 0)
 			return row+1;
 		
-		var x = data.get(row).getColumn(col-1);
-		var t = x.getClass();
-		var u = t.getComponentType();
+		var value = data.get(row).getColumn(col-1);
+
+		if (value == null) 
+			return "(null)";
 		
-		if (t.isArray() && u == byte.class) {
-			return "[" + toHex((byte[])x) + "]";
+		var type = value.getClass();
+		var u = type.getComponentType();
+		
+		if (type.isArray() && u == byte.class) {
+			return "[" + toHex((byte[])value) + "]";
 		}
 				
 		
-		return x;
+		return value;
 	}
 	
 	private String toHex(byte[] in) {
