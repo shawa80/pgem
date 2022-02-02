@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.DbConstraint;
 import com.shawtonabbey.pgem.database.DbTable;
-import com.shawtonabbey.pgem.database.deserializers.Constr;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
@@ -51,7 +51,7 @@ public class TableDefPlugin implements Plugin {
 	private String makeTableDef(DBC dbc, DbTable t) {
 		
 		
-		//try {
+		try {
 			
 			var oid = t.getOid();
 		
@@ -64,16 +64,39 @@ public class TableDefPlugin implements Plugin {
 			
 			var colsStr2 = String.join(",\n", colsStr);
 			
-			var result = "CREATE TABLE " + t.getName() + " ( \n" +
-					colsStr2 +
-			  " )";
+			
+
+			var constrList = DbConstraint
+					.getConstraints(dbc, t)
+					.stream()
+					.map(x-> "\t" + x.getName() + " " + getTableConDef(x, dbc))
+					.collect(Collectors.toList());
+			
+			var h = String.join(",\n ", constrList);
+			
+			var result = "CREATE TABLE " + t.getName() + " ( \n";
+			result += colsStr2; 
+			if (constrList.size() > 0)
+				result += ", \n" + h;
+			result += "\n)";
+			
 			
 			return result;
-		//} catch (IOException e1) {
-			// TODO Auto-generated catch block
-		//	e1.printStackTrace();
-		//}
-		//return "";
+			
+		} catch (IOException e1) {
+			 //TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return "";
+	}
+	
+	private String getTableConDef(DbConstraint x, DBC dbc) {
+		
+		try {
+			return x.getDefinition(dbc);
+		} catch (IOException e) {
+		}
+		return "";
 	}
 	
 	private String makeColDef(DbColumn col) {
