@@ -44,7 +44,7 @@ public class DbConstraint {
 		var c = new Property<>(TextValue.class);
 		var rs = connection.execX(sqlStr, c, oid);
 		
-		return rs.stream().findFirst().get().getText_value();
+		return rs.stream().findFirst().orElseThrow().getText_value();
 	}
 	
 }

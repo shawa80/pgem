@@ -1,11 +1,15 @@
 package com.shawtonabbey.pgem.plugin.TableDef;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.PgemMainWindow;
+import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.database.deserializers.Constr;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
@@ -33,31 +37,65 @@ public class TableDefPlugin implements Plugin {
 
 				//tODO move to thread;
 				var dbc = t.findDbc();
-				//var oid = t.getTable().getOid();
-				var oid = 7;
 				
-				var c = new Constr<>(TableQuery.class);
-				try {
-					dbc.execX("SELECT c.relchecks, c.relkind, c.relhasindex, c.relhasrules, \n" + 
-							"c.relhastriggers, c.relrowsecurity, c.relforcerowsecurity, \n" + 
-							"false AS relhasoids, c.relispartition, c.oid, c.reltablespace, \n" + 
-							"CASE WHEN c.reloftype = 0 THEN '' ELSE c.reloftype::pg_catalog.regtype::pg_catalog.text END,\n" + 
-							"c.relpersistence, c.relreplident, am.amname\n" + 
-							"FROM pg_catalog.pg_class c\n" + 
-							"LEFT JOIN pg_catalog.pg_class tc ON (c.reltoastrelid = tc.oid)\n" + 
-							"LEFT JOIN pg_catalog.pg_am am ON (c.relam = am.oid)"
-							+ "WHERE c.oid = ?", c, oid);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				var sql = makeTableDef(dbc, t.getTable());
 				
-				window.launchQueryWin(t.findDbc(), "");
+				window.launchQueryWin(t.findDbc(), sql);
 				
 			});
 			
 		});
 		
+	}
+	
+	private String makeTableDef(DBC dbc, DbTable t) {
+		
+		
+		//try {
+			
+			var oid = t.getOid();
+		
+			
+			var cols = t.getColumns();
+			
+			var colsStr = cols.stream()
+				.map(x-> "\t" + makeColDef(x))
+				.collect(Collectors.toList());
+			
+			var colsStr2 = String.join(",\n", colsStr);
+			
+			var result = "CREATE TABLE " + t.getName() + " ( \n" +
+					colsStr2 +
+			  " )";
+			
+			return result;
+		//} catch (IOException e1) {
+			// TODO Auto-generated catch block
+		//	e1.printStackTrace();
+		//}
+		//return "";
+	}
+	
+	private String makeColDef(DbColumn col) {
+		var result = "";
+		
+		result += col.getName() + " " + col.getType();
+		
+		if (col.getCharacterMaximumLength() != null) {
+			result += "(" + col.getCharacterMaximumLength() + ")";
+		}
+		
+		if (col.isNullable()) {
+			result += " null";
+		} else { 
+			result += " not null";
+		}
+		
+		if (col.getDefaultValue() != null) {
+			result += " default " + col.getDefaultValue();
+		}
+		
+		return result;
 	}
 	
 }

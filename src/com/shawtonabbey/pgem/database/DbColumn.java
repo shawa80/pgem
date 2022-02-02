@@ -19,21 +19,40 @@ public class DbColumn {
 	
 	@Getter
 	private DbTableLike parent;
+	
+	@Getter
+	private boolean isNullable;
+	
+	@Getter
+	private String defaultValue;
 		
+	@Getter
+	private Integer characterMaximumLength;
+	
 	public DbColumn(DbTableLike parent, Column c) {
-		this(parent, c.getColumn_name(), c.getData_type());
+				
+		this(parent, c.getColumn_name(), 
+				c.getData_type(), 
+				"YES".equals(c.getIs_nullable()), 
+				c.getColumn_default(),
+				c.getCharacter_maximum_length());
 	}
 	
-	public DbColumn(DbTableLike parent, String name, String type) {
+	public DbColumn(DbTableLike parent, String name, String type, boolean isNullable, String defaultValue,
+			Integer characterMaximumLength) {
 		
 		this.name = name;
 		this.type = type;
 		this.parent = parent;
+		this.isNullable = isNullable;
+		this.defaultValue = defaultValue;
+		this.characterMaximumLength = characterMaximumLength;
 	}
 
 	public static List<DbColumn> getColumns(DBC connection, DbTableLike table) throws IOException {
 		
-		var sqlStr = "SELECT column_name, data_type " + 
+		var sqlStr = "SELECT column_name, data_type, column_default, is_nullable, "
+				+ " character_maximum_length " +
 				"FROM information_schema.columns " + 
 				"WHERE table_schema = ? " + 
 				"  AND table_name   = ?";
