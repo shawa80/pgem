@@ -33,7 +33,7 @@ public class TableDefPlugin implements Plugin {
 				
 		dispatch.find(TableInstance.Ev.class).listen((t,ev) -> {
 			
-			t.addPopup("Def", (e) -> {
+			t.addPopup("DDL", "Create", (e) -> {
 
 				//tODO move to thread;
 				var dbc = t.findDbc();
