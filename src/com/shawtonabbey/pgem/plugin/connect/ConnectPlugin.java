@@ -32,7 +32,7 @@ public class ConnectPlugin implements Plugin {
 	public void register() {
 			
 		javax.security.auth.login.Configuration.setConfiguration(new CustomConfig());
-	
+
 	}
 	
 	public void init() {

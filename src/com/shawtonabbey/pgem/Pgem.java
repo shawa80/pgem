@@ -41,11 +41,11 @@ public class Pgem
 		var context = new AnnotationConfigApplicationContext(
             AppConfig.class);
     
-		var loader = ServiceLoader.load(PluginFactory.class);
-		for (PluginFactory plugin : loader) {
-		    System.out.println(plugin);
-		    plugin.load(context).init();
-		}
+		//var loader = ServiceLoader.load(PluginFactory.class);
+		//for (PluginFactory plugin : loader) {
+		//    System.out.println(plugin);
+		//    plugin.load(context).init();
+		//}
 
 		
 		var beans = context.getBeansOfType(Plugin.class);

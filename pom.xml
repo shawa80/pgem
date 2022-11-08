@@ -24,11 +24,11 @@
     </plugins>
   </build>
   <dependencies>
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>42.3.1</version>
-</dependency>
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>42.3.1</version>
+	</dependency>
 
   	<dependency>
   		<groupId>org.springframework</groupId>
@@ -42,6 +42,21 @@
   		<version>3.1.1</version>
   	</dependency>	
 
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>5.12.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy</artifactId>
+			<version>1.12.18</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bytebuddy</groupId>
+			<artifactId>byte-buddy-agent</artifactId>
+			<version>1.12.18</version>
+		</dependency>
   		
 		<!--   <dependency org="com.siliconandsynapse.code" name="observable" rev="1.0.0" />
 		<dependency org="com.siliconandsynapse.code" name="jsyntaxpane" rev="1.1.5" />

@@ -18,7 +18,7 @@ public class ItemView extends JComponent {
 		
 		lblLabel = new JLabel("New label");
 		lblLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblLabel.setIcon(new ImageIcon(ItemView.class.getResource("/org/springframework/scripting/config/spring-lang.gif")));
+		//lblLabel.setIcon(new ImageIcon(ItemView.class.getResource("/org/springframework/scripting/config/spring-lang.gif")));
 		add(lblLabel);
 		
 		var padding = new JLabel("                    ");
