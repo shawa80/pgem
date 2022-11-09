@@ -50,6 +50,9 @@ module pgem {
 	requires java.xml;
 	requires jdk.security.auth;
 	requires static lombok;
+	requires KcmKrb5;
+	requires com.sun.jna;
+	requires net.bytebuddy;
 	requires rsyntaxtextarea;
 	requires spring.beans;
 	requires spring.context;

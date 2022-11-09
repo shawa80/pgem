@@ -17,6 +17,7 @@ public class DbRule {
 	private String def;
 	
 	public static List<DbRule> getRules(DBC connection, DbTableLike table) throws IOException {
+			
 		
 		var sqlStr = "select rulename as name, definition as def "
 				+ " from pg_rules"

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.kerberos.kcm.KerberosCacheIntercept;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.Plugin;
@@ -32,7 +33,7 @@ public class ConnectPlugin implements Plugin {
 	public void register() {
 			
 		javax.security.auth.login.Configuration.setConfiguration(new CustomConfig());
-
+		KerberosCacheIntercept.installKcm();
 	}
 	
 	public void init() {
