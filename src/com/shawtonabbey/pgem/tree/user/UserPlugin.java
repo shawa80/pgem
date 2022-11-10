@@ -20,8 +20,7 @@ public class UserPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(UserGroup.Added.class);
-		dispatch.register(UserInstance.Added.class);
+
 	}
 	
 	public void init() {

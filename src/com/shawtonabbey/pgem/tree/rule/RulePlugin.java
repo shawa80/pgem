@@ -21,8 +21,7 @@ public class RulePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(RuleGroup.Added.class);
-		dispatch.register(RuleInstance.Added.class);
+
 	}
 	
 	public void init() {

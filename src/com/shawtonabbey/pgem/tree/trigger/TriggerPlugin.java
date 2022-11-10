@@ -18,8 +18,7 @@ public class TriggerPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(TriggerGroup.Added.class);
-		dispatch.register(TriggerInstance.Added.class);
+
 	}
 	
 	public void init() {

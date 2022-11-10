@@ -18,8 +18,7 @@ public class SequencePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(SequenceGroup.Added.class);
-		dispatch.register(SequenceInstance.Added.class);
+
 	}
 	
 	public void init() {

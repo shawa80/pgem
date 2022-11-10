@@ -11,10 +11,6 @@ import com.shawtonabbey.pgem.event.Open;
 import com.shawtonabbey.pgem.event.Save;
 import com.shawtonabbey.pgem.event.Start;
 import com.shawtonabbey.pgem.event.Stop;
-import com.shawtonabbey.pgem.query.AQueryWindow;
-import com.shawtonabbey.pgem.tree.DBManager;
-import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
-import com.shawtonabbey.pgem.tree.database.ServerInstance;
 
 @Component
 public class SysPlugin implements Plugin {
@@ -29,16 +25,7 @@ public class SysPlugin implements Plugin {
 	private EventDispatch dispatch;
 	
 	public void register() {
-		dispatch.register(DatabaseInstance.Added.class);
-		dispatch.register(ServerInstance.Added.class);
-		dispatch.register(DBManager.Ev.class);
-		dispatch.register(AQueryWindow.Ev.class);
-		dispatch.register(MenuEv.class);
-		
-		dispatch.register(SaveEv.class);
-		dispatch.register(OpenEv.class);
-		dispatch.register(ConnectEv.class);
-		dispatch.register(DisconnectEv.class);
+
 	}
 	
 	public void init() {

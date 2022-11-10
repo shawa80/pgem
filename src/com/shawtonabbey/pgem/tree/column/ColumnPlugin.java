@@ -19,8 +19,7 @@ public class ColumnPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(ColumnGroup.Added.class);
-		dispatch.register(ColumnInstance.Ev.class);
+
 	}
 	
 	public void init() {

@@ -19,8 +19,7 @@ public class ViewPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(ViewGroup.Added.class);
-		dispatch.register(ViewInstance.Added.class);
+
 	}
 	
 	public void init() {

@@ -18,8 +18,7 @@ public class SchemaPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(SchemaGroup.Added.class);
-		dispatch.register(SchemaInstance.Added.class);
+
 	}
 	
 	public void init() {

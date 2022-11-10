@@ -18,8 +18,7 @@ public class TablePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(TableGroup.Added.class);
-		dispatch.register(TableInstance.Added.class);
+
 	}
 	
 	public void init() {

@@ -18,12 +18,6 @@ public class RoutinePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(RoutineGroup.Added.class);
-		dispatch.register(RoutineInstance.Added.class);
-		dispatch.register(RoutineParamGroup.Added.class);
-		dispatch.register(RoutineParamInstance.Added.class);
-		dispatch.register(RoutineReturnGroup.Added.class);
-		dispatch.register(RoutineReturnInstance.Added.class);
 		
 	}
 	

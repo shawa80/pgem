@@ -18,8 +18,7 @@ public class ConstraintPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(ConstraintGroup.Added.class);
-		dispatch.register(ConstraintInstance.Added.class);
+
 	}
 	
 	public void init() {

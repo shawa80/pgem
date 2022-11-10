@@ -18,8 +18,7 @@ public class IndexPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(IndexGroup.Added.class);
-		dispatch.register(IndexInstance.Added.class);
+
 	}
 	
 	public void init() {

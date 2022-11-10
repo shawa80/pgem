@@ -176,7 +176,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.find(ColumnInstance.Ev.class).listen((cln,ev)-> {
+		dispatch.find(ColumnInstance.Added.class).listen((cln,ev)-> {
 			
 			if (!(cln.getUiParent().getUiParent() instanceof TableInstance))
 				return;
