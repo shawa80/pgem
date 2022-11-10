@@ -21,15 +21,15 @@ public class RulePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(RuleGroup.Ev.class);
-		dispatch.register(RuleInstance.Ev.class);
+		dispatch.register(RuleGroup.Added.class);
+		dispatch.register(RuleInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(TableInstance.Ev.class).listen((t, event) -> {
+		dispatch.find(TableInstance.Added.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(RuleGroup.class, t, t.getTable()).load(event));
 		});
-		dispatch.find(ViewInstance.Ev.class).listen((v, event) -> {
+		dispatch.find(ViewInstance.Added.class).listen((v, event) -> {
 			v.addNode(appContext.getBean(RuleGroup.class, v, v.getView()).load(event));
 		});
 	}

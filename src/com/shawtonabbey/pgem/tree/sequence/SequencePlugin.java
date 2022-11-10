@@ -18,12 +18,12 @@ public class SequencePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(SequenceGroup.Ev.class);
-		dispatch.register(SequenceInstance.Ev.class);
+		dispatch.register(SequenceGroup.Added.class);
+		dispatch.register(SequenceInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(SchemaInstance.Ev.class).listen((s, event) -> {
+		dispatch.find(SchemaInstance.Added.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(SequenceGroup.class, s).load(event));
 		});
 	}

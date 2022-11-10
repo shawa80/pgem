@@ -31,7 +31,7 @@ public class TableDefPlugin implements Plugin {
 	
 	public void init() {
 				
-		dispatch.find(TableInstance.Ev.class).listen((t,ev) -> {
+		dispatch.find(TableInstance.Added.class).listen((t,ev) -> {
 			
 			t.addPopup("DDL", "Create", (e) -> {
 

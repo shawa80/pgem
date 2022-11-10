@@ -21,7 +21,7 @@ public class UserGroup extends XGroup<DatabaseInstance>
 {
 	private DbDatabase db;
 	
-	public interface Ev extends Add<UserGroup> {}
+	public interface Added extends Add<UserGroup> {}
 	
 	public UserGroup(DatabaseInstance parent, DbDatabase db)
 	{
@@ -52,7 +52,7 @@ public class UserGroup extends XGroup<DatabaseInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 	}
 
 }

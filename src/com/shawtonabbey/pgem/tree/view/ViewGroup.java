@@ -21,7 +21,7 @@ public class ViewGroup extends XGroup<SchemaInstance>
 	private SchemaInstance schema;
 
 	
-	public interface Ev extends Add<ViewGroup> {}
+	public interface Added extends Add<ViewGroup> {}
 
 	
 	public ViewGroup(SchemaInstance schema)
@@ -54,7 +54,7 @@ public class ViewGroup extends XGroup<SchemaInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 	}
 
 }

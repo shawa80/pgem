@@ -19,12 +19,12 @@ public class ViewPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(ViewGroup.Ev.class);
-		dispatch.register(ViewInstance.Ev.class);
+		dispatch.register(ViewGroup.Added.class);
+		dispatch.register(ViewInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(SchemaInstance.Ev.class).listen((s, event) -> {
+		dispatch.find(SchemaInstance.Added.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(ViewGroup.class, s).load(event));
 		});
 	}

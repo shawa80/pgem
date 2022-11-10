@@ -11,7 +11,7 @@ import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
-import com.shawtonabbey.pgem.tree.routine.RoutineParamGroup.Ev;
+import com.shawtonabbey.pgem.tree.routine.RoutineParamGroup.Added;
 
 import lombok.Getter;
 
@@ -22,7 +22,7 @@ public class RoutineReturnGroup extends XGroup<RoutineInstance>
 	@Getter
 	private RoutineInstance routine;
 
-	public interface Ev extends Add<RoutineReturnGroup> {}
+	public interface Added extends Add<RoutineReturnGroup> {}
 	
 	public RoutineReturnGroup(RoutineInstance routine)
 	{
@@ -54,7 +54,7 @@ public class RoutineReturnGroup extends XGroup<RoutineInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 	

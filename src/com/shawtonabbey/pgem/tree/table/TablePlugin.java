@@ -18,12 +18,12 @@ public class TablePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(TableGroup.Ev.class);
-		dispatch.register(TableInstance.Ev.class);
+		dispatch.register(TableGroup.Added.class);
+		dispatch.register(TableInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(SchemaInstance.Ev.class).listen((s, e) -> {
+		dispatch.find(SchemaInstance.Added.class).listen((s, e) -> {
 			s.addNode(appContext.getBean(TableGroup.class, s).load(e));
 		});
 	}

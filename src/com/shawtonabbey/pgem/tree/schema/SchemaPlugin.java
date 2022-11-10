@@ -18,12 +18,12 @@ public class SchemaPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(SchemaGroup.Ev.class);
-		dispatch.register(SchemaInstance.Ev.class);
+		dispatch.register(SchemaGroup.Added.class);
+		dispatch.register(SchemaInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(DatabaseInstance.Ev.class).listen((d, event) -> {
+		dispatch.find(DatabaseInstance.Added.class).listen((d, event) -> {
 			
 			d.addNode(appContext.getBean(SchemaGroup.class, d, d.getDatabase()).load(event));
 		});

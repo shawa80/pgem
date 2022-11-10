@@ -20,7 +20,7 @@ import com.shawtonabbey.pgem.ui.tree.ItemModel;
 public class ColumnGroup<T extends ItemModel> extends XGroup<T> {
 
 	
-	public interface Ev extends Add<ColumnGroup<?>> {}
+	public interface Added extends Add<ColumnGroup<?>> {}
 		
 	private DbColumnCollection table;
 	
@@ -60,7 +60,7 @@ public class ColumnGroup<T extends ItemModel> extends XGroup<T> {
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 

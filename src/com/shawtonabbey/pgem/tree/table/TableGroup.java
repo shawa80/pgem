@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class TableGroup extends XGroup<SchemaInstance>
 {
 			
-	public interface Ev extends Add<TableGroup> {}
+	public interface Added extends Add<TableGroup> {}
 	
 	public TableGroup(SchemaInstance schema)
 	{
@@ -27,7 +27,7 @@ public class TableGroup extends XGroup<SchemaInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this,  event));
+		dispatch.find(Added.class).fire(o->o.added(this,  event));
 	}
 	
 	@Override

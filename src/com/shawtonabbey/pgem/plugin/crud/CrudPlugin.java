@@ -27,13 +27,13 @@ public class CrudPlugin implements Plugin {
 	public void init() {
 		
 		
-		dispatch.find(ViewInstance.Ev.class).listen((view, ev) -> {
+		dispatch.find(ViewInstance.Added.class).listen((view, ev) -> {
 			view.addPopup("CRUD", "Select", (e) -> {
 				win.launchQueryWin(view.findDbc(), "Select * from " + view.getView().getName() + " limit 100;");
 			});
 		});
 		
-		dispatch.find(TableInstance.Ev.class).listen((table, ev) -> {
+		dispatch.find(TableInstance.Added.class).listen((table, ev) -> {
 			
 			table.addPopup("CRUD", "Select", (e) -> {
 				

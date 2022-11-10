@@ -24,7 +24,7 @@ public class UserCrudPlugin implements Plugin {
 
 	@Override
 	public void init() {
-		dispatch.find(UserGroup.Ev.class).listen((users, ev) -> {
+		dispatch.find(UserGroup.Added.class).listen((users, ev) -> {
 			users.addPopup("Add", (e) -> {
 				win.launchQueryWin(users.findDbc(), 
 						"CREATE USER name");

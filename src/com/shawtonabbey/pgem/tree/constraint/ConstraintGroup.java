@@ -26,7 +26,7 @@ public class ConstraintGroup extends XGroup<TableInstance> {
 	@Getter
 	private DbTable table;
 	
-	public interface Ev extends Add<ConstraintGroup> {}
+	public interface Added extends Add<ConstraintGroup> {}
 		
 	public ConstraintGroup(TableInstance parent, DbTable table)
 	{
@@ -56,7 +56,7 @@ public class ConstraintGroup extends XGroup<TableInstance> {
 	}
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 

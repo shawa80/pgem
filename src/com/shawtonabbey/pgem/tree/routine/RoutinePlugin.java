@@ -18,25 +18,25 @@ public class RoutinePlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(RoutineGroup.Ev.class);
-		dispatch.register(RoutineInstance.Ev.class);
-		dispatch.register(RoutineParamGroup.Ev.class);
-		dispatch.register(RoutineParamInstance.Ev.class);
-		dispatch.register(RoutineReturnGroup.Ev.class);
-		dispatch.register(RoutineReturnInstance.Ev.class);
+		dispatch.register(RoutineGroup.Added.class);
+		dispatch.register(RoutineInstance.Added.class);
+		dispatch.register(RoutineParamGroup.Added.class);
+		dispatch.register(RoutineParamInstance.Added.class);
+		dispatch.register(RoutineReturnGroup.Added.class);
+		dispatch.register(RoutineReturnInstance.Added.class);
 		
 	}
 	
 	public void init() {
-		dispatch.find(SchemaInstance.Ev.class).listen((s, event) -> {
+		dispatch.find(SchemaInstance.Added.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(RoutineGroup.class, s).load(event));
 		});
 		
-		dispatch.find(RoutineInstance.Ev.class).listen((s, event) -> {
+		dispatch.find(RoutineInstance.Added.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(RoutineParamGroup.class, s).load(event));
 		});
 	
-		dispatch.find(RoutineInstance.Ev.class).listen((s, event) -> {
+		dispatch.find(RoutineInstance.Added.class).listen((s, event) -> {
 			s.addNode(appContext.getBean(RoutineReturnGroup.class, s).load(event));
 		});
 	}

@@ -45,13 +45,13 @@ public class DdlPlugin implements Plugin {
 	
 	public void init() {
 
-		dispatch.find(ServerInstance.Ev.class).listen((srv, ev) -> {
+		dispatch.find(ServerInstance.Added.class).listen((srv, ev) -> {
 			srv.addPopup("Reload", (e) -> {
 				srv.reload(new Event());				
 			});
 		});
 	
-		dispatch.find(RoutineGroup.Ev.class).listen((rtGrp, ev) -> {
+		dispatch.find(RoutineGroup.Added.class).listen((rtGrp, ev) -> {
 			
 			rtGrp.addPopup("DDL", "Create", (e) -> {
 				win.launchQueryWin(rtGrp.findDbc(), 
@@ -77,7 +77,7 @@ public class DdlPlugin implements Plugin {
 		
 		
 		
-		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
+		dispatch.find(RoutineInstance.Added.class).listen((rtn,ev) -> {
 			
 			rtn.addPopup("DDL", "Create Script", (e) -> {
 				
@@ -100,7 +100,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.find(RoutineInstance.Ev.class).listen((rtn,ev) -> {
+		dispatch.find(RoutineInstance.Added.class).listen((rtn,ev) -> {
 			
 			rtn.addPopup("DDL", "Drop", (e) -> {
 				win.launchQueryWin(rtn.findDbc(), 
@@ -112,7 +112,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.find(SequenceGroup.Ev.class).listen((sqc, ev) -> {
+		dispatch.find(SequenceGroup.Added.class).listen((sqc, ev) -> {
 			
 			sqc.addPopup("DDL", "Create", (e) -> {
 				win.launchQueryWin(sqc.findDbc(), 
@@ -124,7 +124,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.find(TableGroup.Ev.class).listen((group, ev) -> {
+		dispatch.find(TableGroup.Added.class).listen((group, ev) -> {
 			
 			group.addPopup("DDL", "New Table", (e) -> {
 				
@@ -137,7 +137,7 @@ public class DdlPlugin implements Plugin {
 
 		});
 		
-		dispatch.find(TableInstance.Ev.class).listen((table,ev) -> {
+		dispatch.find(TableInstance.Added.class).listen((table,ev) -> {
 			
 			table.addPopup("DDL", "Drop", (e) -> {
 				
@@ -159,7 +159,7 @@ public class DdlPlugin implements Plugin {
 
 		
 		
-		dispatch.find(ColumnGroup.Ev.class).listen((grp, ev) -> {
+		dispatch.find(ColumnGroup.Added.class).listen((grp, ev) -> {
 			
 			if (!(grp.parent instanceof TableInstance))
 				return;
@@ -191,7 +191,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 	
-		dispatch.find(ViewGroup.Ev.class).listen((view,ev) -> {
+		dispatch.find(ViewGroup.Added.class).listen((view,ev) -> {
 			view.addPopup("DDL", "Create", (e) -> {
 				
 				win.launchQueryWin(view.findDbc(), 
@@ -202,7 +202,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 		
-		dispatch.find(ViewInstance.Ev.class).listen((view,ev) -> {
+		dispatch.find(ViewInstance.Added.class).listen((view,ev) -> {
 			
 			view.addPopup("DDL", "Script Create", (e) -> {
 				
@@ -220,7 +220,7 @@ public class DdlPlugin implements Plugin {
 		});
 		
 
-		dispatch.find(IndexGroup.Ev.class).listen((indexGrp,ev) -> {
+		dispatch.find(IndexGroup.Added.class).listen((indexGrp,ev) -> {
 			
 			indexGrp.addPopup("DDL", "GUI", (e) -> {
 				var ui = new IndexCreatePanel(indexGrp.getTable());
@@ -240,7 +240,7 @@ public class DdlPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.find(IndexInstance.Ev.class).listen((index,ev) -> {
+		dispatch.find(IndexInstance.Added.class).listen((index,ev) -> {
 			
 			index.addPopup("DDL", "Script Create", (e) -> {
 				
@@ -255,7 +255,7 @@ public class DdlPlugin implements Plugin {
 			});		
 		});
 
-		dispatch.find(ConstraintInstance.Ev.class).listen((con,ev) -> {
+		dispatch.find(ConstraintInstance.Added.class).listen((con,ev) -> {
 			
 			con.addPopup("DDL", "Script Create", (e) -> {
 				
@@ -270,7 +270,7 @@ public class DdlPlugin implements Plugin {
 				
 		});
 		
-		dispatch.find(RuleInstance.Ev.class).listen((rule,ev) -> {
+		dispatch.find(RuleInstance.Added.class).listen((rule,ev) -> {
 			
 			rule.addPopup("DDL", "Script Create", (e) -> {
 				
@@ -285,7 +285,7 @@ public class DdlPlugin implements Plugin {
 				
 		});
 
-		dispatch.find(TriggerInstance.Ev.class).listen((trigger,ev) -> {
+		dispatch.find(TriggerInstance.Added.class).listen((trigger,ev) -> {
 			
 			trigger.addPopup("DDL", "Script Create", (e) -> {
 				

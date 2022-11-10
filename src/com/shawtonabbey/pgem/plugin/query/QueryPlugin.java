@@ -24,7 +24,7 @@ public class QueryPlugin implements Plugin {
 	public void init() {
 				
 		
-		dispatch.find(DatabaseInstance.Ev.class).listen((m,ev) -> {
+		dispatch.find(DatabaseInstance.Added.class).listen((m,ev) -> {
 			
 			m.addPopup("Query", (e) -> {
 

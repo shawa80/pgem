@@ -23,7 +23,7 @@ public class RefreshPlugin implements Plugin {
 	public void init() {
 				
 		
-		dispatch.find(ViewGroup.Ev.class).listen((m,ev) -> {
+		dispatch.find(ViewGroup.Added.class).listen((m,ev) -> {
 			
 			m.addPopup("Refresh", (e) -> {
 				
@@ -33,7 +33,7 @@ public class RefreshPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.find(TableGroup.Ev.class).listen((m,ev) -> {
+		dispatch.find(TableGroup.Added.class).listen((m,ev) -> {
 			
 			m.addPopup("Refresh", (e) -> {
 				

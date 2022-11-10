@@ -21,7 +21,7 @@ public class SequenceInstance extends Instance<SequenceGroup>
 	@Getter
 	private DbSequence sequence;
 	
-	public interface Ev extends Add<SequenceInstance> {}
+	public interface Added extends Add<SequenceInstance> {}
 	
 	public SequenceInstance(SequenceGroup parent, DbSequence sequence)
 	{
@@ -32,7 +32,7 @@ public class SequenceInstance extends Instance<SequenceGroup>
 	
 	public SequenceInstance load(Event event) {
 		
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 				
 		return this;
 	}

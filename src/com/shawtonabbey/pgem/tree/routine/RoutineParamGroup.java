@@ -22,7 +22,7 @@ public class RoutineParamGroup extends XGroup<RoutineInstance>
 	@Getter
 	private RoutineInstance routine;
 
-	public interface Ev extends Add<RoutineParamGroup> {}
+	public interface Added extends Add<RoutineParamGroup> {}
 	
 	public RoutineParamGroup(RoutineInstance routine)
 	{
@@ -54,7 +54,7 @@ public class RoutineParamGroup extends XGroup<RoutineInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 	

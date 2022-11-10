@@ -19,7 +19,7 @@ public class RoutineInstance extends XGroup<RoutineGroup>
 	@Getter
 	DbRoutine routine;
 	
-	public interface Ev extends Add<RoutineInstance> {}
+	public interface Added extends Add<RoutineInstance> {}
 	
 	public RoutineInstance(RoutineGroup parent, DbRoutine r)
 	{
@@ -36,7 +36,7 @@ public class RoutineInstance extends XGroup<RoutineGroup>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 

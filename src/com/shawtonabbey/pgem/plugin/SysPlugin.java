@@ -29,8 +29,8 @@ public class SysPlugin implements Plugin {
 	private EventDispatch dispatch;
 	
 	public void register() {
-		dispatch.register(DatabaseInstance.Ev.class);
-		dispatch.register(ServerInstance.Ev.class);
+		dispatch.register(DatabaseInstance.Added.class);
+		dispatch.register(ServerInstance.Added.class);
 		dispatch.register(DBManager.Ev.class);
 		dispatch.register(AQueryWindow.Ev.class);
 		dispatch.register(MenuEv.class);

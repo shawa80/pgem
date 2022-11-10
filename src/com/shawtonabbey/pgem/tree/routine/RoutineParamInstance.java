@@ -13,7 +13,7 @@ import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
 import com.shawtonabbey.pgem.tree.index.IndexGroup;
 import com.shawtonabbey.pgem.tree.index.IndexInstance;
-import com.shawtonabbey.pgem.tree.index.IndexInstance.Ev;
+import com.shawtonabbey.pgem.tree.index.IndexInstance.Added;
 
 import lombok.Getter;
 
@@ -27,7 +27,7 @@ public class RoutineParamInstance extends Instance<RoutineParamGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<RoutineParamInstance> {}
+	public interface Added extends Add<RoutineParamInstance> {}
 	
 	public RoutineParamInstance(RoutineParamGroup parent, String type)
 	{
@@ -38,7 +38,7 @@ public class RoutineParamInstance extends Instance<RoutineParamGroup> {
 	public RoutineParamInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));				
+		dispatch.find(Added.class).fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

@@ -18,12 +18,12 @@ public class IndexPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(IndexGroup.Ev.class);
-		dispatch.register(IndexInstance.Ev.class);
+		dispatch.register(IndexGroup.Added.class);
+		dispatch.register(IndexInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(TableInstance.Ev.class).listen((t, event) -> {
+		dispatch.find(TableInstance.Added.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(IndexGroup.class, t, t.getTable()).load(event));
 		});
 	}

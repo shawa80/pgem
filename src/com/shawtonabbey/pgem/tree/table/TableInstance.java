@@ -19,8 +19,7 @@ public class TableInstance extends XGroup<TableGroup>
 	@Getter
 	private DbTable table;
 			
-
-	public interface Ev extends Add<TableInstance> {}
+	public interface Added extends Add<TableInstance> {}
 	
 	public TableInstance(TableGroup parent, DbTable table)
 	{
@@ -35,7 +34,7 @@ public class TableInstance extends XGroup<TableGroup>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 	}
 	
 

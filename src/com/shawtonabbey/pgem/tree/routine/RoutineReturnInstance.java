@@ -10,7 +10,7 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
-import com.shawtonabbey.pgem.tree.routine.RoutineParamInstance.Ev;
+import com.shawtonabbey.pgem.tree.routine.RoutineParamInstance.Added;
 
 import lombok.Getter;
 
@@ -24,7 +24,7 @@ public class RoutineReturnInstance extends Instance<RoutineReturnGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<RoutineReturnInstance> {}
+	public interface Added extends Add<RoutineReturnInstance> {}
 	
 	public RoutineReturnInstance(RoutineReturnGroup parent, String returns)
 	{
@@ -35,7 +35,7 @@ public class RoutineReturnInstance extends Instance<RoutineReturnGroup> {
 	public RoutineReturnInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));				
+		dispatch.find(Added.class).fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

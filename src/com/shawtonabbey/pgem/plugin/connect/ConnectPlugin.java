@@ -41,7 +41,7 @@ public class ConnectPlugin implements Plugin {
 		Preferences pref;
 		pref = Preferences.userRoot().node("com.shawtonabbey.pgem.tree.DBManager");
 		
-		dispatch.find(DatabaseInstance.Ev.class).listen((d, ev) -> {
+		dispatch.find(DatabaseInstance.Added.class).listen((d, ev) -> {
 			
 			d.addPopup("Disconnect", (e)-> {
 				d.findDbc().disconnect();
@@ -52,7 +52,7 @@ public class ConnectPlugin implements Plugin {
 			
 		});
 		
-		dispatch.find(ServerInstance.Ev.class).listen((s, ev) -> {
+		dispatch.find(ServerInstance.Added.class).listen((s, ev) -> {
 			
 			s.addPopup("Version", (e) -> {
 				var db = (DatabaseInstance)s.getChildAt(0);
@@ -62,7 +62,7 @@ public class ConnectPlugin implements Plugin {
 			
 		});
 		
-		dispatch.find(ServerInstance.Ev.class).listen((s, ev) -> {
+		dispatch.find(ServerInstance.Added.class).listen((s, ev) -> {
 			
 			s.addPopup("Disconnect", (e) -> {
 				int children = s.getChildCount();

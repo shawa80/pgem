@@ -53,7 +53,7 @@ public class ExportPlugin implements Plugin {
 			});
 		});
 		
-		dispatch.find(TableInstance.Ev.class).listen((table,ev) -> {
+		dispatch.find(TableInstance.Added.class).listen((table,ev) -> {
 			
 			table.addPopup("Data", "Export", (e) -> {
 				
@@ -68,7 +68,7 @@ public class ExportPlugin implements Plugin {
 		});
 				
 
-		dispatch.find(ViewInstance.Ev.class).listen((view,ev) -> {
+		dispatch.find(ViewInstance.Added.class).listen((view,ev) -> {
 			
 			view.addPopup("Data", "Export", (e) -> {
 				

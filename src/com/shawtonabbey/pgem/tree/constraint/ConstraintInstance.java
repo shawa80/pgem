@@ -23,7 +23,7 @@ public class ConstraintInstance extends Instance<ConstraintGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<ConstraintInstance> {}
+	public interface Added extends Add<ConstraintInstance> {}
 	
 	public ConstraintInstance(ConstraintGroup parent, DbConstraint con)
 	{
@@ -34,7 +34,7 @@ public class ConstraintInstance extends Instance<ConstraintGroup> {
 	public ConstraintInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));				
+		dispatch.find(Added.class).fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

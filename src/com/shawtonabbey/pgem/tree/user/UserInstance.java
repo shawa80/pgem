@@ -22,7 +22,7 @@ public class UserInstance extends Instance<UserGroup>{
 	@Autowired
 	EventDispatch dispatch;
 		
-	public interface Ev extends Add<UserInstance> {}
+	public interface Added extends Add<UserInstance> {}
 	
 	public UserInstance(UserGroup parent, DbUser user)
 	{
@@ -33,7 +33,7 @@ public class UserInstance extends Instance<UserGroup>{
 	public UserInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));			
+		dispatch.find(Added.class).fire(o->o.added(this, event));			
 		event.unlock(this);
 		
 		return this;

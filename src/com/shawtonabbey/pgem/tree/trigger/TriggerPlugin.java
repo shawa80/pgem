@@ -18,12 +18,12 @@ public class TriggerPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(TriggerGroup.Ev.class);
-		dispatch.register(TriggerInstance.Ev.class);
+		dispatch.register(TriggerGroup.Added.class);
+		dispatch.register(TriggerInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(TableInstance.Ev.class).listen((s, e) -> {
+		dispatch.find(TableInstance.Added.class).listen((s, e) -> {
 			s.addNode(appContext.getBean(TriggerGroup.class, s).load(e));
 		});
 	}

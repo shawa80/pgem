@@ -21,7 +21,7 @@ public class DatabaseInstance extends XGroup<ServerInstance>
 	private DbDatabase database;
 	
 	
-	public interface Ev extends Add<DatabaseInstance> {}
+	public interface Added extends Add<DatabaseInstance> {}
 	
 	public DatabaseInstance(ServerInstance server, DbDatabase db)
 	{
@@ -42,7 +42,7 @@ public class DatabaseInstance extends XGroup<ServerInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 	}
 	
 	@Override

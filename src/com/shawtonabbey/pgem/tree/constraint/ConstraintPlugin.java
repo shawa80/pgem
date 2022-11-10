@@ -18,12 +18,12 @@ public class ConstraintPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(ConstraintGroup.Ev.class);
-		dispatch.register(ConstraintInstance.Ev.class);
+		dispatch.register(ConstraintGroup.Added.class);
+		dispatch.register(ConstraintInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(TableInstance.Ev.class).listen((t, event) -> {
+		dispatch.find(TableInstance.Added.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(ConstraintGroup.class, t, t.getTable()).load(event));
 		});
 	}

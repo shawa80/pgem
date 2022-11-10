@@ -19,7 +19,7 @@ import com.shawtonabbey.pgem.tree.table.TableInstance;
 public class TriggerGroup extends XGroup<TableInstance>
 {
 			
-	public interface Ev extends Add<TriggerGroup> {}
+	public interface Added extends Add<TriggerGroup> {}
 	
 	public TriggerGroup(TableInstance table)
 	{
@@ -29,7 +29,7 @@ public class TriggerGroup extends XGroup<TableInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this,  event));
+		dispatch.find(Added.class).fire(o->o.added(this,  event));
 	}
 	
 	@Override

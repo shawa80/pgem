@@ -23,7 +23,7 @@ public class RuleInstance extends Instance<RuleGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<RuleInstance> {}
+	public interface Added extends Add<RuleInstance> {}
 	
 	public RuleInstance(RuleGroup parent, DbRule rule)
 	{
@@ -34,7 +34,7 @@ public class RuleInstance extends Instance<RuleGroup> {
 	public RuleInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));				
+		dispatch.find(Added.class).fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

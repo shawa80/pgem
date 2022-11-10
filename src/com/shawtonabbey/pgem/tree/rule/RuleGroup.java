@@ -25,7 +25,7 @@ public class RuleGroup extends XGroup<ItemModel> {
 	@Getter
 	private DbTableLike table;
 	
-	public interface Ev extends Add<RuleGroup> {}
+	public interface Added extends Add<RuleGroup> {}
 		
 	public RuleGroup(ItemModel parent, DbTableLike table)
 	{
@@ -55,7 +55,7 @@ public class RuleGroup extends XGroup<ItemModel> {
 	}
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 

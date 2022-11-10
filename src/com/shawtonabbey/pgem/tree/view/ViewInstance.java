@@ -19,8 +19,7 @@ public class ViewInstance extends XGroup<ViewGroup>
 	@Getter
 	private DbView view;
 
-	
-	public interface Ev extends Add<ViewInstance> {}
+	public interface Added extends Add<ViewInstance> {}
 		
 	public ViewInstance (ViewGroup parent, DbView view)
 	{
@@ -39,7 +38,7 @@ public class ViewInstance extends XGroup<ViewGroup>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 	}
 
 	

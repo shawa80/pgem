@@ -20,12 +20,12 @@ public class UserPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(UserGroup.Ev.class);
-		dispatch.register(UserInstance.Ev.class);
+		dispatch.register(UserGroup.Added.class);
+		dispatch.register(UserInstance.Added.class);
 	}
 	
 	public void init() {
-		dispatch.find(DatabaseInstance.Ev.class).listen((d, event) -> {
+		dispatch.find(DatabaseInstance.Added.class).listen((d, event) -> {
 			d.addNode(appContext.getBean(UserGroup.class, d, d.getDatabase()).load(event));
 		});
 	}

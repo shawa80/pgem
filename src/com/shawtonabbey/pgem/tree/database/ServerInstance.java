@@ -37,7 +37,7 @@ public class ServerInstance extends Group<DBManager>
 	@Autowired
 	private MainWindow win;
 
-	public interface Ev extends Add<ServerInstance> {}
+	public interface Added extends Add<ServerInstance> {}
 	
 	private boolean loadDbs;
 	
@@ -61,7 +61,7 @@ public class ServerInstance extends Group<DBManager>
 	
 	public void load(Event event) throws IOException {
 		
-		dispatch.find(Ev.class).fire(o->o.added(this,event));
+		dispatch.find(Added.class).fire(o->o.added(this,event));
 		event.lock(ServerInstance.this);
 		this.setLoading();
 		event.whenFinished(() -> this.doneLoading());

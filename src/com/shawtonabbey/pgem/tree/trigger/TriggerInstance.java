@@ -21,7 +21,7 @@ public class TriggerInstance extends Instance<TriggerGroup>
 	@Getter
 	private DbTrigger trigger;
 	
-	public interface Ev extends Add<TriggerInstance> {}
+	public interface Added extends Add<TriggerInstance> {}
 	
 	public TriggerInstance(TriggerGroup parent, DbTrigger trigger)
 	{
@@ -32,7 +32,7 @@ public class TriggerInstance extends Instance<TriggerGroup>
 	
 	public TriggerInstance load(Event event) {
 		
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 				
 		return this;
 	}

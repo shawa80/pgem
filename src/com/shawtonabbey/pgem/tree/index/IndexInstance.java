@@ -23,7 +23,7 @@ public class IndexInstance extends Instance<IndexGroup> {
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<IndexInstance> {}
+	public interface Added extends Add<IndexInstance> {}
 	
 	public IndexInstance(IndexGroup parent, DbIndex index)
 	{
@@ -34,7 +34,7 @@ public class IndexInstance extends Instance<IndexGroup> {
 	public IndexInstance load(Event event) {
 
 		event.lock(this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));				
+		dispatch.find(Added.class).fire(o->o.added(this, event));				
 		event.unlock(this);
 		
 		return this;

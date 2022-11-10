@@ -20,7 +20,7 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 {
 	private SchemaInstance schema;
 
-	public interface Ev extends Add<RoutineGroup> {}
+	public interface Added extends Add<RoutineGroup> {}
 	
 	public RoutineGroup(SchemaInstance schema)
 	{
@@ -52,7 +52,7 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		
 	}
 	

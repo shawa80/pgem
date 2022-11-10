@@ -19,17 +19,17 @@ public class ColumnPlugin implements Plugin {
 	private ApplicationContext appContext;
 	
 	public void register() {
-		dispatch.register(ColumnGroup.Ev.class);
+		dispatch.register(ColumnGroup.Added.class);
 		dispatch.register(ColumnInstance.Ev.class);
 	}
 	
 	public void init() {
 		
-		dispatch.find(TableInstance.Ev.class).listen((t, event) -> {
+		dispatch.find(TableInstance.Added.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(ColumnGroup.class, t, t.getTable()).load(event));
 		});
 		
-		dispatch.find(ViewInstance.Ev.class).listen((t, event) -> {
+		dispatch.find(ViewInstance.Added.class).listen((t, event) -> {
 			t.addNode(appContext.getBean(ColumnGroup.class, t, t.getView()).load(event));
 		});
 	}

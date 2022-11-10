@@ -31,7 +31,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 	@Autowired
 	private EventDispatch dispatch;
 
-	public interface Ev extends Add<SchemaGroup> {}
+	public interface Added extends Add<SchemaGroup> {}
 	
 	public SchemaGroup(DatabaseInstance parent, DbDatabase db)
 	{
@@ -52,7 +52,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 		}
 		
 		event.lock(SchemaGroup.this);
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 		event.unlock(SchemaGroup.this);
 		
 		var sw = new SwingWorker<List<DbSchema>>()

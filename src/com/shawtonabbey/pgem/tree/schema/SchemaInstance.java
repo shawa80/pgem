@@ -25,7 +25,7 @@ public class SchemaInstance extends Group<SchemaGroup>
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<SchemaInstance> {}
+	public interface Added extends Add<SchemaInstance> {}
 	
 	public SchemaInstance(SchemaGroup parent, DbSchema schema)
 	{
@@ -36,7 +36,7 @@ public class SchemaInstance extends Group<SchemaGroup>
 
 	public void load(Event event) {
 		
-		dispatch.find(Ev.class).fire(o->o.added(this, event));		
+		dispatch.find(Added.class).fire(o->o.added(this, event));		
 	}
 	
 	public ImageIcon getIcon() {

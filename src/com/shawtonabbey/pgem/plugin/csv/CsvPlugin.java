@@ -52,7 +52,7 @@ public class CsvPlugin implements Plugin {
 
 		csvWin.enableJava();
 		
-		dispatch.find(TableInstance.Ev.class).listen((t, ev) -> {
+		dispatch.find(TableInstance.Added.class).listen((t, ev) -> {
 			
 			t.addPopup("Data", "Import", (e) -> {
 

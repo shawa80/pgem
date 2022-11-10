@@ -19,7 +19,7 @@ import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 public class SequenceGroup extends XGroup<SchemaInstance>
 {	
 	
-	public interface Ev extends Add<SequenceGroup> {}
+	public interface Added extends Add<SequenceGroup> {}
 	
 	public SequenceGroup(SchemaInstance schema)
 	{
@@ -48,7 +48,7 @@ public class SequenceGroup extends XGroup<SchemaInstance>
 
 	@Override
 	protected void FireEvent(Event event) {
-		dispatch.find(Ev.class).fire(o->o.added(this, event));
+		dispatch.find(Added.class).fire(o->o.added(this, event));
 	}
 
 }
