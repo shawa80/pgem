@@ -6,12 +6,10 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.debug.DebugWindow;
 import com.shawtonabbey.pgem.query.AQueryWindow;
 import com.shawtonabbey.pgem.swingUtils.SwingWorkerProxy;
@@ -19,14 +17,8 @@ import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 
 @Component
-public class ExportPlugin implements Plugin {
+public class ExportPlugin extends PluginBase {
 	
-	@Autowired
-	private ApplicationContext appContext;
-	
-	@Autowired
-	private EventDispatch dispatch;
-
 	@Autowired
 	private DebugWindow debug;
 	
@@ -34,14 +26,11 @@ public class ExportPlugin implements Plugin {
 
 	private DBC conn;
 	
-	public void register() {
-	}
-
 	
 	public void init() {
 		
 		
-		dispatch.find(AQueryWindow.Ev.class).listen((q,ev)-> {
+		dispatch.find(AQueryWindow.Added.class).listen((q,ev)-> {
 			q.addAction("Export", (e) -> {
 				
 				conn = q.getConnection();

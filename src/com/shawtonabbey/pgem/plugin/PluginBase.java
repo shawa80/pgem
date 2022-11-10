@@ -14,5 +14,13 @@ public abstract class PluginBase implements Plugin {
 
 	@Autowired
 	protected ApplicationContext appContext;
+
+	public void register() {
+	}
+
+	
+	public void init() {
+		
+	}
 	
 }

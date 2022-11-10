@@ -4,21 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.PgemMainWindow;
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
-public class QueryPlugin implements Plugin {
+public class QueryPlugin extends PluginBase {
 
 	
 	@Autowired
-	private EventDispatch dispatch;
-	@Autowired
 	private PgemMainWindow window;
 	
-	public void register() {
-	}
 
 	
 	public void init() {

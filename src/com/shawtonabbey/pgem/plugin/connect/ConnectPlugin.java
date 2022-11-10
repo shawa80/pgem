@@ -5,13 +5,11 @@ import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.kerberos.kcm.KerberosCacheIntercept;
 import com.shawtonabbey.pgem.PgemMainWindow;
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.SysPlugin;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.DBManager;
@@ -20,15 +18,12 @@ import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 import com.shawtonabbey.pgem.tree.database.ServerInstance;
 
 @Component
-public class ConnectPlugin implements Plugin {
+public class ConnectPlugin extends PluginBase {
 
 	
 	@Autowired
-	private EventDispatch dispatch;
-	@Autowired
 	private PgemMainWindow window;
-	@Autowired
-	private ApplicationContext appContext;
+
 	
 	public void register() {
 			

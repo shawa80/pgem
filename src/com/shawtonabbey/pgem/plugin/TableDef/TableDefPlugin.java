@@ -11,23 +11,16 @@ import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.database.DbConstraint;
 import com.shawtonabbey.pgem.database.DbTable;
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
-public class TableDefPlugin implements Plugin {
+public class TableDefPlugin extends PluginBase {
 
-	
-	@Autowired
-	private EventDispatch dispatch;
-	
+		
 	@Autowired
 	private PgemMainWindow window;
 	
-	public void register() {
-	}
-
 	
 	public void init() {
 				

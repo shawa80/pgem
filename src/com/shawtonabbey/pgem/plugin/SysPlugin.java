@@ -2,10 +2,8 @@ package com.shawtonabbey.pgem.plugin;
 
 import javax.swing.JMenuBar;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.event.Open;
 import com.shawtonabbey.pgem.event.Save;
@@ -21,8 +19,6 @@ public class SysPlugin implements Plugin {
 	public interface ConnectEv extends Start {}
 	public interface DisconnectEv extends Stop {}
 	
-	@Autowired
-	private EventDispatch dispatch;
 	
 	public void register() {
 

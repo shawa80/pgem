@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.database.deserializers.Property;
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.ddl.index.IndexCreatePanel;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -32,16 +31,10 @@ import com.shawtonabbey.pgem.ui.MainWindow;
 import java.util.List;
 
 @Component
-public class DdlPlugin implements Plugin {
+public class DdlPlugin extends PluginBase {
 
-	@Autowired
-	private EventDispatch dispatch;
 	@Autowired
 	private MainWindow win;
-	
-	public void register() {
-	}
-
 	
 	public void init() {
 

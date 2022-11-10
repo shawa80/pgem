@@ -5,24 +5,17 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
 @Component
-public class CrudPlugin implements Plugin {
-
-	@Autowired
-	private EventDispatch dispatch;
+public class CrudPlugin extends PluginBase {
 	
 	@Autowired
 	private MainWindow win;
 	
-	public void register() {
-	}
-
 	
 	public void init() {
 		

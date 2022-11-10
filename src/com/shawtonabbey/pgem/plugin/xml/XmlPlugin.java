@@ -4,28 +4,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.SysPlugin;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
 @Component
-public class XmlPlugin implements Plugin {
+public class XmlPlugin extends PluginBase {
 
-	@Autowired
-	private EventDispatch dispatch;
 	@Autowired
 	private MainWindow win;
-	
-	@Autowired
-	private ApplicationContext appContext;
-
-	public void register() {
-	}
-
 	
 	public void init() {
 

@@ -1,23 +1,14 @@
 package com.shawtonabbey.pgem.plugin.refresh;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.table.TableGroup;
 import com.shawtonabbey.pgem.tree.view.ViewGroup;
 
 @Component
-public class RefreshPlugin implements Plugin {
-
-	
-	@Autowired
-	private EventDispatch dispatch;
-	
-	public void register() {
-	}
+public class RefreshPlugin extends PluginBase {
 
 	
 	public void init() {

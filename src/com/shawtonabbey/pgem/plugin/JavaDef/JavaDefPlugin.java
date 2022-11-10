@@ -3,32 +3,21 @@ package com.shawtonabbey.pgem.plugin.JavaDef;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.query.AQueryWindow;
 import com.shawtonabbey.pgem.query.CountedRowTableModel;
 import com.shawtonabbey.pgem.query.SqlTableModel;
 
 @Component
-public class JavaDefPlugin  implements Plugin {
+public class JavaDefPlugin extends PluginBase {
 
-	
-	@Autowired
-	private EventDispatch dispatch;
-	
-	@Override
-	public void register() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void init() {
 		
-		dispatch.find(AQueryWindow.Ev.class).listen((query, ev) -> {
+		dispatch.find(AQueryWindow.Added.class).listen((query, ev) -> {
 			
 			
 			var textBox = new JTextPane();
@@ -77,6 +66,7 @@ public class JavaDefPlugin  implements Plugin {
 	}
 	
 	private String clean(String type) {
+		
 		if (type.startsWith("java.lang."))
 			return type.substring(10);
 		

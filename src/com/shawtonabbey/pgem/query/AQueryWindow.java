@@ -42,7 +42,8 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	@Autowired
 	EventDispatch dispatch;
 	
-	public interface Ev extends Add<AQueryWindow> {}
+	public interface Added extends Add<AQueryWindow> {}
+	
 	public interface Event {public void event(QueryWindow win);}
 	public interface DataReady {public void dataReady(SqlTableModel model);}
 	
@@ -117,7 +118,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 
 	
 	public void init() {
-		dispatch.find(Ev.class).fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));
+		dispatch.find(Added.class).fire(o->o.added(this, new com.shawtonabbey.pgem.tree.Event()));
 	}
 	
 	public void addAction(String name, ActionListener action) {

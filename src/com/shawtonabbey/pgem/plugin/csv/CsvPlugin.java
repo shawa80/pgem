@@ -16,14 +16,12 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.csv.ui.Compile;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvReader;
@@ -35,18 +33,12 @@ import com.shawtonabbey.pgem.plugin.csv.writer.TransformWriter;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
-public class CsvPlugin implements Plugin {
-	
-	@Autowired
-	private EventDispatch dispatch;
-	
+public class CsvPlugin extends PluginBase {
+		
 	private String path;
 	
 	private CsvImportWin csvWin = new CsvImportWin();
 	
-	public void register() {
-	}
-
 	
 	public void init() {
 

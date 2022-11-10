@@ -3,27 +3,14 @@ package com.shawtonabbey.pgem.plugin.debug;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 
 @Component
-public class DebuggerPlugin implements Plugin {
+public class DebuggerPlugin extends PluginBase {
 
 	@Autowired
 	private DebugWindow win;
 	
-	@SuppressWarnings("unused")
-	@Autowired
-	private EventDispatch dispatch;
-	
-	public DebuggerPlugin() {
-		
-		
-		
-	}
-	
-	public void register() {
-	}
 
 	
 	public void init() {
