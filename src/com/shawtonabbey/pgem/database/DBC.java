@@ -180,7 +180,6 @@ public class DBC implements AutoCloseable
 			}
 		}
 	}
-
 	
 	public <T> T first(String sqlStr, Class<T> cls, Object... args) throws IOException
 	{

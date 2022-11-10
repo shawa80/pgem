@@ -26,6 +26,8 @@ public class Pgem
 	public static void main(String[] args)
 	{
 
+		System.setProperty("awt.useSystemAAFontSettings","on");
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException |UnsupportedLookAndFeelException e) {
