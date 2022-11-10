@@ -1,25 +1,12 @@
 package com.shawtonabbey.pgem.tree.schema;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
-public class SchemaPlugin implements Plugin {
-
-	@Autowired
-	private EventDispatch dispatch;
-
-	@Autowired
-	private ApplicationContext appContext;
-	
-	public void register() {
-
-	}
+public class SchemaPlugin extends PluginBase {
 	
 	public void init() {
 		dispatch.find(DatabaseInstance.Added.class).listen((d, event) -> {

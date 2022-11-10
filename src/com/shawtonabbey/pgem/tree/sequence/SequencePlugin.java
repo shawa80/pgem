@@ -1,25 +1,12 @@
 package com.shawtonabbey.pgem.tree.sequence;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 @Component
-public class SequencePlugin implements Plugin {
-
-	@Autowired
-	private EventDispatch dispatch;
-
-	@Autowired
-	private ApplicationContext appContext;
-	
-	public void register() {
-
-	}
+public class SequencePlugin extends PluginBase {
 	
 	public void init() {
 		dispatch.find(SchemaInstance.Added.class).listen((s, event) -> {

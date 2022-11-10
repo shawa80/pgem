@@ -1,25 +1,13 @@
 package com.shawtonabbey.pgem.tree.routine;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.plugin.Plugin;
+import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 @Component
-public class RoutinePlugin implements Plugin {
+public class RoutinePlugin  extends PluginBase {
 
-	@Autowired
-	private EventDispatch dispatch;
-
-	@Autowired
-	private ApplicationContext appContext;
-	
-	public void register() {
-		
-	}
 	
 	public void init() {
 		dispatch.find(SchemaInstance.Added.class).listen((s, event) -> {
