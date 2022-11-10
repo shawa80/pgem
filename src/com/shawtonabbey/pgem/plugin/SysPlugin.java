@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.event.EventDispatch.Add;
-import com.shawtonabbey.pgem.event.EventDispatch.Open;
-import com.shawtonabbey.pgem.event.EventDispatch.Save;
-import com.shawtonabbey.pgem.event.EventDispatch.Start;
-import com.shawtonabbey.pgem.event.EventDispatch.Stop;
+import com.shawtonabbey.pgem.event.Add;
+import com.shawtonabbey.pgem.event.Open;
+import com.shawtonabbey.pgem.event.Save;
+import com.shawtonabbey.pgem.event.Start;
+import com.shawtonabbey.pgem.event.Stop;
 import com.shawtonabbey.pgem.query.AQueryWindow;
 import com.shawtonabbey.pgem.tree.DBManager;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;

@@ -1,7 +1,5 @@
 package com.shawtonabbey.pgem;
 
-import java.util.ServiceLoader;
-
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -11,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.plugin.Plugin;
-import com.shawtonabbey.pgem.plugin.PluginFactory;
 import com.shawtonabbey.pgem.ui.MainWindow;
 
 @Component
@@ -48,24 +45,24 @@ public class Pgem
 		//}
 
 		
-		var beans = context.getBeansOfType(Plugin.class);
-		
-		beans.values().stream().forEach(b -> {
-			b.register();
-		});
-		
-		beans.values().stream().forEach(b -> {
-			b.init();
-		});
-		
-		var win = context.getBean(MainWindow.class);
-		        
-            
-        ((PgemMainWindow)win).start();
-
-       
-		return;
+			var beans = context.getBeansOfType(Plugin.class);
+			
+			beans.values().stream().forEach(b -> {
+				b.register();
+			});
+			
+			beans.values().stream().forEach(b -> {
+				b.init();
+			});
+			
+			var win = context.getBean(MainWindow.class);
+			        
+	            
+	        ((PgemMainWindow)win).start();
 	
+	       
+			return;
+
 	}
 
 }

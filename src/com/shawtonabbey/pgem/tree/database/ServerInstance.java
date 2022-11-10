@@ -19,7 +19,7 @@ import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbDatabase;
 import com.shawtonabbey.pgem.database.DbServer;
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.event.EventDispatch.Add;
+import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.plugin.connect.ConnectDialog;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 
