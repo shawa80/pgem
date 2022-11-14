@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbRoutine;
+import com.shawtonabbey.pgem.database.routine.DbRoutine;
+import com.shawtonabbey.pgem.database.routine.DbRoutineFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -20,6 +22,9 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 {
 	private SchemaInstance schema;
 
+	@Autowired
+	private DbRoutineFactory factory;
+	
 	public interface Added extends Add<RoutineGroup> {}
 	
 	public RoutineGroup(SchemaInstance schema)
@@ -38,7 +43,7 @@ public class RoutineGroup extends XGroup<SchemaInstance>
 		
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbRoutine>>()
-				.setWork(() -> DbRoutine.getRoutines(findDbc(), schema.getSchema()))
+				.setWork(() -> factory.getRoutines(findDbc(), schema.getSchema()))
 				.thenOnEdt((tables) -> {
 					
 					tables.stream()

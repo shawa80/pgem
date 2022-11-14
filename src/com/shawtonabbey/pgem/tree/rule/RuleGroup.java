@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbRule;
 import com.shawtonabbey.pgem.database.DbTableLike;
+import com.shawtonabbey.pgem.database.rule.DbRule;
+import com.shawtonabbey.pgem.database.rule.DbRuleFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -24,6 +26,9 @@ public class RuleGroup extends XGroup<ItemModel> {
 	
 	@Getter
 	private DbTableLike table;
+	
+	@Autowired
+	private DbRuleFactory factory;
 	
 	public interface Added extends Add<RuleGroup> {}
 		
@@ -43,7 +48,7 @@ public class RuleGroup extends XGroup<ItemModel> {
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbRule>>()
-				.setWork(() -> DbRule.getRules(findDbc(), table))
+				.setWork(() -> factory.getRules(findDbc(), table))
 				.thenOnEdt((rules) -> {
 					rules.stream()
 						.map(x -> appContext.getBean(RuleInstance.class, this, x))

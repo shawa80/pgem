@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbIndex;
 import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.index.DbIndex;
+import com.shawtonabbey.pgem.database.index.DbIndexFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -24,6 +26,9 @@ public class IndexGroup extends XGroup<TableInstance> {
 	
 	@Getter
 	private DbTable table;
+	
+	@Autowired
+	private DbIndexFactory factory;
 	
 	public interface Added extends Add<IndexGroup> {}
 		
@@ -43,7 +48,7 @@ public class IndexGroup extends XGroup<TableInstance> {
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbIndex>>()
-				.setWork(() -> DbIndex.getIndexes(findDbc(), table))
+				.setWork(() -> factory.getIndexes(findDbc(), table))
 				.thenOnEdt((indexes) -> {
 					indexes.stream()
 						.map(x -> appContext.getBean(IndexInstance.class, this, x))
