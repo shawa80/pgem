@@ -16,8 +16,9 @@ import com.shawtonabbey.pgem.tree.Group;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbDatabase;
-import com.shawtonabbey.pgem.database.DbServer;
+import com.shawtonabbey.pgem.database.db.DbDatabase;
+import com.shawtonabbey.pgem.database.db.DbDatabaseFactory;
+import com.shawtonabbey.pgem.database.server.DbServer;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.plugin.connect.ConnectDialog;
@@ -33,6 +34,9 @@ public class ServerInstance extends Group<DBManager>
 	private ConnectDialog params;
 	@Autowired
 	EventDispatch dispatch;
+	
+	@Autowired
+	private DbDatabaseFactory factory;
 	
 	@Autowired
 	private MainWindow win;
@@ -79,7 +83,7 @@ public class ServerInstance extends Group<DBManager>
 			try (var conn = DBC.connect(params.getAddress(), params.getPort(),
 					db, params.getUser(), params.getPass()))
 			{
-				var dbs = DbDatabase.getDatabases(conn, server);
+				var dbs = factory.getDatabases(conn, server);
 				return dbs;
 			}
 		})

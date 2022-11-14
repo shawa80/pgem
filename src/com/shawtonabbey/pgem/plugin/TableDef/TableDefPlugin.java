@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.database.constraint.DbConstraint;
 import com.shawtonabbey.pgem.database.constraint.DbConstraintFactory;
 import com.shawtonabbey.pgem.database.table.DbTable;

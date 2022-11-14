@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbDatabase;
+import com.shawtonabbey.pgem.database.db.DbDatabase;
 import com.shawtonabbey.pgem.database.deserializers.Constr;
 
 @Component

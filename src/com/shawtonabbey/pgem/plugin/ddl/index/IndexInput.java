@@ -9,7 +9,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JCheckBox;
 import javax.swing.table.DefaultTableModel;
 
-import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.database.table.DbTable;
 import com.shawtonabbey.pgem.ui.ATextField;
 

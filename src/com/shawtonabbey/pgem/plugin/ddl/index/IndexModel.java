@@ -2,7 +2,7 @@ package com.shawtonabbey.pgem.plugin.ddl.index;
 
 import java.util.List;
 
-import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumn;
 
 public interface IndexModel {
 

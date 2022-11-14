@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,9 @@ import com.shawtonabbey.pgem.database.schema.DbSchema;
 @Scope("singleton")
 public class DbTableFactory {
 
+	@Autowired
+	protected ApplicationContext appContext;
+	
 	public List<DbTable> getTables(DBC connection, DbSchema schema) throws IOException {
 		
 		List<DbTable> results = new ArrayList<DbTable>();
@@ -37,7 +42,7 @@ public class DbTableFactory {
 			var c = new Property<>(BigIntValue.class);
 			var oid = connection.execX("SELECT ?::regclass::oid as value", c, 
 					schema.getName() + "." + tableName).stream().findFirst().get();
-			results.add(new DbTable(connection, tableName, schema, oid.getValue()));
+			results.add(appContext.getBean(DbTable.class ,connection, tableName, schema, oid.getValue()));
 		}
 		rs.close();
 		

@@ -1,12 +1,7 @@
-package com.shawtonabbey.pgem.database;
+package com.shawtonabbey.pgem.database.column;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.shawtonabbey.pgem.database.deserializers.Property;
-
+import com.shawtonabbey.pgem.database.Column;
+import com.shawtonabbey.pgem.database.DbTableLike;
 import lombok.Getter;
 
 public class DbColumn {
@@ -49,24 +44,6 @@ public class DbColumn {
 		this.characterMaximumLength = characterMaximumLength;
 	}
 
-	public static List<DbColumn> getColumns(DBC connection, DbTableLike table) throws IOException {
-		
-		var sqlStr = "SELECT column_name, data_type, column_default, is_nullable, "
-				+ " character_maximum_length " +
-				"FROM information_schema.columns " + 
-				"WHERE table_schema = ? " + 
-				"  AND table_name   = ?";
-
-		var c = new Property<>(Column.class);
-		var r = connection.execX(sqlStr, c, 
-				table.getSchema().getName(), table.getName());
-		
-		var cls = r.stream()
-			.map((x) -> new DbColumn(table, x))
-			.collect(Collectors.toList());
-		
-		return Collections.unmodifiableList(cls);
-	}
 	
 	
 	@Override

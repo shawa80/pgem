@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbDatabase;
+import com.shawtonabbey.pgem.database.db.DbDatabase;
 import com.shawtonabbey.pgem.database.schema.DbSchema;
 import com.shawtonabbey.pgem.database.schema.DbSchemaFactory;
 import com.shawtonabbey.pgem.event.EventDispatch;

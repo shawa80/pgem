@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbDatabase;
+import com.shawtonabbey.pgem.database.db.DbDatabase;
 import com.shawtonabbey.pgem.database.user.DbUser;
 import com.shawtonabbey.pgem.database.user.DbUserFactory;
 import com.shawtonabbey.pgem.event.Add;

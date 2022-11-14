@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbColumn;
 import com.shawtonabbey.pgem.database.DbColumnCollection;
+import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;

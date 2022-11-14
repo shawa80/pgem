@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.event.Observable;
 
 import lombok.Getter;
