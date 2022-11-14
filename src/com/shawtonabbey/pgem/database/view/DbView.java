@@ -1,8 +1,14 @@
-package com.shawtonabbey.pgem.database;
+package com.shawtonabbey.pgem.database.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.database.DbColumn;
+import com.shawtonabbey.pgem.database.DbColumnCollection;
+import com.shawtonabbey.pgem.database.DbTableLike;
+import com.shawtonabbey.pgem.database.TextValue;
+import com.shawtonabbey.pgem.database.schema.DbSchema;
 
 import lombok.Getter;
 
@@ -17,7 +23,7 @@ public class DbView implements DbColumnCollection, DbTableLike {
 	private List<DbColumn> columns;
 	
 	
-	private DbView (DBC connection, String name, DbSchema schema) throws IOException {
+	public DbView (DBC connection, String name, DbSchema schema) throws IOException {
 		
 		this.name = name;
 		this.schema = schema;
@@ -35,27 +41,5 @@ public class DbView implements DbColumnCollection, DbTableLike {
 			
 		return result + def.getText_value();
 	}
-
-	
-	public static List<DbView> getViews(DBC connection, DbSchema schema) throws IOException {
-
-		List<DbView> results = new ArrayList<DbView>();
-		
-		ARecordSet rs;
-
-		String sqlStr = "select table_name from information_schema.tables " +
-		"WHERE table_schema=? AND table_type='VIEW' " +
-		"order by table_name;";
-
-		rs = connection.exec(sqlStr, schema.getName());
-
-		while (rs.next())
-		{
-			results.add(new DbView(connection, rs.get("table_name"), schema));
-		}
-		
-		return results;
-	}
-	
 	
 }

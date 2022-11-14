@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.BigIntValue;
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbSchema;
 import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.database.deserializers.Property;
+import com.shawtonabbey.pgem.database.schema.DbSchema;
 
 @Component
 @Scope("singleton")

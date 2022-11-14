@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbDatabase;
-import com.shawtonabbey.pgem.database.DbSchema;
+import com.shawtonabbey.pgem.database.schema.DbSchema;
+import com.shawtonabbey.pgem.database.schema.DbSchemaFactory;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
@@ -30,6 +31,9 @@ public class SchemaGroup extends Group<DatabaseInstance>
 
 	@Autowired
 	private EventDispatch dispatch;
+	
+	@Autowired
+	private DbSchemaFactory factory;
 
 	public interface Added extends Add<SchemaGroup> {}
 	
@@ -56,7 +60,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 		event.unlock(SchemaGroup.this);
 		
 		var sw = new SwingWorker<List<DbSchema>>()
-		.setWork(() -> DbSchema.getSchemas(findDbc(), db, loadPgSchema))
+		.setWork(() -> factory.getSchemas(findDbc(), db, loadPgSchema))
 		.thenOnEdt((schemas) -> {
 			
 			schemas.stream()

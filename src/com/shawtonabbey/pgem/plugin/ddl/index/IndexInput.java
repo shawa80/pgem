@@ -10,7 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.table.DefaultTableModel;
 
 import com.shawtonabbey.pgem.database.DbColumn;
-import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.table.DbTable;
 import com.shawtonabbey.pgem.ui.ATextField;
 
 import javax.swing.JScrollPane;

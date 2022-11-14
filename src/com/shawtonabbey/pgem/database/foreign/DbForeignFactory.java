@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.database.deserializers.Constr;
+import com.shawtonabbey.pgem.database.table.DbTable;
 
 @Component
 @Scope("singleton")

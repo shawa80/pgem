@@ -5,7 +5,8 @@ import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
 import javax.swing.JSplitPane;
-import com.shawtonabbey.pgem.database.DbTable;
+
+import com.shawtonabbey.pgem.database.table.DbTable;
 
 import javax.swing.JEditorPane;
 

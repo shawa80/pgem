@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.shawtonabbey.pgem.database.deserializers.Constr;
 import com.shawtonabbey.pgem.database.deserializers.Property;
+import com.shawtonabbey.pgem.database.table.DbTable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

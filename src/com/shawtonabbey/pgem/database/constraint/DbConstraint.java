@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.database.deserializers.Constr;
 import com.shawtonabbey.pgem.database.deserializers.Property;
+import com.shawtonabbey.pgem.database.table.DbTable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.shawtonabbey.pgem.tree.table;
-import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.table.DbTable;
+import com.shawtonabbey.pgem.database.table.DbTableFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -9,6 +10,8 @@ import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +19,9 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class TableGroup extends XGroup<SchemaInstance>
 {
-			
+	@Autowired		
+	private DbTableFactory factory;
+	
 	public interface Added extends Add<TableGroup> {}
 	
 	public TableGroup(SchemaInstance schema)
@@ -35,7 +40,7 @@ public class TableGroup extends XGroup<SchemaInstance>
 		
 		Event tableLoad = new Event();
 		var sw = new SwingWorker<List<DbTable>>()
-			.setWork(() -> DbTable.getTables(findDbc(), getParentDb().getSchema()))
+			.setWork(() -> factory.getTables(findDbc(), getParentDb().getSchema()))
 			.thenOnEdt((tables) -> {
 				tables.stream()
 					.map(x -> appContext.getBean(TableInstance.class, this, x))

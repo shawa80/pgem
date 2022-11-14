@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbTable;
 import com.shawtonabbey.pgem.database.index.DbIndex;
 import com.shawtonabbey.pgem.database.index.DbIndexFactory;
+import com.shawtonabbey.pgem.database.table.DbTable;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;

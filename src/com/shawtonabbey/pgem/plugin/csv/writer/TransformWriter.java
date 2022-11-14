@@ -2,7 +2,7 @@ package com.shawtonabbey.pgem.plugin.csv.writer;
 
 import java.util.stream.IntStream;
 
-import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.table.DbTable;
 
 public class TransformWriter {
 

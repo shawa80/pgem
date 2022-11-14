@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbDatabase;
-import com.shawtonabbey.pgem.database.DbUser;
+import com.shawtonabbey.pgem.database.user.DbUser;
+import com.shawtonabbey.pgem.database.user.DbUserFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -20,6 +22,9 @@ import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 public class UserGroup extends XGroup<DatabaseInstance>
 {
 	private DbDatabase db;
+	
+	@Autowired
+	private DbUserFactory factory;
 	
 	public interface Added extends Add<UserGroup> {}
 	
@@ -38,7 +43,7 @@ public class UserGroup extends XGroup<DatabaseInstance>
 		
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbUser>>()
-				.setWork(() -> DbUser.getUsers(findDbc(), db))
+				.setWork(() -> factory.getUsers(findDbc(), db))
 				.thenOnEdt((users) -> {
 						
 					users.stream()

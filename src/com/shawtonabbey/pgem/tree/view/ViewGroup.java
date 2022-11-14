@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbView;
+import com.shawtonabbey.pgem.database.view.DbView;
+import com.shawtonabbey.pgem.database.view.DbViewfactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -20,6 +22,8 @@ public class ViewGroup extends XGroup<SchemaInstance>
 {
 	private SchemaInstance schema;
 
+	@Autowired
+	private DbViewfactory factory;
 	
 	public interface Added extends Add<ViewGroup> {}
 
@@ -39,7 +43,7 @@ public class ViewGroup extends XGroup<SchemaInstance>
 		
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbView>>()
-				.setWork(() -> DbView.getViews(findDbc(), schema.getSchema()))
+				.setWork(() -> factory.getViews(findDbc(), schema.getSchema()))
 				.thenOnEdt((views) -> {
 		
 					views.stream()

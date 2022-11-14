@@ -2,6 +2,8 @@ package com.shawtonabbey.pgem.database;
 
 import java.util.List;
 
+import com.shawtonabbey.pgem.database.schema.DbSchema;
+
 public interface DbTableLike {
 
 	public DbSchema getSchema();

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbSchema;
 import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.database.schema.DbSchema;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Group;
