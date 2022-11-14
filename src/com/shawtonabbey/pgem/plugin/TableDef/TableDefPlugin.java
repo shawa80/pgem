@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbColumn;
-import com.shawtonabbey.pgem.database.DbConstraint;
 import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.constraint.DbConstraint;
+import com.shawtonabbey.pgem.database.constraint.DbConstraintFactory;
 import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
@@ -21,6 +22,8 @@ public class TableDefPlugin extends PluginBase {
 	@Autowired
 	private PgemMainWindow window;
 	
+	@Autowired
+	private DbConstraintFactory constFactory;
 	
 	public void init() {
 				
@@ -59,7 +62,7 @@ public class TableDefPlugin extends PluginBase {
 			
 			
 
-			var constrList = DbConstraint
+			var constrList = constFactory
 					.getConstraints(dbc, t)
 					.stream()
 					.map(x-> "\t" + x.getName() + " " + getTableConDef(x, dbc))

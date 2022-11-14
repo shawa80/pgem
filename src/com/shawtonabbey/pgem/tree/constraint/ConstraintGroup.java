@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbConstraint;
 import com.shawtonabbey.pgem.database.DbTable;
+import com.shawtonabbey.pgem.database.constraint.DbConstraint;
+import com.shawtonabbey.pgem.database.constraint.DbConstraintFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -22,6 +24,9 @@ import lombok.Getter;
 @Scope("prototype")
 public class ConstraintGroup extends XGroup<TableInstance> {
 
+	
+	@Autowired
+	private DbConstraintFactory constFactory;
 	
 	@Getter
 	private DbTable table;
@@ -44,7 +49,7 @@ public class ConstraintGroup extends XGroup<TableInstance> {
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbConstraint>>()
-				.setWork(() -> DbConstraint.getConstraints(findDbc(), table))
+				.setWork(() -> constFactory.getConstraints(findDbc(), table))
 				.thenOnEdt((indexes) -> {
 					indexes.stream()
 						.map(x -> appContext.getBean(ConstraintInstance.class, this, x))

@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbSequence;
+import com.shawtonabbey.pgem.database.sequence.DbSequence;
+import com.shawtonabbey.pgem.database.sequence.DbSequenceFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -18,6 +20,9 @@ import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 @Scope("prototype")
 public class SequenceGroup extends XGroup<SchemaInstance>
 {	
+	@Autowired
+	private DbSequenceFactory sequenceFactory;
+	
 	
 	public interface Added extends Add<SequenceGroup> {}
 	
@@ -34,7 +39,7 @@ public class SequenceGroup extends XGroup<SchemaInstance>
 	protected SwingWorker<?> getWorker() {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbSequence>>()
-				.setWork(() -> DbSequence.getSequence(findDbc(), getParentDb().getSchema()))
+				.setWork(() -> sequenceFactory.getSequence(findDbc(), getParentDb().getSchema()))
 				.thenOnEdt((seq) -> {
 
 					seq.stream()
