@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.database.deserializers.Property;
+import com.shawtonabbey.pgem.database.deserializers.TextValue;
 
 @AllArgsConstructor
 public class DbRoutine {

@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbColumnCollection;
 import com.shawtonabbey.pgem.database.DbTableLike;
-import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.database.column.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumnCollection;
 import com.shawtonabbey.pgem.database.column.DbColumnFactory;
+import com.shawtonabbey.pgem.database.deserializers.TextValue;
 import com.shawtonabbey.pgem.database.schema.DbSchema;
 
 import lombok.Getter;

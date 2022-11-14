@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.DbColumnCollection;
 import com.shawtonabbey.pgem.database.DbTableLike;
 import com.shawtonabbey.pgem.database.column.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumnCollection;
 import com.shawtonabbey.pgem.database.column.DbColumnFactory;
 import com.shawtonabbey.pgem.database.schema.DbSchema;
 
@@ -24,8 +24,6 @@ public class DbTable implements DbColumnCollection, DbTableLike {
 	private String name;
 	@Getter
 	private DbSchema schema;	
-	
-	private List<DbColumn> columns;
 	
 	private DBC connection;
 	

@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.ARecordSet;
-import com.shawtonabbey.pgem.database.BigIntValue;
 import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.database.deserializers.BigIntValue;
 import com.shawtonabbey.pgem.database.deserializers.Property;
 import com.shawtonabbey.pgem.database.schema.DbSchema;
 

@@ -1,4 +1,4 @@
-package com.shawtonabbey.pgem.database;
+package com.shawtonabbey.pgem.database.deserializers;
 
 import lombok.Getter;
 import lombok.Setter;

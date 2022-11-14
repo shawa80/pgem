@@ -1,6 +1,5 @@
 package com.shawtonabbey.pgem.database.column;
 
-import com.shawtonabbey.pgem.database.Column;
 import com.shawtonabbey.pgem.database.DbTableLike;
 import lombok.Getter;
 

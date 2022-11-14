@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.TextValue;
 import com.shawtonabbey.pgem.database.deserializers.Property;
+import com.shawtonabbey.pgem.database.deserializers.TextValue;
 import com.shawtonabbey.pgem.database.table.DbTable;
 import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.ddl.index.IndexCreatePanel;

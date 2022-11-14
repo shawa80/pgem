@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.DbTrigger;
+import com.shawtonabbey.pgem.database.trigger.DbTrigger;
+import com.shawtonabbey.pgem.database.trigger.DbTriggerFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -19,6 +21,9 @@ import com.shawtonabbey.pgem.tree.table.TableInstance;
 public class TriggerGroup extends XGroup<TableInstance>
 {
 			
+	@Autowired
+	private DbTriggerFactory factory;
+	
 	public interface Added extends Add<TriggerGroup> {}
 	
 	public TriggerGroup(TableInstance table)
@@ -37,7 +42,7 @@ public class TriggerGroup extends XGroup<TableInstance>
 		
 		Event tableLoad = new Event();
 		var sw = new SwingWorker<List<DbTrigger>>()
-			.setWork(() -> DbTrigger.getTriggers(findDbc(), getParentDb().getTable()))
+			.setWork(() -> factory.getTriggers(findDbc(), getParentDb().getTable()))
 			.thenOnEdt((triggers) -> {
 				triggers.stream()
 					.map(x -> appContext.getBean(TriggerInstance.class, this, x))

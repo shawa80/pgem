@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.BigIntValue;
 import com.shawtonabbey.pgem.database.DBC;
-import com.shawtonabbey.pgem.database.TextValue;
+import com.shawtonabbey.pgem.database.deserializers.BigIntValue;
 import com.shawtonabbey.pgem.database.deserializers.Property;
+import com.shawtonabbey.pgem.database.deserializers.TextValue;
 import com.shawtonabbey.pgem.database.schema.DbSchema;
 
 @Component

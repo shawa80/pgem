@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.database.Column;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbTableLike;
 import com.shawtonabbey.pgem.database.deserializers.Property;

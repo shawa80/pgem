@@ -16,6 +16,7 @@ public class Property<T>  implements Deserializer<T> {
 		
 		var cols = set.getColumnCount();
 		
+		@SuppressWarnings("deprecation")
 		var c = cls.newInstance();
 		
 		for (var i = 1; i <= cols; i++) {

@@ -5,12 +5,9 @@ import com.shawtonabbey.pgem.database.ARecordSet;
 
 public class Constr<T> implements Deserializer<T> {
 
-	
-	private Class<T> cls;
 	private Constructor<?> construct;
 	
 	public Constr(Class<T> cls) {
-		this.cls = cls;
 		
 		construct = cls.getConstructors()[0];
 	}
@@ -25,6 +22,7 @@ public class Constr<T> implements Deserializer<T> {
 		for (var i = 1; i <= cols; i++) {						
 			cArgs[i-1] = set.getValue(i);
 		}
+		@SuppressWarnings("unchecked")
 		var c = (T)construct.newInstance(cArgs);
 		
 		return c;

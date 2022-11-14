@@ -1,8 +1,6 @@
-package com.shawtonabbey.pgem.database;
+package com.shawtonabbey.pgem.database.column;
 
 import java.util.List;
-
-import com.shawtonabbey.pgem.database.column.DbColumn;
 
 public interface DbColumnCollection {
 
