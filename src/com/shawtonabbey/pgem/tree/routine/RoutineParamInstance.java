@@ -7,14 +7,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.event.EventDispatch;
-import com.shawtonabbey.pgem.database.index.DbIndex;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.Instance;
-import com.shawtonabbey.pgem.tree.index.IndexGroup;
-import com.shawtonabbey.pgem.tree.index.IndexInstance;
-import com.shawtonabbey.pgem.tree.index.IndexInstance.Added;
-
 import lombok.Getter;
 
 @Component

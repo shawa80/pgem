@@ -37,6 +37,7 @@ public class Pgem
 
 
 		
+		@SuppressWarnings("resource")
 		var context = new AnnotationConfigApplicationContext(
             AppConfig.class);
     

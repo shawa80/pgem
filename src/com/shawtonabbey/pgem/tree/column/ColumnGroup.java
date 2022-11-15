@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DbTableLike;
 import com.shawtonabbey.pgem.database.column.DbColumn;
-import com.shawtonabbey.pgem.database.column.DbColumnCollection;
 import com.shawtonabbey.pgem.database.column.DbColumnFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;

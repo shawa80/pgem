@@ -1,7 +1,5 @@
 package com.shawtonabbey.pgem.tree.routine;
 
-import java.util.List;
-
 import javax.swing.ImageIcon;
 
 import org.springframework.context.annotation.Scope;
@@ -11,8 +9,6 @@ import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
 import com.shawtonabbey.pgem.tree.XGroup;
-import com.shawtonabbey.pgem.tree.routine.RoutineParamGroup.Added;
-
 import lombok.Getter;
 
 @Component
