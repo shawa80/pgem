@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Box;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.awt.event.ActionEvent;
 import java.awt.Component;
@@ -45,12 +46,12 @@ public class IndexInput extends JPanel {
 
 	}
 	
-	public void setTable(DbTable t) {
+	public void setTable(DbTable t, List<DbColumn> cols) {
 		
 		tableNameFld.setText(t.getName());
 		
 		var model = new DefaultComboBoxModel<DbColumn>();
-		t.getColumns().stream().forEach(c-> model.addElement(c));
+		cols.stream().forEach(c-> model.addElement(c));
 		columnLst.setModel(model);
 	}
 	

@@ -1,11 +1,15 @@
 package com.shawtonabbey.pgem.plugin.crud;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.database.column.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumnFactory;
 import com.shawtonabbey.pgem.plugin.PluginBase;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 import com.shawtonabbey.pgem.tree.view.ViewInstance;
 import com.shawtonabbey.pgem.ui.MainWindow;
@@ -16,6 +20,8 @@ public class CrudPlugin extends PluginBase {
 	@Autowired
 	private MainWindow win;
 	
+	@Autowired
+	private DbColumnFactory columnFactory;
 	
 	public void init() {
 		
@@ -35,23 +41,36 @@ public class CrudPlugin extends PluginBase {
 			
 			table.addPopup("CRUD", "Insert", (e) -> {
 				
-				var columns = table.getTable().getColumns().stream().map(d-> d.getName())
-						.collect(Collectors.joining(", "));
-				var values = table.getTable().getColumns().stream().map(d-> "")
-						.collect(Collectors.joining(", "));
+				new SwingWorker<List<DbColumn>>()
+				.setWork(() -> 					
+					columnFactory.getColumns(table.findDbc(), table.getTable())
+				).thenOnEdt((cols) -> {
+					var columns = cols.stream().map(d-> d.getName())
+							.collect(Collectors.joining(", "));
+					
+					var values = cols.stream().map(d-> "")
+							.collect(Collectors.joining(", "));
+					
+					win.launchQueryWin(table.findDbc(), 
+							"insert into " + table.getTable().getName() + "(" + columns + ") values (" + values +")");					
+				}).start();
 				
-				win.launchQueryWin(table.findDbc(), 
-						"insert into " + table.getTable().getName() + "(" + columns + ") values (" + values +")");
 				
 			});
 
 			table.addPopup("CRUD", "Update", (e) -> {
-				
-				var columns = table.getTable().getColumns().stream().map(d-> d.getName() + " = ")
-						.collect(Collectors.joining(", "));
-				
-				win.launchQueryWin(table.findDbc(), 
-						"update " + table.getTable().getName() + " set " + columns + " where = ");
+			
+				new SwingWorker<List<DbColumn>>()
+				.setWork(() -> 					
+					columnFactory.getColumns(table.findDbc(), table.getTable())
+				).thenOnEdt((cols) -> {
+					var columns = cols.stream().map(d-> d.getName() + " = ")
+							.collect(Collectors.joining(", "));
+					
+					win.launchQueryWin(table.findDbc(), 
+							"update " + table.getTable().getName() + " set " + columns + " where = ");
+
+				}).start();				
 				
 			});
 

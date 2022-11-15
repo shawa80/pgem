@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.database.column.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumnFactory;
 import com.shawtonabbey.pgem.database.deserializers.Property;
 import com.shawtonabbey.pgem.database.deserializers.TextValue;
 import com.shawtonabbey.pgem.database.table.DbTable;
@@ -35,6 +37,10 @@ public class DdlPlugin extends PluginBase {
 
 	@Autowired
 	private MainWindow win;
+	
+	@Autowired
+	private DbColumnFactory columnFactory;
+
 	
 	public void init() {
 
@@ -140,11 +146,17 @@ public class DdlPlugin extends PluginBase {
 			
 			table.addPopup("DDL", "Primary Key", (e) -> {
 				
-				var columns = table.getTable().getColumns().stream().map(d-> "--" + d.getName())
-						.collect(Collectors.joining("\n"));
 				
-				win.launchQueryWin(table.findDbc(), columns + "\nALTER TABLE " 
-				+ table.getName() + " ADD PRIMARY KEY (<column>);");
+				new SwingWorker<String>()
+				.setWork(() -> 					
+					columnFactory.getColumns(table.findDbc(), table.getTable())
+					.stream().map(d-> "--" + d.getName())
+					.collect(Collectors.joining("\n"))
+				).thenOnEdt((columns) -> {
+					win.launchQueryWin(table.findDbc(), columns + "\nALTER TABLE " 
+							+ table.getName() + " ADD PRIMARY KEY (<column>);");
+				}).start();
+				
 				
 			});
 
@@ -216,9 +228,23 @@ public class DdlPlugin extends PluginBase {
 		dispatch.find(IndexGroup.Added.class).listen((indexGrp,ev) -> {
 			
 			indexGrp.addPopup("DDL", "GUI", (e) -> {
-				var ui = new IndexCreatePanel(indexGrp.getTable());
+				
+				var sw = new SwingWorker<List<DbColumn>>()
+					.setWork(() -> {
+						var table = indexGrp.getTable();
+						
+						return columnFactory.getColumns(indexGrp.findDbc(), table);
+					})
+					.thenOnEdt((cols) -> {
+						
+						var ui = new IndexCreatePanel(indexGrp.getTable(), cols);
 
-				win.launchPanel(ui);
+						win.launchPanel(ui);
+												
+					});
+				sw.start();
+				
+				
 				
 			});
 			

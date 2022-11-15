@@ -4,8 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.BorderLayout;
+import java.util.List;
+
 import javax.swing.JSplitPane;
 
+import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.database.table.DbTable;
 
 import javax.swing.JEditorPane;
@@ -21,7 +24,7 @@ public class IndexCreatePanel extends JPanel {
 	private JEditorPane editorPane;
 
 	
-	public IndexCreatePanel(DbTable table) {
+	public IndexCreatePanel(DbTable table, List<DbColumn> cols) {
 		this();
 		//this.table = table;
 		
@@ -35,7 +38,7 @@ public class IndexCreatePanel extends JPanel {
 			
 		});
 		
-		indexInput.setTable(table);
+		indexInput.setTable(table, cols);
 		indexInput.setModel(model);
 		indexInput.init();
 	}

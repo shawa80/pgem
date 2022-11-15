@@ -1,12 +1,14 @@
 package com.shawtonabbey.pgem.plugin.csv.writer;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
+import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.database.table.DbTable;
 
 public class TransformWriter {
 
-	public static String write(DbTable table, String sql) {
+	public static String write(DbTable table, List<DbColumn> cols, String sql) {
 
 		var code = "";
 
@@ -26,7 +28,7 @@ public class TransformWriter {
 		code += "	\n";
 		code += "	public void map(PreparedStatement stm, Object obj) throws SQLException {\n";
 		code += "		Csv csv = (Csv)obj;\n\n";
-		code += 		getParams(table);
+		code += 		getParams(table, cols);
 		code += "	}\n";
 		code += "}\n";
 
@@ -34,11 +36,10 @@ public class TransformWriter {
 		return code;
 	}
 
-	private static String getParams(DbTable table) {
+	private static String getParams(DbTable table, List<DbColumn> cols) {
 		
-		var cls = table.getColumns();
-		var params = IntStream.range(0, cls.size())
-		.mapToObj(i -> "		stm.setObject(" + (i+1) + ", csv." + cls.get(i).getName() + ");\n")
+		var params = IntStream.range(0, cols.size())
+		.mapToObj(i -> "		stm.setObject(" + (i+1) + ", csv." + cols.get(i).getName() + ");\n")
 		.toArray(String[]::new);
 
 		var p = String.join("", params);

@@ -9,10 +9,12 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.column.DbColumn;
+import com.shawtonabbey.pgem.database.column.DbColumnFactory;
 import com.shawtonabbey.pgem.database.constraint.DbConstraint;
 import com.shawtonabbey.pgem.database.constraint.DbConstraintFactory;
 import com.shawtonabbey.pgem.database.table.DbTable;
 import com.shawtonabbey.pgem.plugin.PluginBase;
+import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
@@ -25,18 +27,26 @@ public class TableDefPlugin extends PluginBase {
 	@Autowired
 	private DbConstraintFactory constFactory;
 	
+	@Autowired
+	private DbColumnFactory columnFactory;
+	
 	public void init() {
 				
 		dispatch.find(TableInstance.Added.class).listen((t,ev) -> {
 			
 			t.addPopup("DDL", "Create", (e) -> {
 
-				//tODO move to thread;
-				var dbc = t.findDbc();
-				
-				var sql = makeTableDef(dbc, t.getTable());
-				
-				window.launchQueryWin(t.findDbc(), sql);
+				new SwingWorker<String>()
+				.setWork(() -> {
+
+					var dbc = t.findDbc();
+					
+					return makeTableDef(dbc, t.getTable());
+
+				}).thenOnEdt((sql) -> {
+
+					window.launchQueryWin(t.findDbc(), sql);
+				}).start();
 				
 			});
 			
@@ -49,10 +59,7 @@ public class TableDefPlugin extends PluginBase {
 		
 		try {
 			
-			var oid = t.getOid();
-		
-			
-			var cols = t.getColumns();
+			var cols = columnFactory.getColumns(dbc, t);
 			
 			var colsStr = cols.stream()
 				.map(x-> "\t" + makeColDef(x))
@@ -60,8 +67,6 @@ public class TableDefPlugin extends PluginBase {
 			
 			var colsStr2 = String.join(",\n", colsStr);
 			
-			
-
 			var constrList = constFactory
 					.getConstraints(dbc, t)
 					.stream()

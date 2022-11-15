@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.database.DbTableLike;
 import com.shawtonabbey.pgem.database.column.DbColumn;
 import com.shawtonabbey.pgem.database.column.DbColumnCollection;
+import com.shawtonabbey.pgem.database.column.DbColumnFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -19,12 +22,14 @@ import com.shawtonabbey.pgem.ui.tree.ItemModel;
 @Scope("prototype")
 public class ColumnGroup<T extends ItemModel> extends XGroup<T> {
 
+	@Autowired
+	private DbColumnFactory factory;
 	
 	public interface Added extends Add<ColumnGroup<?>> {}
 		
-	private DbColumnCollection table;
+	private DbTableLike table;
 	
-	public ColumnGroup(T parent, DbColumnCollection table)
+	public ColumnGroup(T parent, DbTableLike table)
 	{
 		super(parent, "Columns");
 
@@ -41,7 +46,7 @@ public class ColumnGroup<T extends ItemModel> extends XGroup<T> {
 		Event event = new Event();
 		var sw = new SwingWorker<List<DbColumn>>()
 			.setWork(() -> {
-				return table.getColumns();
+				return factory.getColumns(findDbc(), table);
 			})
 			.thenOnEdt((columns) -> {
 				
