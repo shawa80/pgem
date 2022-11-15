@@ -10,10 +10,4 @@ public class DbIndex {
 	private String name;
 	@Getter
 	private String def;
-	
-
-	
-
-
-
 }

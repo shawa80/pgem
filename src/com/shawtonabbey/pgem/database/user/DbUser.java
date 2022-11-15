@@ -9,8 +9,5 @@ public class DbUser {
 	@Getter
 	private String name;
 	
-	
-	
-	
 }
 

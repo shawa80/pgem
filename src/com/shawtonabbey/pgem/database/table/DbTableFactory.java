@@ -42,7 +42,7 @@ public class DbTableFactory {
 			var c = new Property<>(BigIntValue.class);
 			var oid = connection.execX("SELECT ?::regclass::oid as value", c, 
 					schema.getName() + "." + tableName).stream().findFirst().get();
-			results.add(appContext.getBean(DbTable.class, tableName, schema, oid.getValue()));
+			results.add(new DbTable(tableName, schema, oid.getValue()));
 		}
 		rs.close();
 		

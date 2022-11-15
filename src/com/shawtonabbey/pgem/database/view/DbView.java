@@ -1,9 +1,6 @@
 package com.shawtonabbey.pgem.database.view;
 
 import java.io.IOException;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.DbTableLike;
 import com.shawtonabbey.pgem.database.deserializers.TextValue;
@@ -11,8 +8,6 @@ import com.shawtonabbey.pgem.database.schema.DbSchema;
 
 import lombok.Getter;
 
-@Component
-@Scope("prototype")
 public class DbView implements DbTableLike {
 
 	@Getter
@@ -20,7 +15,7 @@ public class DbView implements DbTableLike {
 	@Getter
 	private DbSchema schema;
 			
-	public DbView (DBC connection, String name, DbSchema schema) throws IOException {
+	public DbView (String name, DbSchema schema) throws IOException {
 		
 		this.name = name;
 		this.schema = schema;

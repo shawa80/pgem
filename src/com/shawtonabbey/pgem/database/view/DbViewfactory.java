@@ -34,7 +34,7 @@ public class DbViewfactory {
 
 		while (rs.next())
 		{
-			results.add(appContext.getBean(DbView.class, connection, rs.get("table_name"), schema));
+			results.add(new DbView(rs.get("table_name"), schema));
 		}
 		
 		return results;
