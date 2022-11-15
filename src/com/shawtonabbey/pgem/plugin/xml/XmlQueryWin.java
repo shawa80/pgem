@@ -133,7 +133,7 @@ public class XmlQueryWin extends JPanel implements Savable{
 		
 		resultsModel = new CountedRowTableModel();
 		panel_5.setLayout(new BorderLayout(0, 0));
-		SQLResultsPane resultsPane = new SQLResultsPane(resultsModel);
+		SQLResultsPane resultsPane = new SQLResultsPane();
 		panel_5.add(resultsPane);
 		
 		JToolBar toolBar_1 = new JToolBar();

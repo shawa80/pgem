@@ -9,6 +9,7 @@ import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 public class TablePlugin extends PluginBase {
 	
 	public void init() {
+		
 		dispatch.find(SchemaInstance.Added.class).listen((s, e) -> {
 			s.addNode(appContext.getBean(TableGroup.class, s).load(e));
 		});

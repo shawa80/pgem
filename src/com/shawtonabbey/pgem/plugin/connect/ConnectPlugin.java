@@ -137,10 +137,12 @@ public class ConnectPlugin extends PluginBase {
 						return null;
 					})
 					.thenOnEdt((server) -> {
-						if (server == null) return;
+						if (server == null)
+							return;
 						
-						server.load(connectEvent);
 						m.addNode(server);
+						server.load(connectEvent);
+						
 					})
 					.setException(ex -> {
 						JOptionPane.showMessageDialog(null, ex.getMessage());

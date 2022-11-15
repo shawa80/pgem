@@ -36,20 +36,20 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	
 	private SqlTableModel model;
 	private JToolBar toolBar;
-	private JButton stopButton;
-	private JButton runButton;
 	
 	@Autowired
 	EventDispatch dispatch;
 	
 	public interface Added extends Add<AQueryWindow> {}
 	
-	public interface Event {public void event(QueryWindow win);}
-	public interface DataReady {public void dataReady(SqlTableModel model);}
-	
-	public final Observable<Event> runStart = new Observable<>(Event.class);
-	public final Observable<Event> runFinished = new Observable<>(Event.class);
+
+	public final Observable<QueryStarted> runStart = new Observable<>(QueryStarted.class);
+	public final Observable<QueryEnded> runFinished = new Observable<>(QueryEnded.class);
 	public final Observable<DataReady> dataReady = new Observable<>(DataReady.class);
+	
+	public SqlTableModel getModel() {
+		return model;
+	}
 	
 	public AQueryWindow()
 	{
@@ -65,7 +65,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 		query.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
 		query.setCodeFoldingEnabled(true);
 		
-		results = new SQLResultsPane(model);
+		results = new SQLResultsPane();
 		queryScroll = new JScrollPane(query);
 		splitPane.setLeftComponent(queryScroll);
 		splitPane.setRightComponent(results);
@@ -73,40 +73,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 		add(splitPane, BorderLayout.CENTER);
 		
 		toolBar = new JToolBar();
-		add(toolBar, BorderLayout.NORTH);
-		
-		runButton = new JButton("Run");
-		runButton.addActionListener((ev) -> {
-			
-			runStart.fire(o->o.event(this));
-			
-			var txt = query.getText();
-			model.clear();
-			
-			new SwingWorkerProxy<>(SqlResultModel.class, model)
-			.setWork((m) -> {
-				conn.runQuery( 				//on Swing worker thread
-						m::setColumns,	//on EDT, edtModel a proxy that of model that moves calls to EDT
-						m::addRow,
-						m::setStatus,
-						txt);
-				})
-			.thenOnEdt((m) -> {
-				runFinished.fire(o->o.event(this));
-				dataReady.fire(o->o.dataReady(model));
-			}).start();
-			
-		});
-		toolBar.add(runButton);
-		
-		stopButton = new JButton("Stop");
-		stopButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				conn.stop();
-			}
-		});
-		toolBar.add(stopButton);
-				
+		add(toolBar, BorderLayout.NORTH);				
 		
 		setVisible(true);
 				
