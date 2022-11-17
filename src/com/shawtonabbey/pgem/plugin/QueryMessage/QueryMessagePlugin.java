@@ -3,10 +3,8 @@ package com.shawtonabbey.pgem.plugin.QueryMessage;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.shawtonabbey.pgem.PgemMainWindow;
 import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.query.AQueryWindow;
 

@@ -9,6 +9,6 @@ public interface MainWindow {
 	
 	public void launchQueryWin(DBC db, String query);
 	public void launchPanel(JPanel panel);
-	public void launchImport();
+	//public void launchImport();
 	public void message(String msg);
 }

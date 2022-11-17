@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.DBC;
+import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.plugin.SysPlugin;
 import com.shawtonabbey.pgem.plugin.csv.ui.CsvImportWin;
@@ -12,6 +13,8 @@ import com.shawtonabbey.pgem.plugin.save.SaveAction;
 import com.shawtonabbey.pgem.query.QueryWindow;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.DBManager;
+import com.shawtonabbey.pgem.tree.Event;
+import com.shawtonabbey.pgem.tree.sequence.SequenceGroup;
 import com.shawtonabbey.pgem.ui.ATabbedPane;
 import com.shawtonabbey.pgem.ui.MainWindow;
 import com.shawtonabbey.pgem.ui.lambda.AMouseListener;
@@ -36,6 +39,10 @@ public class PgemMainWindow extends JFrame implements MainWindow
 	
 	@Autowired
 	private EventDispatch dispatch;
+	
+	private JMenu tools;
+
+	public interface Added extends Add<PgemMainWindow> {}
 	
 	PgemMainWindow()
 	{
@@ -101,6 +108,8 @@ public class PgemMainWindow extends JFrame implements MainWindow
 		splitPane.setDividerLocation(0.25);
 		
 		dispatch.find(SysPlugin.MenuEv.class).fire(o->o.added(m, null));
+		
+		dispatch.find(Added.class).fire(o->o.added(this, new Event()));
 	}
 	
 	public JTree getTree()
@@ -117,31 +126,16 @@ public class PgemMainWindow extends JFrame implements MainWindow
 
 
 		var menu = new JMenuBar();
-		var tools = new JMenu("Tools", true);
-
-		tools.add(createSaveAction());
+		tools = new JMenu("Tools", true);
 		
 		menu.add(tools);
 		return menu;
 	}
 	
-
-	
-	private JMenuItem createSaveAction() {
-		JMenuItem menuItem;
-		menuItem = new JMenuItem("Save");
-		menuItem.addActionListener((ActionEvent e) ->
-			{
-				var qw = getDesktop().getSelectedComponent();
-				var action = new SaveAction();
-				
-				if (qw instanceof Savable)
-					action.perform(this, (Savable)qw);
-				
-			});
-		menuItem.setMnemonic(KeyEvent.VK_Q);
-		return menuItem;
+	public void addMenu(JMenuItem menu) {
+		tools.add(menu);
 	}
+
 	
 	/**
 	 * @param connection
@@ -170,13 +164,13 @@ public class PgemMainWindow extends JFrame implements MainWindow
 		getDesktop().addTab(panel);
 	}
 	
-	@Override
-	public void launchImport() {
-		
-		var win = new CsvImportWin();
-		win.setVisible(true);
-		
-	}
+//	@Override
+//	public void launchImport() {
+//		
+//		var win = new CsvImportWin();
+//		win.setVisible(true);
+//		
+//	}
 	
 	
 }

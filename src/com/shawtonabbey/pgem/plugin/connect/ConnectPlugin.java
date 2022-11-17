@@ -99,56 +99,53 @@ public class ConnectPlugin extends PluginBase {
 				connect.setLocationRelativeTo(window);
 				connect.setVisible(true);
 				
-				new SwingWorker<ServerInstance>()
+				var worker = new SwingWorker<ServerInstance>()
 					.setWork(() -> {
 						
-						if (connect.selectedConnect())
-						{
-							pref.put("address", connect.getAddress());
-							pref.put("port", connect.getPort());				
-							pref.put("database", connect.getDatabase());
-							pref.put("user", connect.getUser());
-							
-							pref.put("krbUser", connect.getKerberosUser());
-							pref.put("krbFile", connect.getKerberosFile());
-							pref.put("krbUseFile", connect.isKerberosfile()+"");
-							
-							pref.put("LoginTab",  connect.getTab()+"");
-							
-							pref.put("LoadDbs", connect.getLoadDbs()+"");
-							
-							UserPassPrompt.user = connect.getKerberosUser();
-							UserPassPrompt.password = connect.getKerberosPass();
-							
-							KerberosLogin.cachePath = null;
-							if (connect.isKerberosfile())
-								KerberosLogin.cachePath = connect.getKerberosFile();
-							
-							var useKerberos = true;
-							if (connect.getTab() == 0)
-								useKerberos = false;
+						pref.put("address", connect.getAddress());
+						pref.put("port", connect.getPort());				
+						pref.put("database", connect.getDatabase());
+						pref.put("user", connect.getUser());
+						
+						pref.put("krbUser", connect.getKerberosUser());
+						pref.put("krbFile", connect.getKerberosFile());
+						pref.put("krbUseFile", connect.isKerberosfile()+"");
+						
+						pref.put("LoginTab",  connect.getTab()+"");
+						
+						pref.put("LoadDbs", connect.getLoadDbs()+"");
+						
+						UserPassPrompt.user = connect.getKerberosUser();
+						UserPassPrompt.password = connect.getKerberosPass();
+						
+						KerberosLogin.cachePath = null;
+						if (connect.isKerberosfile())
+							KerberosLogin.cachePath = connect.getKerberosFile();
+						
+						var useKerberos = true;
+						if (connect.getTab() == 0)
+							useKerberos = false;
 
-							var loadDbs = connect.getLoadDbs();
-							
-							var server = appContext.getBean(ServerInstance.class, m, window, connect, useKerberos, loadDbs);
-									
-							return server;
-						}	
-						return null;
+						var loadDbs = connect.getLoadDbs();
+						
+						var server = appContext.getBean(ServerInstance.class, m, window, connect, useKerberos, loadDbs);
+								
+						return server;
 					})
 					.thenOnEdt((server) -> {
-						if (server == null)
-							return;
 						
 						m.addNode(server);
 						server.load(connectEvent);
 						
 					})
 					.setException(ex -> {
-						JOptionPane.showMessageDialog(null, ex.getMessage());
-					})
-					.start();
+						JOptionPane.showMessageDialog(window, ex.getMessage());
+					});
 				
+				if (connect.selectedConnect())
+				{
+					worker.start();
+				}
 			});
 		});
 		
