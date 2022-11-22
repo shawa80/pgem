@@ -27,7 +27,13 @@ public class ForeignInstance extends Instance<ForeignGroup> {
 	
 	public ForeignInstance(ForeignGroup parent, DbForeign foreign)
 	{
-		super(parent, foreign.getName());
+		super(parent, foreign.getName() 
+				+ "(" + foreign.getForeign_column_name() 
+				+ "=>"
+				+ foreign.getPrimary_table()
+				+ "."
+				+ foreign.getPrimary_column()
+				+  ")");
 		this.foreign = foreign;
 	}
 	
