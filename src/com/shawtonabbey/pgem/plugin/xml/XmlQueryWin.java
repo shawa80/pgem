@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 
 import com.shawtonabbey.pgem.Savable;
 import com.shawtonabbey.pgem.event.Observable;
+import com.shawtonabbey.pgem.plugin.QueryResult.ResultsPane;
 import com.shawtonabbey.pgem.query.CountedRowTableModel;
 import com.shawtonabbey.pgem.query.SQLResultsPane;
 import javax.swing.JTextField;
@@ -91,7 +92,7 @@ public class XmlQueryWin extends JPanel implements Savable{
 		panel_2.add(tabbedPane_1, BorderLayout.CENTER);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane_1.addTab("Doc", null, panel_3, null);
+		tabbedPane.addTab("Doc", null, panel_3, null);
 		panel_3.setLayout(new BorderLayout(0, 0));
 		
 		xmlDoc = new RSyntaxTextArea();
@@ -134,6 +135,9 @@ public class XmlQueryWin extends JPanel implements Savable{
 		resultsModel = new CountedRowTableModel();
 		panel_5.setLayout(new BorderLayout(0, 0));
 		SQLResultsPane resultsPane = new SQLResultsPane();
+		var x = new ResultsPane();
+		x.setModel(resultsModel);
+		resultsPane.add(new JScrollPane(x));
 		panel_5.add(resultsPane);
 		
 		JToolBar toolBar_1 = new JToolBar();

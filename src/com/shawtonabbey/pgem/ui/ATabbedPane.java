@@ -1,5 +1,6 @@
 package com.shawtonabbey.pgem.ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
@@ -32,10 +33,10 @@ public class ATabbedPane extends JTabbedPane {
 		var p = new JPanel();
 		p.setOpaque(false);
 		p.setLayout(new FlowLayout());
-		var b = new JButton("X");
+		var b = new JLabel("X");
+		b.setForeground(Color.RED);
 		
 		b.addMouseListener((AMouseListener)(me) -> removeTab(comp));
-		
 		
 		var l = new JLabel(comp.toString());
 		
