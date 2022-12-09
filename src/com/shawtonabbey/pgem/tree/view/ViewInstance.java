@@ -8,13 +8,13 @@ import com.shawtonabbey.pgem.database.view.DbView;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 
 import lombok.Getter;
 
 @Component
 @Scope("prototype")
-public class ViewInstance extends XGroup<ViewGroup>
+public class ViewInstance extends DataGroup<ViewGroup>
 {
 	@Getter
 	private DbView view;

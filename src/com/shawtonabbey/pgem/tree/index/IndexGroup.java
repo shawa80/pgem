@@ -14,14 +14,14 @@ import com.shawtonabbey.pgem.database.table.DbTable;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 import lombok.Getter;
 
 @Component
 @Scope("prototype")
-public class IndexGroup extends XGroup<TableInstance> {
+public class IndexGroup extends DataGroup<TableInstance> {
 
 	
 	@Getter

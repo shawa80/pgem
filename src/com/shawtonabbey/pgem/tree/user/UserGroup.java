@@ -14,12 +14,12 @@ import com.shawtonabbey.pgem.database.user.DbUserFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.tree.database.DatabaseInstance;
 
 @Component
 @Scope("prototype")
-public class UserGroup extends XGroup<DatabaseInstance>
+public class UserGroup extends DataGroup<DatabaseInstance>
 {
 	private DbDatabase db;
 	

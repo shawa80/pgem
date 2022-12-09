@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import lombok.Getter;
 
 @Component
 @Scope("prototype")
-public class RoutineReturnGroup extends XGroup<RoutineInstance>
+public class RoutineReturnGroup extends DataGroup<RoutineInstance>
 {
 	@Getter
 	private RoutineInstance routine;

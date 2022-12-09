@@ -7,7 +7,7 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
-public abstract class XGroup<P extends ItemModel> extends Group<P> {
+public abstract class DataGroup<P extends ItemModel> extends Group<P> {
 
 	@Autowired
 	protected ApplicationContext appContext;
@@ -15,7 +15,7 @@ public abstract class XGroup<P extends ItemModel> extends Group<P> {
 	@Autowired
 	protected EventDispatch dispatch;
 	
-	public XGroup(P parent, String name) {
+	public DataGroup(P parent, String name) {
 		super(parent, name);
 
 	}

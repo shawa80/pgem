@@ -13,12 +13,12 @@ import com.shawtonabbey.pgem.database.trigger.DbTriggerFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.tree.table.TableInstance;
 
 @Component
 @Scope("prototype")
-public class TriggerGroup extends XGroup<TableInstance>
+public class TriggerGroup extends DataGroup<TableInstance>
 {
 			
 	@Autowired

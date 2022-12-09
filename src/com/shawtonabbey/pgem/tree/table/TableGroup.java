@@ -4,7 +4,7 @@ import com.shawtonabbey.pgem.database.table.DbTableFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
-public class TableGroup extends XGroup<SchemaInstance>
+public class TableGroup extends DataGroup<SchemaInstance>
 {
 	@Autowired		
 	private DbTableFactory factory;

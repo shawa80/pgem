@@ -7,13 +7,13 @@ import com.shawtonabbey.pgem.database.routine.DbRoutine;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 
 import lombok.Getter;
 
 @Component
 @Scope("prototype")
-public class RoutineInstance extends XGroup<RoutineGroup>
+public class RoutineInstance extends DataGroup<RoutineGroup>
 {	
 	
 	@Getter

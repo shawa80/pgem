@@ -14,14 +14,14 @@ import com.shawtonabbey.pgem.database.rule.DbRuleFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.ui.tree.ItemModel;
 
 import lombok.Getter;
 
 @Component
 @Scope("prototype")
-public class RuleGroup extends XGroup<ItemModel> {
+public class RuleGroup extends DataGroup<ItemModel> {
 
 	
 	@Getter

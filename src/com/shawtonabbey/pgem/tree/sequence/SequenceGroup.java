@@ -13,12 +13,12 @@ import com.shawtonabbey.pgem.database.sequence.DbSequenceFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 @Component
 @Scope("prototype")
-public class SequenceGroup extends XGroup<SchemaInstance>
+public class SequenceGroup extends DataGroup<SchemaInstance>
 {	
 	@Autowired
 	private DbSequenceFactory sequenceFactory;

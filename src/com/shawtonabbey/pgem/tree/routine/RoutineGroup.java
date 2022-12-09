@@ -13,12 +13,12 @@ import com.shawtonabbey.pgem.database.routine.DbRoutineFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
-import com.shawtonabbey.pgem.tree.XGroup;
+import com.shawtonabbey.pgem.tree.DataGroup;
 import com.shawtonabbey.pgem.tree.schema.SchemaInstance;
 
 @Component
 @Scope("prototype")
-public class RoutineGroup extends XGroup<SchemaInstance>
+public class RoutineGroup extends DataGroup<SchemaInstance>
 {
 	private SchemaInstance schema;
 
