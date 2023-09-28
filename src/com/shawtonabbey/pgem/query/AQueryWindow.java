@@ -26,7 +26,8 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 {
 	
 	private static final long serialVersionUID = 1L;
-	private RSyntaxTextArea query;
+	public JTextPane query;
+	//public RSyntaxTextArea query;
 	private JScrollPane queryScroll;
 	private SQLResultsPane results;
 	private DBC conn;
@@ -45,7 +46,8 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	public final Observable<QueryStarted> runStart = new Observable<>(QueryStarted.class);
 	public final Observable<QueryEnded> runFinished = new Observable<>(QueryEnded.class);
 	public final Observable<DataReady> dataReady = new Observable<>(DataReady.class);
-	
+
+
 	public SqlTableModel getModel() {
 		return model;
 	}
@@ -60,9 +62,10 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 
 		var splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
-		query = new RSyntaxTextArea();
-		query.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
-		query.setCodeFoldingEnabled(true);
+		query = new JTextPane();
+		//query = new RSyntaxTextArea();
+		//query.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+		//query.setCodeFoldingEnabled(true);
 		
 		results = new SQLResultsPane();
 		queryScroll = new JScrollPane(query);
