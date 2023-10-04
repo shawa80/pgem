@@ -20,6 +20,9 @@ public class ATabbedPane extends JTabbedPane {
 	
 	public ATabbedPane() {
 		
+	    addChangeListener((e) -> {
+	            ATabbedPane.this.repaint(500);
+	        });
 	}
 		
 	public void addTab(Component comp) {

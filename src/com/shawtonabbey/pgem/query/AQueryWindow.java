@@ -13,11 +13,14 @@ import com.shawtonabbey.pgem.event.EventDispatch;
 import com.shawtonabbey.pgem.event.Observable;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.ui.lambda.AComponentListener;
+import com.shawtonabbey.pgem.ui.lambda.AComponentListenerAll;
 
 //import jsyntaxpane.components.LineNumbersRuler;
 //import jsyntaxpane.syntaxkits.SqlSyntaxKit;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.*;
 
 @Component
@@ -28,7 +31,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	private static final long serialVersionUID = 1L;
 	public JTextPane query;
 	//public RSyntaxTextArea query;
-	private JScrollPane queryScroll;
+	public JScrollPane queryScroll;
 	private SQLResultsPane results;
 	private DBC conn;
 	
@@ -36,6 +39,7 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 	
 	private SqlTableModel model;
 	private JToolBar toolBar;
+	public JLayeredPane layer;
 	
 	@Autowired
 	EventDispatch dispatch;
@@ -62,14 +66,23 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 
 		var splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
+		layer = new JLayeredPane();
 		query = new JTextPane();
+		
+		
+		layer.addComponentListener((AComponentListenerAll)(e) ->  {
+				var x = layer.getSize();
+				queryScroll.setSize(x);
+				queryScroll.setLocation(0, 0);			
+		});
 		//query = new RSyntaxTextArea();
 		//query.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
 		//query.setCodeFoldingEnabled(true);
 		
 		results = new SQLResultsPane();
 		queryScroll = new JScrollPane(query);
-		splitPane.setLeftComponent(queryScroll);
+		layer.add(queryScroll, JLayeredPane.DEFAULT_LAYER);
+		splitPane.setLeftComponent(layer);
 		splitPane.setRightComponent(results);
 
 		add(splitPane, BorderLayout.CENTER);
@@ -81,7 +94,15 @@ public class AQueryWindow extends JPanel implements QueryWindow, Openable
 				
 		query.setText("");
 		
-		this.addComponentListener((AComponentListener)(e) -> {splitPane.setDividerLocation(0.5);});
+		this.addComponentListener((AComponentListener)(e) -> {
+			splitPane.setDividerLocation(0.5);
+
+			this.validate();
+			var x = layer.getSize();
+			queryScroll.setSize(x);
+			queryScroll.setLocation(0, 0);
+
+		});
 
 	}
 
