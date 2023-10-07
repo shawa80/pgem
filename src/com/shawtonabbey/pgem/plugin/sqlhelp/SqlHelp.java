@@ -1,16 +1,8 @@
 package com.shawtonabbey.pgem.plugin.sqlhelp;
 
-import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JWindow;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.undo.UndoManager;
-
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.plugin.PluginBase;
@@ -27,47 +19,56 @@ public class SqlHelp extends PluginBase {
 	
 	public void init() {
 		dispatch.find(AQueryWindow.Added.class).listen((w, ev) -> {
-			
-			var s = w.query.getStyledDocument();
-			var x = w.query;
-			var y = w.layer;
-			var sp = w.queryScroll;
 
     		String[] data = {"one", "two", "three", "four", "x", "x", "x", "x"};
+			
+			var scrollPane = w.queryScroll;
+			var layerPane = w.layer;
+			var textPane = w.query;
+			
     		var list = new JList<String>(data);
-    		var l = new JScrollPane(list);
-    		y.add(l, JLayeredPane.POPUP_LAYER);
+    		var listScroll = new JScrollPane(list);
+    		
+    		layerPane.add(listScroll, JLayeredPane.POPUP_LAYER);
 
     		list.addListSelectionListener((e) -> {
-    			//pause then h
-    			if (!list.isSelectionEmpty())
+
+    			if (!list.isSelectionEmpty() && e.getValueIsAdjusting() == false)
     				new SwingWorker<Integer>()
-    					.setWork(() -> { Thread.sleep(500); return 0;})
-    					.thenOnEdt((r) -> l.setVisible(false))
+    					.setWork(() -> { Thread.sleep(250); return 0;})
+    					.thenOnEdt((r) -> {
+    						var item = list.getSelectedValue();
+    						listScroll.setVisible(false);
+    						var caretPos = textPane.getCaretPosition();
+    						textPane.getDocument().insertString(caretPos, item, null);
+    						var size = item.length();
+    						textPane.setCaretPosition(caretPos + size);
+    						textPane.requestFocus();
+    					})
     					.start();
     		});
 			
 	        w.query.getDocument().addDocumentListener((DocChange)(e) -> {
-	        	var d = e.getDocument();
-	        	var o = e.getOffset();
+	        	var doc = e.getDocument();
+	        	var o = e.getOffset()-5;
 	        	try {
 	        		
-	        		var c = x.getCaret();
-	        		var xy = c.getMagicCaretPosition();
-	        		var fh = x.getFont().getSize();
+	        		var caret = textPane.getCaret();
+	        		var xy = caret.getMagicCaretPosition();
+	        		var fh = textPane.getFont().getSize();
 	        		fh *= 1.5;
 	        		
-					var t = d.getText(o, 1);
-					if ("x".equals(t))
+					var t = doc.getText(o, 5);
+					if ("from ".equals(t))
 					{
-						var pos = sp.getViewport().getViewPosition();
-						l.setLocation(xy.x - pos.x, (xy.y+fh)-pos.y);
-						l.setSize(100, 100);
-						l.setVisible(true);
+						var pos = scrollPane.getViewport().getViewPosition();
+						listScroll.setLocation(xy.x - pos.x, (xy.y+fh)-pos.y);
+						listScroll.setSize(100, 100);
+						listScroll.setVisible(true);
 						list.clearSelection();
 					} 
 					else 
-						l.setVisible(false);
+						listScroll.setVisible(false);
 				} catch (Exception e1) {
 				}
 	        });
