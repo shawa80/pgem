@@ -60,7 +60,7 @@ public class SchemaGroup extends Group<DatabaseInstance>
 		event.unlock(SchemaGroup.this);
 		
 		var sw = new SwingWorker<List<DbSchema>>()
-		.setWork(() -> factory.getSchemas(findDbc(), db, loadPgSchema))
+		.setWork(() -> factory.getSchemas(findDbc(), loadPgSchema))
 		.thenOnEdt((schemas) -> {
 			
 			schemas.stream()

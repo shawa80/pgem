@@ -15,7 +15,7 @@ import com.shawtonabbey.pgem.database.deserializers.Constr;
 @Scope("singleton")
 public class DbSchemaFactory {
 
-	public List<DbSchema> getSchemas(DBC connection, DbDatabase database, boolean loadSysSchema) throws IOException {
+	public List<DbSchema> getSchemas(DBC connection, boolean loadSysSchema) throws IOException {
 		
 
 		var sqlStr = "select schema_name "+

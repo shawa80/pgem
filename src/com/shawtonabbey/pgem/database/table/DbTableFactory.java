@@ -43,6 +43,7 @@ public class DbTableFactory {
 			var oid = connection.execX("SELECT ?::regclass::oid as value", c, 
 					schema.getName() + "." + tableName).stream().findFirst().get();
 			results.add(new DbTable(tableName, schema, oid.getValue()));
+			
 		}
 		rs.close();
 		

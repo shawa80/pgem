@@ -2,6 +2,7 @@ package com.shawtonabbey.pgem.database;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
@@ -21,7 +22,6 @@ import lombok.Getter;
 public class DBC implements AutoCloseable
 {
 	private Connection db;
-	
 	
 	private String address;
 	private String port;

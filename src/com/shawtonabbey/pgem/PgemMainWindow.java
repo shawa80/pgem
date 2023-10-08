@@ -145,9 +145,9 @@ public class PgemMainWindow extends JFrame implements MainWindow
 				.thenOnEdt((dbc) -> {
 					
 					var qw = appContext.getBean(QueryWindow.class);
+					qw.setConnection(dbc);
 					qw.init();
 					qw.enableSql();
-					qw.setConnection(dbc);
 					qw.setSql(query);
 					
 					getDesktop().addTab((java.awt.Component)qw);

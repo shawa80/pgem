@@ -1,8 +1,6 @@
 package com.shawtonabbey.pgem.query;
 import javax.swing.*;
 
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,8 +17,6 @@ import com.shawtonabbey.pgem.ui.lambda.AComponentListenerAll;
 //import jsyntaxpane.syntaxkits.SqlSyntaxKit;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.*;
 
 @Component
