@@ -15,7 +15,7 @@ import com.shawtonabbey.pgem.database.schema.DbSchema;
 
 @Component
 @Scope("singleton")
-public class DbViewfactory {
+public class DbViewFactory {
 
 	@Autowired
 	protected ApplicationContext appContext;

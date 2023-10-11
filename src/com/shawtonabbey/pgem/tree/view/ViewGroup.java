@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.shawtonabbey.pgem.database.view.DbView;
-import com.shawtonabbey.pgem.database.view.DbViewfactory;
+import com.shawtonabbey.pgem.database.view.DbViewFactory;
 import com.shawtonabbey.pgem.event.Add;
 import com.shawtonabbey.pgem.swingUtils.SwingWorker;
 import com.shawtonabbey.pgem.tree.Event;
@@ -23,7 +23,7 @@ public class ViewGroup extends DataGroup<SchemaInstance>
 	private SchemaInstance schema;
 
 	@Autowired
-	private DbViewfactory factory;
+	private DbViewFactory factory;
 	
 	public interface Added extends Add<ViewGroup> {}
 

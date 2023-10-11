@@ -1,5 +1,7 @@
 package com.shawtonabbey.pgem.plugin.sqlhelp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultListModel;
@@ -10,9 +12,10 @@ import javax.swing.JScrollPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.shawtonabbey.pgem.database.DBC;
 import com.shawtonabbey.pgem.database.schema.DbSchemaFactory;
 import com.shawtonabbey.pgem.database.table.DbTableFactory;
-import com.shawtonabbey.pgem.event.EventDispatch;
+import com.shawtonabbey.pgem.database.view.DbViewFactory;
 import com.shawtonabbey.pgem.plugin.PluginBase;
 import com.shawtonabbey.pgem.plugin.sqlhint.DocChange;
 import com.shawtonabbey.pgem.query.AQueryWindow;
@@ -26,6 +29,9 @@ public class SqlHelp extends PluginBase {
 	
 	@Autowired
 	DbTableFactory tables;
+	@Autowired
+	DbViewFactory views;
+	
 	
 	public SqlHelp() {
 		
@@ -35,19 +41,10 @@ public class SqlHelp extends PluginBase {
 		dispatch.find(AQueryWindow.Added.class).listen((w, ev) -> {
 
 			//move to worker thread
-    		var m = new DefaultListModel<String>();			
-			try {
-			var conn = w.getConnection();
-			var sss = schemas.getSchemas(conn, false);
-			for (var s : sss) {
-				var jjj = tables.getTables(conn, s);
-				var names = jjj.stream().map((x) -> x.getName()).collect(Collectors.toList());
-				m.addAll(names);
-			}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-    		//String[] data = {"one", "two", "three", "four", "x", "x", "x", "x"};
+    		var m = new DefaultListModel<String>();	
+    		var conn = w.getConnection();
+    		var names = getHelp(conn);
+    		m.addAll(names);
 			
 			var scrollPane = w.queryScroll;
 			var layerPane = w.layer;
@@ -107,5 +104,37 @@ public class SqlHelp extends PluginBase {
 	        });
 			
 		});
+	}
+	
+	private List<String> getHelp(DBC conn) {
+		
+		var list = new ArrayList<String>();
+		
+		try {
+			
+			
+			var sss = schemas.getSchemas(conn, false);
+			for (var s : sss) {
+				var jjj = tables.getTables(conn, s);
+				var names = jjj.stream()
+						.map((x) -> s.getName() + "." + x.getName())
+						.collect(Collectors.toList());
+				list.addAll(names);
+				
+				var lll = views.getViews(conn, s);
+				names = lll.stream()
+						.map((x) -> s.getName() + "." + x.getName())
+						.collect(Collectors.toList());
+				
+				list.addAll(names);
+				
+			}
+			
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return list;
 	}
 }
